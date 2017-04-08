@@ -1,0 +1,8 @@
+{
+  "name": "rainbow6Rank.mrcraftcod.fr",
+  "description": "Rainbow6Rank",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "node test.js"
+  }
+}
