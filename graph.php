@@ -1,6 +1,7 @@
+<!--suppress JSDuplicatedDeclaration -->
 <script type='text/javascript'>
     function roundDate(date) {
-        var coeff = 1000 * 60 * 5;
+        var coeff = 1000 * 60 * 10;
         return new Date(Math.round(date.getTime() / coeff) * coeff)
     }
 
@@ -151,7 +152,7 @@
             });
 
             //Build Chart
-            var chartRanked = AmCharts.makeChart(chartdivWatched, {
+            AmCharts.makeChart(chartdivWatched, {
                     type: 'serial',
                     theme: chartColors['theme'],
                     backgroundAlpha: 1,
@@ -189,7 +190,7 @@
                         autoWrap: true,
                         position: 'bottom',
                         minPeriod: 'hh',
-                        labelFunction: function (valueText, date, categoryAxis) {
+                        labelFunction: function (valueText, date) {
                             return ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)
                         }
                     },
