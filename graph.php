@@ -1,8 +1,9 @@
 <!--suppress JSDuplicatedDeclaration -->
 <script type='text/javascript'>
-    function roundDate(date) {
-        var coeff = 1000 * 60 * 10;
-        return new Date(Math.round(date.getTime() / coeff) * coeff)
+        function roundDate(date)
+        {
+            var coeff = 1000 * 60 * 60;
+            return new Date(Math.floor(date.getTime() / coeff) * coeff)
     }
 
     $(document).ready(function () {
@@ -147,8 +148,8 @@
                     rankedDatas.push(dateData);
                 }
 
-            rankedDatas.sort(function (a, b) {
-                return a['date'] - b['date'];
+            rankedDatas = rankedDatas.sort(function (a, b) {
+                return Date.parse(a['date']) - Date.parse(b['date']);
             });
 
             //Build Chart
@@ -189,7 +190,7 @@
                         equalSpacing: true,
                         autoWrap: true,
                         position: 'bottom',
-                        minPeriod: 'hh',
+                        minPeriod: 'mm',
                         labelFunction: function (valueText, date) {
                             return ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)
                         }

@@ -15,4 +15,6 @@ function getJSONFromFiles()
     return json_encode($datas);
 }
 
+//echo '<br/>' . getJSONFromFiles() . '<br/>';
+
 include 'graph.php';
