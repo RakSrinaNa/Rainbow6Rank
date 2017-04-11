@@ -1,18 +1,17 @@
 <!--suppress JSDuplicatedDeclaration -->
 <script type='text/javascript'>
-        function roundDate(date)
-        {
-            var coeff = 1000 * 60 * 60;
-            return new Date(Math.floor(date.getTime() / coeff) * coeff)
+    function roundDate(date) {
+        var coeff = 1000 * 60 * 60;
+        return new Date(Math.floor(date.getTime() / coeff) * coeff)
     }
 
     $(document).ready(function () {
 
         //Resize chart to fit height
-        var chartHolderWatched = document.getElementById('chartHolder' + '<?php echo $divName; ?>');
-        var chartdivWatched = document.getElementById('chartDiv' + '<?php echo $divName; ?>');
-        new ResizeSensor(chartHolderWatched, function () {
-            chartdivWatched.style.height = '' + chartHolderWatched.clientHeight + 'px';
+        var chartHolder = document.getElementById('chartHolder' + '<?php echo $divName; ?>');
+        var chartDiv = document.getElementById('chartDiv' + '<?php echo $divName; ?>');
+        new ResizeSensor(chartHolder, function () {
+            chartDiv.style.height = '' + chartHolder.clientHeight + 'px';
         });
 
         AmCharts.ready(function () {
@@ -29,15 +28,84 @@
                 handDrawn: false
             };
 
+            var ranks = {
+                'Silver I': {
+                    from: 2400,
+                    to: 2500
+                },
+                'Silver II': {
+                    from: 2300,
+                    to: 2400
+                },
+                'Silver III': {
+                    from: 2200,
+                    to: 2300
+                },
+                'Silver IV': {
+                    from: 2100,
+                    to: 2200
+                },
+                'Bronze I': {
+                    from: 2000,
+                    to: 2100
+                },
+                'Bronze II': {
+                    from: 1900,
+                    to: 2000
+                },
+                'Bronze III': {
+                    from: 1800,
+                    to: 1900
+                },
+                'Bronze IV': {
+                    from: 1700,
+                    to: 1800
+                },
+                'Copper I': {
+                    from: 1600,
+                    to: 1700
+                },
+                'Copper II': {
+                    from: 1500,
+                    to: 1600
+                },
+                'Copper III': {
+                    from: 1400,
+                    to: 1500
+                }
+            };
+
+            var i = 0;
+            var guideColors = [
+                '#555555',
+                '#aaaaaa'
+            ];
             var guides = [];
+            for (var rank in ranks)
+                if (ranks.hasOwnProperty(rank)) {
+                    guides.push({
+                        fillAlpha: 0.3,
+                        lineAlpha: 1,
+                        lineThickness: 1,
+                        value: ranks[rank]['from'],
+                        toValue: ranks[rank]['to'],
+                        valueAxis: 'pointsAxis',
+                        label: rank,
+                        inside: true,
+                        position: 'right',
+                        fillColor: guideColors[i++ % guideColors.length]
+                    });
+                }
+
+
             var datas = JSON.parse('<?php echo $datas(); ?>');
 
-            var graphs = [];
-            var tempDatas = [];
+            var rankedGraphs = [];
+            var rankedTempDatas = [];
             for (var player in datas)
                 if (datas.hasOwnProperty(player)) {
                     const username = player;
-                    graphs.push({
+                    rankedGraphs.push({
                         id: username,
                         bullet: 'circle',
                         bulletBorderAlpha: 1,
@@ -61,30 +129,30 @@
                     for (var date in datas[player])
                         if (datas[player].hasOwnProperty(date)) {
                             var roundedDate = roundDate(new Date(date));
-                            if (!tempDatas.hasOwnProperty(roundedDate))
-                                tempDatas[roundedDate] = {};
-                            tempDatas[roundedDate][player] = datas[player][date];
+                            if (!rankedTempDatas.hasOwnProperty(roundedDate))
+                                rankedTempDatas[roundedDate] = {};
+                            rankedTempDatas[roundedDate][player] = datas[player][date];
                         }
                 }
 
-            var datas = [];
-            for (var date in tempDatas)
-                if (tempDatas.hasOwnProperty(date)) {
+            var rankedDatas = [];
+            for (var date in rankedTempDatas)
+                if (rankedTempDatas.hasOwnProperty(date)) {
                     var dateData = {};
                     dateData['date'] = date;
-                    for (var user in tempDatas[date])
-                        if (tempDatas[date].hasOwnProperty(user))
-                            dateData[user] = tempDatas[date][user];
+                    for (var user in rankedTempDatas[date])
+                        if (rankedTempDatas[date].hasOwnProperty(user))
+                            dateData[user] = rankedTempDatas[date][user];
 
-                    datas.push(dateData);
+                    rankedDatas.push(dateData);
                 }
 
-            datas = datas.sort(function (a, b) {
+            rankedDatas = rankedDatas.sort(function (a, b) {
                 return Date.parse(a['date']) - Date.parse(b['date']);
             });
 
             //Build Chart
-            AmCharts.makeChart(chartdivWatched, {
+            AmCharts.makeChart(chartDiv, {
                     type: 'serial',
                     theme: chartColors['theme'],
                     backgroundAlpha: 1,
@@ -103,7 +171,7 @@
                             return graphDataItem && graphDataItem.graph && graphDataItem.graph.valueField && graphDataItem.values && (graphDataItem.values.value || graphDataItem.values.value === 0) ? Math.round(graphDataItem.values.value * 100) / 100 : '';
                         }
                     },
-                    dataProvider: datas,
+                    dataProvider: rankedDatas,
                     valueAxes: [{
                         id: 'pointsAxis',
                         axisAlpha: 0.5,
@@ -126,7 +194,7 @@
                             return ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)
                         }
                     },
-                    graphs: graphs,
+                    graphs: rankedGraphs,
                     chartScrollbar: {
                         autoGridCount: true,
                         scrollbarHeight: 40,
@@ -156,7 +224,7 @@
                     },
                     guides: guides,
                     categoryField: 'date',
-                    minPeriod: 'hh',
+                    minPeriod: 'mm',
                     autoGridCount: true,
                     axisColor: '#555555',
                     gridAlpha: 0.1,

@@ -1,34 +1,54 @@
 <?php
-if(false)
-{
+if (false) {
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
 }
 $dev = isset($_GET['dev']);
-$customPeriodDisplayed = isset($_GET['startPeriod']) && isset($_GET['endPeriod']);
 ?>
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <link rel="stylesheet" href="css/main.css"/>
-        <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
-        <script type="text/javascript" src="js/libs/ElementQueries/ResizeSensor.js"></script>
-        <script type="text/javascript" src="js/libs/ElementQueries/ElementQueries.js"></script>
-        <script type="text/javascript" src="js/libs/amcharts/amcharts.js"></script>
-        <script type="text/javascript" src="js/libs/amcharts/serial.js"></script>
-        <script type="text/javascript" src="js/libs/amcharts/themes/light.js"></script>
-        <script type="text/javascript" src="js/libs/amcharts/plugins/responsive/responsive.min.js"></script>
-        <meta charset="UTF-8">
-        <title>Rainbow6 stats</title>
-    </head>
-    <body>
-        <div style="margin-bottom: 10px;">
-
-        </div>
-        <div class="chartHolder" id="chartHolderRanked5">
-            <span class="chartName">Season 5</span>
-            <div class="chartDiv" id="chartDivRanked5"></div>
-        </div>
-        <?php include "chartRanked5.php"; ?>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="css/main.css"/>
+    <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
+    <script type="text/javascript" src="js/libs/ElementQueries/ResizeSensor.js"></script>
+    <script type="text/javascript" src="js/libs/ElementQueries/ElementQueries.js"></script>
+    <script type="text/javascript" src="js/libs/amcharts/amcharts.js"></script>
+    <script type="text/javascript" src="js/libs/amcharts/serial.js"></script>
+    <script type="text/javascript" src="js/libs/amcharts/themes/light.js"></script>
+    <script type="text/javascript" src="js/libs/amcharts/plugins/responsive/responsive.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Rainbow6 stats</title>
+</head>
+<body>
+<hr/>
+<div class="chartHolder" id="chartHolderRanked5">
+    <span class="chartName">Season 5</span>
+    <div class="chartDiv" id="chartDivRanked5"></div>
+</div>
+<hr/>
+<div class="chartHolder" id="chartHolderKDR">
+    <span class="chartName">Ratio K/D Ranked</span>
+    <div class="chartDiv" id="chartDivKDR"></div>
+</div>
+<hr/>
+<div class="chartHolder" id="chartHolderWLRR">
+    <span class="chartName">Ratio WLR Ranked</span>
+    <div class="chartDiv" id="chartDivWLRR"></div>
+</div>
+<hr/>
+<div class="chartHolder" id="chartHolderKDC">
+    <span class="chartName">Ratio K/D Casual</span>
+    <div class="chartDiv" id="chartDivKDC"></div>
+</div>
+<hr/>
+<div class="chartHolder" id="chartHolderWLRC">
+    <span class="chartName">Ratio WLR Casual</span>
+    <div class="chartDiv" id="chartDivWLRC"></div>
+</div>
+<?php include "chartRanked5.php"; ?>
+<?php include "chartKDR.php"; ?>
+<?php include "chartWLRR.php"; ?>
+<?php include "chartKDC.php"; ?>
+<?php include "chartWLRC.php"; ?>
+</body>
 </html>
