@@ -19,7 +19,7 @@ else
 		if [ "$f" != ".travis.yml" ] && [ "$f" != "deploy.sh" ] && [ "$f" != "test.js" ] && [ "$f" != "package.json" ] && [ "$f" != "README.md" ] && [ "$f" != ".gitignore" ]
 		then
 	 		printf "\nUploading file $f\n"
-	 		curl --ftp-create-dirs -T $f -u $FTP_USER:$FTP_PASS ftp://ftp.cluster003.ovh.net/www/subdomains/yttracker/$f
+	 		curl --ftp-create-dirs -T $f -u $FTP_USER:$FTP_PASS ftp://ftp.cluster003.ovh.net/www/subdomains/rainbow/$f
 		fi
 	done
 fi
