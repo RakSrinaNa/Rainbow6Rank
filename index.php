@@ -1,7 +1,5 @@
 <?php
 
-require_once 'model/DBConnection.class.php';
-
 if (false) {
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
@@ -10,14 +8,14 @@ $dev = isset($_GET['dev']);
 
 function getLastUpdateDate()
 {
-    $date = "ERROR";
-    $query = DBConnection::getConnection()->query('SELECT LastUpdated FROM  `R6Stats`;');
-    if (!$query)
-        return $date;
-    if ($query->num_rows > 0)
-        while ($row = $query->fetch_assoc())
-            $date = $row['LastUpdated'];
-    return $date;
+    $date = 0;
+    $files = glob('players/*/*.json', GLOB_BRACE);
+    foreach ($files as $file)
+    {
+        $fDate = filemtime($file);
+        $date = $date > $fDate ? $date : $fDate;
+    }
+    return $date === 0 ? 'UNKNOWN' : date("Y-m-d H:i:s", $date);;
 }
 
 ?>
@@ -38,7 +36,7 @@ function getLastUpdateDate()
 <body>
 <header>
     <div>
-        Last updated: <?php echo getLastUpdateDate(); ?>
+        <a href="https://r6stats.com/" style="color:blue;" target="_blank">Last updated: <?php echo getLastUpdateDate(); ?></a>
     </div>
 </header>
 <hr/>

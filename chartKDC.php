@@ -7,10 +7,10 @@ $datas = function () {
     $files = glob('players/*/*.json', GLOB_BRACE);
     foreach ($files as $file) {
         $player = json_decode(file_get_contents($file), true);
-        $username = $player['player']['username'];
-        if(!$username || $username === '')
+        if(!isset($player['player']['username']) || $player['player']['username'] === '')
             continue;
-        if (!isset($datas[$username]))
+        $username = $player['player']['username'];
+        if(!isset($datas[$username]))
             $datas[$username] = array();
         $datas[$username][$player['player']['updated_at']] = $player['player']['stats']['casual']['kd'];
     }

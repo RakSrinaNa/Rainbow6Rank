@@ -8,11 +8,11 @@ $datas = function()
     $files = glob('players/*/*.json', GLOB_BRACE);
     foreach ($files as $file) {
         $player = json_decode(file_get_contents($file), true);
-        if(!$player['seasons']['5'])
+        if(!isset($player['seasons']) || !isset($player['seasons']['5']))
+            continue;
+        if(!isset($player['player']['username']) || $player['player']['username'] === '')
             continue;
         $username = $player['player']['username'];
-        if(!$username || $username === '')
-            continue;
         if(!isset($datas[$username]))
             $datas[$username] = array();
         $datas[$username][$player['player']['updated_at']] = $player['seasons']['5']['emea']['ranking']['rating'];

@@ -1,7 +1,5 @@
 <?php
 
-require_once 'model/DBConnection.class.php';
-
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
@@ -83,8 +81,6 @@ foreach ($players as $player) {
         echo DateTime::getLastErrors();
     }
 }
-
-DBConnection::getConnection()->query('INSERT INTO `R6Stats`(`KeyID`, `KeyValue`) VALUES("LastUpdated", CURRENT_TIMESTAMP()) ON DUPLICATE KEY UPDATE `KeyValue`=CURRENT_TIMESTAMP();');
 
 logg($fpLog, 'Done' . "\n");
 fclose($fpLog);
