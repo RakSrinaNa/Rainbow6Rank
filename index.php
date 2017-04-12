@@ -1,9 +1,25 @@
 <?php
+
+require_once 'model/DBConnection.class.php';
+
 if (false) {
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
 }
 $dev = isset($_GET['dev']);
+
+function getLastUpdateDate()
+{
+    $date = "ERROR";
+    $query = DBConnection::getConnection()->query('SELECT LastUpdated FROM  `R6Stats`;');
+    if (!$query)
+        return $date;
+    if ($query->num_rows > 0)
+        while ($row = $query->fetch_assoc())
+            $date = $row['LastUpdated'];
+    return $date;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +36,11 @@ $dev = isset($_GET['dev']);
     <title>Rainbow6 stats</title>
 </head>
 <body>
+<header>
+    <div>
+        Last updated: <?php echo getLastUpdateDate(); ?>
+    </div>
+</header>
 <hr/>
 <div class="chartHolder" id="chartHolderRanked5">
     <span class="chartName">Season 5</span>
