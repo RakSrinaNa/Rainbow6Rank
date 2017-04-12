@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 function logg($fpLog, $message)
 {
     echo $message;
@@ -18,14 +21,14 @@ function readAPI($fpLog, $path)
         'Content-Type: application/json',
         'Accept: application/json'
     ));
-
     $content = curl_exec($cURL);
+    logg($fpLog, 'HTTP Response: ' . curl_getinfo($cURL, CURLINFO_HTTP_CODE) . "\n");
     //$content = file_get_contents($ENDPOINT . $path);
-    curl_close($cURL);
-    if(!$content)
-    {
-        log($fpLog, 'Error getting from API ' . error_get_last()['message'] . "\n");
+    if (!$content) {
+        logg($fpLog, 'Error getting from API (' . curl_errno($cURL) . ')' . curl_error($cURL) . "\n");
     }
+    curl_close($cURL);
+    logg($fpLog, 'Read content from ' . $path . ' -> ' . $content . "\n");
     return $content;
 }
 
@@ -35,49 +38,48 @@ $players = array('MrCraftCod', 'LokyDogma');
 
 $fpLog = fopen('log.log', 'w');
 
-foreach($players as $player)
-{
+logg($fpLog, 'Working directory: ' . getcwd() . "\n\n");
+
+foreach ($players as $player) {
     logg($fpLog, 'Doing player ' . $player . ':' . "\n");
     $json = array();
     $c1 = readAPI($fpLog, $player . '?platform=uplay');
     $c2 = readAPI($fpLog, $player . '/seasons?platform=uplay');
-    if(!$c1 || !$c2)
-    {
+    if (!$c1 || !$c2) {
         continue;
     }
     $json['player'] = json_decode($c1, true);
     $json['seasons'] = json_decode($c2, true);
 
     logg($fpLog, 'Datas ' . json_encode($json) . "\n");
-    
+
     $temp = $json['player']['player']['updated_at'];
     $date = date_create_from_format($timeFormat, $temp);
-    if($date)
-    {    
+    if ($date) {
         $time = $date->getTimestamp() * 1000;
 
         logg($fpLog, 'Time ' . $time . "\n");
 
-        $file = 'players/' . $player . '/' . $time . '.json';
+        $file = 'www/subdomains/rainbow/players/' . $player . '/' . $time . '.json';
 
-        if(!file_exists($file))
-        {
-            logg($fpLog, 'Writing file' . $file . "\n");
+        if (!file_exists($file)) {
+            logg($fpLog, 'Writing file ' . $file . "\n");
             $fp = fopen($file, 'w');
-            fwrite($fp, json_encode($json));
-            fclose($fp);
-            logg($fpLog, 'Writing file done' . "\n");
-        }
-        else
-        {
+            if (!$fp) {
+                logg($fpLog, 'Error opening file ' . $file . "\n");
+            } else {
+                fwrite($fp, json_encode($json));
+                fclose($fp);
+                logg($fpLog, 'Writing file done' . "\n");
+            }
+        } else {
             logg($fpLog, "File " . $file . ' already exists, skipping' . "\n");
         }
         logg($fpLog, "\n");
-    }
-    else
-    {
+    } else {
         echo DateTime::getLastErrors();
     }
 }
 
+logg($fpLog, 'Done' . "\n");
 fclose($fpLog);
