@@ -50,7 +50,7 @@ foreach ($players as $player) {
     $json['player'] = json_decode($c1, true)['player'];
     $json['seasons'] = json_decode($c2, true)['seasons'];
 
-    $temp = $json['player']['player']['updated_at'];
+    $temp = $json['player']['updated_at'];
     $date = date_create_from_format($timeFormat, $temp);
     if ($date) {
         $time = $date->getTimestamp() * 1000;
