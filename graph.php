@@ -44,7 +44,7 @@
                         dashLengthField: 'dashLength',
                         legendValueText: '[[value]]',
                         title: username,
-                        //fillAlphas: 0.2,
+                        //fillAlphas: 0.05,
                         valueField: username,
                         valueAxis: 'pointsAxis',
                         type: 'step',
@@ -121,6 +121,7 @@
                         position: 'bottom',
                         minPeriod: 'hh',
                         //labelRotation: 10,
+                        labelsEnabled: false,
                         labelFunction: function (valueText, date) {
                             return ' ';
                             //return ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)
@@ -129,7 +130,7 @@
                     graphs: graphs,
                     chartScrollbar: {
                         autoGridCount: true,
-                        scrollbarHeight: 40,
+                        scrollbarHeight: 20,
                         selectedBackgroundColor: chartColors['selectedBackgroundColor'],
                         gridColor: chartColors['gridColor'],
                         color: chartColors['color'],
@@ -145,8 +146,9 @@
                         fullWidth: true,
                         valueBalloonsEnabled: true,
                         valueLineBalloonEnabled: true,
-                        valueLineEnabled: true,
-                        zoomable: false,
+                        valueLineEnabled: false,
+                        zoomable: true,
+                        valueZoomable: true,
                         categoryBalloonDateFormat: 'MMMM-DD HH:NN'
                     },
                     numberFormatter: {
