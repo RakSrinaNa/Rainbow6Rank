@@ -1,9 +1,8 @@
 <!--suppress JSDuplicatedDeclaration -->
 <script type='text/javascript'>
-        function roundDate(date)
-        {
-            var coeff = 1000 * 60 * 60;
-            return new Date(Math.floor(date.getTime() / coeff) * coeff)
+    function roundDate(date) {
+        var coeff = 1000 * 60 * 60;
+        return new Date(Math.floor(date.getTime() / coeff) * coeff)
     }
 
     $(document).ready(function () {
@@ -49,7 +48,8 @@
                         //fillAlphas: 0.2,
                         valueField: username,
                         valueAxis: 'pointsAxis',
-                        type: 'smoothedLine',
+                        type: 'step',
+                        //type: 'smoothedLine',
                         lineThickness: 2,
                         bulletSize: 8,
                         balloonFunction: function (graphDataItem) {

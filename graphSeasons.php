@@ -117,7 +117,8 @@
                         //fillAlphas: 0.2,
                         valueField: username,
                         valueAxis: 'pointsAxis',
-                        type: 'smoothedLine',
+                        type: 'step',
+                        //type: 'smoothedLine',
                         lineThickness: 2,
                         bulletSize: 8,
                         balloonFunction: function (graphDataItem) {
