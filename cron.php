@@ -49,8 +49,8 @@ foreach ($players as $player) {
     if (!$c1 || !$c2) {
         continue;
     }
-    $json['player'] = json_decode($c1, true);
-    $json['seasons'] = json_decode($c2, true);
+    $json['player'] = json_decode($c1, true)['player'];
+    $json['seasons'] = json_decode($c2, true)['seasons'];
 
     logg($fpLog, 'Datas ' . json_encode($json) . "\n");
 
