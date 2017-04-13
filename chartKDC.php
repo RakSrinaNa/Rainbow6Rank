@@ -2,6 +2,10 @@
 $divName = 'KDC';
 $title = 'K/D Ratio Casual';
 
+$guides = function(){
+    return json_encode(array());
+};
+
 $datas = function () {
     $datas = array();
     $files = glob('players/*/*.json', GLOB_BRACE);

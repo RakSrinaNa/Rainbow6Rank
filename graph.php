@@ -28,7 +28,6 @@
                 handDrawn: false
             };
 
-            var guides = [];
             var datas = JSON.parse('<?php echo $datas(); ?>');
 
             var graphs = [];
@@ -121,9 +120,10 @@
                         autoWrap: true,
                         position: 'bottom',
                         minPeriod: 'hh',
-                        labelRotation: 10,
+                        //labelRotation: 10,
                         labelFunction: function (valueText, date) {
-                            return ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)
+                            return ' ';
+                            //return ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)
                         }
                     },
                     graphs: graphs,
@@ -154,7 +154,7 @@
                         decimalSeparator: ",",
                         thousandsSeparator: ""
                     },
-                    guides: guides,
+                    guides: <?php echo $guides() ?>,
                     categoryField: 'date',
                     minPeriod: 'hh',
                     autoGridCount: true,
