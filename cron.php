@@ -24,12 +24,10 @@ function readAPI($fpLog, $path)
     ));
     $content = curl_exec($cURL);
     logg($fpLog, 'HTTP Response: ' . curl_getinfo($cURL, CURLINFO_HTTP_CODE) . "\n");
-    //$content = file_get_contents($ENDPOINT . $path);
     if (!$content) {
         logg($fpLog, 'Error getting from API (' . curl_errno($cURL) . ')' . curl_error($cURL) . "\n");
     }
     curl_close($cURL);
-    logg($fpLog, 'Read content from ' . $path . ' -> ' . $content . "\n");
     return $content;
 }
 
@@ -51,8 +49,6 @@ foreach ($players as $player) {
     }
     $json['player'] = json_decode($c1, true)['player'];
     $json['seasons'] = json_decode($c2, true)['seasons'];
-
-    logg($fpLog, 'Datas ' . json_encode($json) . "\n");
 
     $temp = $json['player']['player']['updated_at'];
     $date = date_create_from_format($timeFormat, $temp);

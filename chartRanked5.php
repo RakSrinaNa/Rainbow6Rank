@@ -88,6 +88,4 @@ $datas = function () {
     return json_encode($datas);
 };
 
-//echo '<br/>' . $datas() . '<br/>';
-
 include 'graph.php';
