@@ -146,7 +146,7 @@
                         fullWidth: true,
                         valueBalloonsEnabled: true,
                         valueLineBalloonEnabled: true,
-                        valueLineEnabled: false,
+                        valueLineEnabled: true,
                         zoomable: true,
                         valueZoomable: true,
                         categoryBalloonDateFormat: 'MMMM-DD HH:NN'
