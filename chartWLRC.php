@@ -1,6 +1,6 @@
 <?php
 $divName = 'WLRC';
-$title = 'WLR Ratio Casual';
+$title = 'W/L Ratio Casual';
 
 $guides = function(){
     return json_encode(array());

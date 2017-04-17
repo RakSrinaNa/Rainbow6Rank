@@ -1,6 +1,6 @@
 <?php
 $divName = 'WLRR';
-$title = 'WLR Ratio Ranked';
+$title = 'W/L Ratio Ranked';
 
 $guides = function(){
     return json_encode(array());

@@ -51,7 +51,7 @@ function getLastUpdateDate()
 </div>
 <hr/>
 <div class="chartHolder" id="chartHolderWLRR">
-    <span class="chartName">Ratio WLR Ranked</span>
+    <span class="chartName">Ratio W/L Ranked</span>
     <div class="chartDiv" id="chartDivWLRR"></div>
 </div>
 <hr/>
@@ -61,7 +61,7 @@ function getLastUpdateDate()
 </div>
 <hr/>
 <div class="chartHolder" id="chartHolderWLRC">
-    <span class="chartName">Ratio WLR Casual</span>
+    <span class="chartName">Ratio W/L Casual</span>
     <div class="chartDiv" id="chartDivWLRC"></div>
 </div>
 <?php include "chartRanked5.php"; ?>
