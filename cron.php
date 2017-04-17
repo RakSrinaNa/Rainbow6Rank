@@ -57,7 +57,11 @@ foreach ($players as $player) {
 
         logg($fpLog, 'Time ' . $time . "\n");
 
-        $file = 'www/subdomains/rainbow/players/' . $player . '/' . $time . '.json';
+        $folder = 'www/subdomains/rainbow/players/' . $player . '/';
+        $file = $folder . $time . '.json';
+
+        if (!file_exists($folder))
+            mkdir($folder, 0777, true);
 
         if (!file_exists($file)) {
             logg($fpLog, 'Writing file ' . $file . "\n");
