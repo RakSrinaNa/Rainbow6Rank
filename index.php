@@ -36,7 +36,7 @@ function getLastUpdateDate()
 <body>
 <header>
     <div>
-        <a href="https://r6stats.com/" style="color:blue;" target="_blank">Last updated: <?php echo getLastUpdateDate(); ?></a>
+        Last data from: <?php echo getLastUpdateDate(); ?>
     </div>
 </header>
 <hr/>
@@ -63,6 +63,10 @@ function getLastUpdateDate()
 <div class="chartHolder" id="chartHolderWLRC">
     <span class="chartName">Ratio W/L Casual</span>
     <div class="chartDiv" id="chartDivWLRC"></div>
+</div>
+<hr/>
+<div>
+    <a href="https://r6stats.com/" style="text-decoration: none; color: black;" target="_blank">Datas from R6Stats</a>
 </div>
 <?php include "chartRanked5.php"; ?>
 <?php include "chartKDR.php"; ?>
