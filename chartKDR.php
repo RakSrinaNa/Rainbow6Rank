@@ -10,7 +10,7 @@ $datas = function () {
     $datas = array();
     $files = glob('players/*/*.json', GLOB_BRACE);
     foreach ($files as $file) {
-        if(isset($_GET['all']) && time() - explode('.', $file)[0] > 604800)
+        if(!isset($_GET['all']) && time() - explode('.', $file)[0] > 604800)
             continue;
         $player = json_decode(file_get_contents($file), true);
         if(!isset($player['player']['username']) || $player['player']['username'] === '')
