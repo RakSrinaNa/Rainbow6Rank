@@ -33,17 +33,17 @@ function readAPI($fpLog, $path)
 
 $timeFormat = 'Y-m-d\TH:i:s+';
 
-$players = array('MrCraftCod', 'LokyDogma', 'PhoenixRS666');
+$players = array('MrCraftCod'=>'uplay', 'LokyDogma'=>'uplay', 'PhoenixRS666'=>'uplay');
 
 $fpLog = fopen('log.log', 'w');
 
 logg($fpLog, 'Working directory: ' . getcwd() . "\n\n");
 
-foreach ($players as $player) {
+foreach ($players as $player=>$platform) {
     logg($fpLog, 'Doing player ' . $player . ':' . "\n");
     $json = array();
-    $c1 = readAPI($fpLog, $player . '?platform=uplay');
-    $c2 = readAPI($fpLog, $player . '/seasons?platform=uplay');
+    $c1 = readAPI($fpLog, $player . '?platform=' . $platform);
+    $c2 = readAPI($fpLog, $player . '/seasons?platform=' . $platform);
     if (!$c1 || !$c2) {
         continue;
     }
