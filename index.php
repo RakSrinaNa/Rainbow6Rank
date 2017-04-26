@@ -40,6 +40,27 @@ function getLastUpdateDate()
     </div>
 </header>
 <hr/>
+<div style="margin-top: 5px;">
+    <?php
+    if(!isset($_GET['all']))
+    {
+    ?>
+    <div align="center"">
+    <a href="?all=1">See all gathered data</a>
+</div>
+<?php
+}
+else
+{
+    ?>
+    <div align="center">
+        <a href=".">See current month data</a>
+    </div>
+    <?php
+}
+?>
+<hr>
+</div>
 <div class="chartHolder" id="chartHolderRanked5">
     <span class="chartName">Season 5</span>
     <div class="chartDiv" id="chartDivRanked5"></div>
