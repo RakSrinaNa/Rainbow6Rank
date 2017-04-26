@@ -33,7 +33,7 @@ function readAPI($fpLog, $path)
 
 $timeFormat = 'Y-m-d\TH:i:s+';
 
-$players = array('MrCraftCod', 'LokyDogma');
+$players = array('MrCraftCod', 'LokyDogma', 'PhoenixRS666');
 
 $fpLog = fopen('log.log', 'w');
 
