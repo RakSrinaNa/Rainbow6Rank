@@ -83,7 +83,8 @@ $datas = function () {
         $username = $player['player']['username'];
         if (!isset($datas[$username]))
             $datas[$username] = array();
-        $datas[$username][$player['player']['updated_at']] = $player['seasons']['5']['emea']['ranking']['rating'];
+        if($player['seasons']['5']['emea']['ranking']['rank'] > 0)
+            $datas[$username][$player['player']['updated_at']] = $player['seasons']['5']['emea']['ranking']['rating'];
     }
     return json_encode($datas);
 };
