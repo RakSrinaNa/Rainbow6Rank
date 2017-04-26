@@ -1,7 +1,7 @@
 language: node_js
 node_js:
 - '0.11'
-sudo: true
+sudo: required
 notifications:
   email: false
   on_failure: always
