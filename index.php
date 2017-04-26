@@ -1,10 +1,11 @@
 <?php
 
-if (true) {
+if (false) {
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
 }
 $dev = isset($_GET['dev']);
+$monthRange = 2419200;
 
 function getLastUpdateDate()
 {
