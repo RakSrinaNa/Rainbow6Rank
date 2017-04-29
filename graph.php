@@ -120,12 +120,7 @@
                         autoWrap: true,
                         position: 'bottom',
                         minPeriod: 'hh',
-                        //labelRotation: 10,
-                        labelsEnabled: false,
-                        labelFunction: function (valueText, date) {
-                            return ' ';
-                            //return ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2)
-                        }
+                        labelsEnabled: true
                     },
                     graphs: graphs,
                     chartScrollbar: {
