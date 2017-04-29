@@ -51,7 +51,7 @@
 <header id="topContainer">
     <div class="leftNav inline">
         <ul>
-            <li><a href="https://r6stats.com/" style="text-decoration: none; color: black;" target="_blank">Datas from R6Stats</a></li>
+            <li><a href="https://r6stats.com/" target="_blank">Datas from R6Stats</a></li>
         </ul>
     </div>
     <div class="inline">
