@@ -48,28 +48,36 @@
     <title>Rainbow6 stats</title>
 </head>
 <body>
-<header>
-    <div>
-        <p align="center">Last update at: <?php echo getLastCheckDate() ?> - Last data
-            from: <?php echo getLastUpdateDate(); ?></p>
-		<?php
-			if(!isset($_GET['all']))
-			{
-				?>
-                <div align="center">
-                    <a href="?all=1">See all gathered data</a>
-                </div>
+<header id="topContainer">
+    <div class="leftNav inline">
+        <ul>
+        </ul>
+    </div>
+    <div class="inline">
+        <ul>
+            <li class="centerNav">Last update at: <?php echo getLastCheckDate() ?></li>
+            <li class="centerNav">Last data from: <?php echo getLastUpdateDate(); ?></li>
+        </ul>
+    </div>
+    <div class="rightNav inline">
+        <ul>
+            <li>
 				<?php
-			}
-			else
-			{
+					if(!isset($_GET['all']))
+					{
+						?>
+                        <a href="?all=1">See all gathered data</a>
+						<?php
+					}
+					else
+					{
+						?>
+                        <a href=".">See current month data</a>
+						<?php
+					}
 				?>
-                <div align="center">
-                    <a href=".">See current month data</a>
-                </div>
-				<?php
-			}
-		?>
+            </li>
+        </ul>
     </div>
 </header>
 <hr/>

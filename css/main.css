@@ -11,6 +11,57 @@ body
 	background-color : #777777;
 }
 
+#topContainer
+{
+	background-color : #333333;
+	width       : 100%;
+	padding-top : 3px;
+}
+
+header ul
+{
+	list-style-type  : none;
+	margin           : 0;
+	padding          : 0;
+	overflow         : hidden;
+	background-color : #333333;
+}
+
+header ul > li
+{
+	float : left;
+}
+
+.rightNav
+{
+	float : right !important;
+}
+
+.leftNav
+{
+	float : left !important;
+}
+
+header ul > li > a
+{
+	border-radius   : 10px;
+	display         : block;
+	color           : #CCCCCC;
+	text-align      : center;
+	padding         : 14px 16px;
+	text-decoration : none;
+}
+
+header ul > li > a:hover
+{
+	background-color : #111111;
+}
+
+.inline
+{
+	display : inline-block;
+}
+
 .leftVerticalLine
 {
 	border-left  : 3px solid;
