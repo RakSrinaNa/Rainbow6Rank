@@ -1,31 +1,36 @@
 html,
-body {
-    height: 100%;
-    text-align: center;
-    margin: auto;
-    padding-top: 5px;
+body
+{
+	height     : 100%;
+	text-align : center;
+	margin     : auto;
 }
 
-body {
-    background-color: #777777;
+body
+{
+	background-color : #777777;
 }
 
-.leftVerticalLine{
-    border-left: 3px solid;
-    border-color: inherit;
+.leftVerticalLine
+{
+	border-left  : 3px solid;
+	border-color : inherit;
 }
 
-.lightVerticalLine{
-    border-left: 1px solid;
-    border-color: inherit;
+.lightVerticalLine
+{
+	border-left  : 1px solid;
+	border-color : inherit;
 }
 
-.chartHolder{
-    width: 95%;
-    height: 85%;
-    margin: auto;
+.chartHolder
+{
+	width  : 95%;
+	height : 85%;
+	margin : auto;
 }
 
-.chartDiv{
-    width: 100%;
+.chartDiv
+{
+	width : 100%;
 }
