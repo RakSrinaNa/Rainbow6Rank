@@ -51,6 +51,7 @@
 <header id="topContainer">
     <div class="leftNav inline">
         <ul>
+            <li><a href="https://r6stats.com/" style="text-decoration: none; color: black;" target="_blank">Datas from R6Stats</a></li>
         </ul>
     </div>
     <div class="inline">
@@ -103,10 +104,6 @@
 <div class="chartHolder" id="chartHolderWLRC">
     <span class="chartName">Ratio W/L Casual</span>
     <div class="chartDiv" id="chartDivWLRC"></div>
-</div>
-<hr/>
-<div>
-    <a href="https://r6stats.com/" style="text-decoration: none; color: black;" target="_blank">Datas from R6Stats</a>
 </div>
 <?php include "chartRanked5.php"; ?>
 <?php include "chartKDR.php"; ?>
