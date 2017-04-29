@@ -6,6 +6,8 @@
 ## Infos
 This website relies on the statistics offered by [R6Stats](https://r6stats.com/) with their [API](https://dev.r6stats.com/docs/).
 
+The CRON task is started with the parameters ```28 * * * *```
+
 ## Libraries
 Amcharts - [https://www.amcharts.com](https://www.amcharts.com)
 
