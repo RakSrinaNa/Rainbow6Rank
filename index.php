@@ -11,7 +11,7 @@
 	function getLastCheckDate()
 	{
 		$date = 0;
-		$files = glob('players/*.update', GLOB_BRACE);
+		$files = glob('players/last.update', GLOB_BRACE);
 		foreach($files as $file)
 		{
 			$fDate = filemtime($file);
