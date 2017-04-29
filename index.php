@@ -17,7 +17,7 @@
 			$fDate = filemtime($file);
 			$date = $date > $fDate ? $date : $fDate;
 		}
-		return $date === 0 ? 'UNKNOWN' : date("Y-m-d H:i:s", $date);
+		return $date === 0 ? 'UNKNOWN' : date("H:i:s", $date);
 	}
 
 	function getLastUpdateDate()
@@ -29,7 +29,7 @@
 			$fDate = filemtime($file);
 			$date = $date > $fDate ? $date : $fDate;
 		}
-		return $date === 0 ? 'UNKNOWN' : date("Y-m-d H:i:s", $date);
+		return $date === 0 ? 'UNKNOWN' : date("H:i:s", $date);
 	}
 
 ?>
