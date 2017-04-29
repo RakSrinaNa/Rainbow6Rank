@@ -1,23 +1,36 @@
 <?php
 
-if (false) {
-    error_reporting(E_ALL);
-    ini_set('display_errors', '1');
-}
-$dev = isset($_GET['dev']);
-$monthRange = 2419200;
+	if(false)
+	{
+		error_reporting(E_ALL);
+		ini_set('display_errors', '1');
+	}
+	$dev = isset($_GET['dev']);
+	$monthRange = 2419200;
 
-function getLastUpdateDate()
-{
-    $date = 0;
-    $files = glob('players/*/*.json', GLOB_BRACE);
-    foreach ($files as $file)
-    {
-        $fDate = filemtime($file);
-        $date = $date > $fDate ? $date : $fDate;
-    }
-    return $date === 0 ? 'UNKNOWN' : date("Y-m-d H:i:s", $date);
-}
+	function getLastCheckDate()
+	{
+		$date = 0;
+		$files = glob('players/*.update', GLOB_BRACE);
+		foreach($files as $file)
+		{
+			$fDate = filemtime($file);
+			$date = $date > $fDate ? $date : $fDate;
+		}
+		return $date === 0 ? 'UNKNOWN' : date("Y-m-d H:i:s", $date);
+	}
+
+	function getLastUpdateDate()
+	{
+		$date = 0;
+		$files = glob('players/*/*.json', GLOB_BRACE);
+		foreach($files as $file)
+		{
+			$fDate = filemtime($file);
+			$date = $date > $fDate ? $date : $fDate;
+		}
+		return $date === 0 ? 'UNKNOWN' : date("Y-m-d H:i:s", $date);
+	}
 
 ?>
 <!DOCTYPE html>
@@ -37,28 +50,30 @@ function getLastUpdateDate()
 <body>
 <header>
     <div>
-        Last data from: <?php echo getLastUpdateDate(); ?>
+        <p>Last update at: <?php echo getLastCheckDate() ?></p>
+        <p>Last data from: <?php echo getLastUpdateDate(); ?></p>
     </div>
 </header>
 <hr/>
 <div style="margin-top: 5px;">
-    <?php
-    if(!isset($_GET['all']))
-    {
-    ?>
-    <div align="center"">
+	<?php
+		if(!isset($_GET['all']))
+		{
+	?>
+    <div align="center"
+    ">
     <a href="?all=1">See all gathered data</a>
 </div>
 <?php
-}
-else
-{
-    ?>
-    <div align="center">
-        <a href=".">See current month data</a>
-    </div>
-    <?php
-}
+	}
+	else
+	{
+		?>
+        <div align="center">
+            <a href=".">See current month data</a>
+        </div>
+		<?php
+	}
 ?>
 <hr>
 </div>

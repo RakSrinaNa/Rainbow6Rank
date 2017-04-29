@@ -6,7 +6,8 @@ $guides = function(){
     return json_encode(array());
 };
 
-$datas = function () use (&$monthRange) {
+$datas = function () use (&$monthRange)
+{
     $datas = array();
     $files = glob('players/*/*.json', GLOB_BRACE);
     foreach ($files as $file) {
