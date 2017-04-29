@@ -55,8 +55,8 @@
     </div>
     <div class="inline">
         <ul>
-            <li class="centerNav">Last update at: <?php echo getLastCheckDate() ?></li>
-            <li class="centerNav">Last data from: <?php echo getLastUpdateDate(); ?></li>
+            <li class="centerNav"><a href="#">Last update at: <?php echo getLastCheckDate() ?></a></li>
+            <li class="centerNav"><a href="#">Last data from: <?php echo getLastUpdateDate(); ?></a></li>
         </ul>
     </div>
     <div class="rightNav inline">
@@ -80,7 +80,6 @@
         </ul>
     </div>
 </header>
-<hr/>
 <div class="chartHolder" id="chartHolderRanked5">
     <span class="chartName">Season 5</span>
     <div class="chartDiv" id="chartDivRanked5"></div>
