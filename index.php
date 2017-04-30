@@ -6,7 +6,8 @@
 		ini_set('display_errors', '1');
 	}
 	$dev = isset($_GET['dev']);
-	$monthRange = 2419200;
+	$monthRange = isset($_GET['weekly']) ? 31536000 : 2592000;
+	$chartDir = isset($_GET['weekly']) ? 'weekly/' : '';
 
 	function getLastCheckDate()
 	{
@@ -63,6 +64,22 @@
     <div class="rightNav inline">
         <ul>
             <li>
+		        <?php
+			        if(!isset($_GET['weekly']))
+			        {
+				        ?>
+                        <a href="?weekly=1">See weekly data</a>
+				        <?php
+			        }
+			        else
+			        {
+				        ?>
+                        <a href=".">See every data</a>
+				        <?php
+			        }
+		        ?>
+            </li>
+            <li>
 				<?php
 					if(!isset($_GET['all']))
 					{
@@ -105,10 +122,10 @@
     <span class="chartName">Ratio W/L Casual</span>
     <div class="chartDiv" id="chartDivWLRC"></div>
 </div>
-<?php include "chartRanked5.php"; ?>
-<?php include "chartKDR.php"; ?>
-<?php include "chartWLRR.php"; ?>
-<?php include "chartKDC.php"; ?>
-<?php include "chartWLRC.php"; ?>
+<?php include $chartDir . "chartRanked5.php"; ?>
+<?php include $chartDir . "chartKDR.php"; ?>
+<?php include $chartDir . "chartWLRR.php"; ?>
+<?php include $chartDir . "chartKDC.php"; ?>
+<?php include $chartDir . "chartWLRC.php"; ?>
 </body>
 </html>
