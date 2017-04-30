@@ -28,11 +28,11 @@
 			$datas[$username][$dateID]['stat'] += $player['player']['stats']['casual']['kills'];
 			$datas[$username][$dateID]['total'] += $player['player']['stats']['casual']['deaths'];
 		}
-		$previousStat = 0;
-		$previousTotal = 0;
 		$goodData = array();
 		foreach($datas as $user => $userData)
 		{
+			$previousStat = 0;
+			$previousTotal = 0;
 			if(!isset($goodData[$user]))
 				$goodData[$user] = array();
 			uksort($userData, function($a, $b){
