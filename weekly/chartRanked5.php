@@ -37,7 +37,7 @@
 			if($player['seasons']['5']['emea']['ranking']['rank'] <= 0)
 				continue;
 			$dateID = date("W-Y", $timestamp);
-			if(!$datas[$username][$dateID])
+			if(!isset($datas[$username][$dateID]))
 				$datas[$username][$dateID] = array('stat' => 0, 'count' => 0);
 			$datas[$username][$dateID]['stat'] += $player['seasons']['5']['emea']['ranking']['rating'];
 			$datas[$username][$dateID]['count']++;
@@ -45,7 +45,7 @@
 		$goodData = array();
 		foreach($datas as $user => $userData)
 		{
-			if(!$goodData[$user])
+			if(!isset($goodData[$user]))
 				$goodData[$user] = array();
 			foreach($userData as $date => $dateDatas)
 			{
