@@ -5,6 +5,7 @@
 		error_reporting(E_ALL);
 		ini_set('display_errors', '1');
 	}
+	date_default_timezone_set('Europe/Paris');
 	$dev = isset($_GET['dev']);
 	$monthRange = isset($_GET['weekly']) ? 31536000 : 2592000;
 	$chartDir = isset($_GET['weekly']) ? 'weekly/' : '';
