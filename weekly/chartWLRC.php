@@ -1,4 +1,6 @@
 <?php
+	require_once 'WeekUtils.php';
+
 	$divName = 'WLRC';
 	$title = 'W/L Ratio Casual';
 

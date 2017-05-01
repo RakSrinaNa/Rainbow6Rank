@@ -1,4 +1,6 @@
 <?php
+	require_once 'WeekUtils.php';
+
 	$divName = 'ASS';
 	$title = 'Assists';
 

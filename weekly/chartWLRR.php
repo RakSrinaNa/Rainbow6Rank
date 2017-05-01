@@ -1,4 +1,6 @@
 <?php
+	require_once 'WeekUtils.php';
+
 	$divName = 'WLRR';
 	$title = 'W/L Ratio Ranked';
 

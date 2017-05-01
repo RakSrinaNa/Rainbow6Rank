@@ -1,4 +1,6 @@
 <?php
+	require_once 'WeekUtils.php';
+
 	$divName = 'KDR';
 	$title = 'K/D Ratio Ranked';
 

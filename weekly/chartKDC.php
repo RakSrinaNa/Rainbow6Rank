@@ -1,4 +1,6 @@
 <?php
+	require_once 'WeekUtils.php';
+
 	$divName = 'KDC';
 	$title = 'K/D Ratio Casual';
 
