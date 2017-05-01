@@ -50,7 +50,7 @@ $datas = function () use (&$monthRange)
 			$weekDate->setISODate(explode('-', $date)[1], explode('-', $date)[0]);
 			$weekDate->setTime(0, 0);
 
-			$stat = ($dateDatas['stat'] - $previousStat) / ($dateDatas['total'] - $previousTotal);
+			$stat = ($dateDatas['stat'] - $previousStat) / ($dateDatas['total'] - $previousTotal + 1);
 			$previousStat = $dateDatas['stat'];
 			$previousTotal = $dateDatas['total'];
 			$fullDate = $weekDate->format('Y-m-d\TH:i:s');
