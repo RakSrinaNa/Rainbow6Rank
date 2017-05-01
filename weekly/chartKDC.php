@@ -22,39 +22,47 @@
 			$username = $player['player']['username'];
 			if(!isset($datas[$username]))
 				$datas[$username] = array();
-			$dateID = date("W-Y", $timestamp);
-			if(!isset($datas[$username][$dateID]))
-				$datas[$username][$dateID] = array('stat' => 0, 'total' => 0);
-			$datas[$username][$dateID]['stat'] += $player['player']['stats']['casual']['kills'];
-			$datas[$username][$dateID]['total'] += $player['player']['stats']['casual']['deaths'];
+			$datas[$username][$player['player']['updated_at']] = array('stat' => 0, 'total' => 0, 'timestamp' => $timestamp);
+			$datas[$username][$player['player']['updated_at']]['stat'] = $player['player']['stats']['casual']['kills'];
+			$datas[$username][$player['player']['updated_at']]['total'] = $player['player']['stats']['casual']['deaths'];
 		}
-		$goodData = array();
+		$tempDatas = array();
 		foreach($datas as $user => $userData)
 		{
-			$previousStat = 0;
-			$previousTotal = 0;
-			if(!isset($goodData[$user]))
-				$goodData[$user] = array();
-			uksort($userData, function($a, $b){
-				$weekDateA = new DateTime();
-				$weekDateA->setISODate(explode('-', $a)[1], explode('-', $a)[0]);
-				$weekDateA->setTime(0, 0);
-
-				$weekDateB = new DateTime();
-				$weekDateB->setISODate(explode('-', $b)[1], explode('-', $b)[0]);
-				$weekDateB->setTime(0, 0);
-
-				return $a - $b;
-			});
+			if(!isset($tempDatas[$user]))
+				$tempDatas[$user] = array();
 			foreach($userData as $date => $dateDatas)
 			{
+				$week = date("W-Y", $dateDatas['timestamp']);
+				if(!isset($tempDatas[$user][$week]))
+					$tempDatas[$user][$week] = array();
+				$tempDatas[$user][$week][] = $dateDatas;
+			}
+		}
+		foreach($tempDatas as $user => $userData)
+			foreach($userData as $week => $weekDatas)
+				usort($weekDatas, function($a, $b)
+				{
+					return $a['timestamp'] - $b['timestamp'];
+				});
+		$goodData = array();
+		foreach($tempDatas as $user => $userData)
+		{
+			if(!isset($goodData[$user]))
+				$goodData[$user] = array();
+			foreach($userData as $week => $weekDatas)
+			{
 				$weekDate = new DateTime();
-				$weekDate->setISODate(explode('-', $date)[1], explode('-', $date)[0]);
+				$weekDate->setISODate(explode('-', $week)[1], explode('-', $week)[0]);
 				$weekDate->setTime(0, 0);
 
-				$stat = ($dateDatas['stat'] - $previousStat) / ($dateDatas['total'] - $previousTotal + 1);
-				$previousStat = $dateDatas['stat'];
-				$previousTotal = $dateDatas['total'];
+				$start = array_values($weekDatas)[0];
+				$end = array_values(array_slice($weekDatas, -1))[0];
+
+				if($start['timestamp'] === $end['timestamp'])
+					continue;
+
+				$stat = ($end['stat'] - $start['stat']) / ($end['total'] - $start['total'] + 1);
 				$fullDate = $weekDate->format('Y-m-d\TH:i:s');
 				$goodData[$user][$fullDate] = $stat;
 			}
