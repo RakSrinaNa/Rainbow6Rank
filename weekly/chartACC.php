@@ -26,48 +26,7 @@
 			$datas[$username][$player['player']['updated_at']]['stat'] = $player['player']['stats']['overall']['bullets_hit'];
 			$datas[$username][$player['player']['updated_at']]['total'] = $player['player']['stats']['overall']['bullets_fired'];
 		}
-		$tempDatas = array();
-		foreach($datas as $user => $userData)
-		{
-			if(!isset($tempDatas[$user]))
-				$tempDatas[$user] = array();
-			foreach($userData as $date => $dateDatas)
-			{
-				$week = date("W-Y", $dateDatas['timestamp']);
-				if(!isset($tempDatas[$user][$week]))
-					$tempDatas[$user][$week] = array();
-				$tempDatas[$user][$week][] = $dateDatas;
-			}
-		}
-		foreach($tempDatas as $user => $userData)
-			foreach($userData as $week => $weekDatas)
-				usort($weekDatas, function($a, $b)
-				{
-					return $a['timestamp'] - $b['timestamp'];
-				});
-		$goodData = array();
-		foreach($tempDatas as $user => $userData)
-		{
-			if(!isset($goodData[$user]))
-				$goodData[$user] = array();
-			foreach($userData as $week => $weekDatas)
-			{
-				$weekDate = new DateTime();
-				$weekDate->setISODate(explode('-', $week)[1], explode('-', $week)[0]);
-				$weekDate->setTime(0, 0);
-
-				$start = array_values($weekDatas)[0];
-				$end = array_values(array_slice($weekDatas, -1))[0];
-
-				if($start['timestamp'] === $end['timestamp'])
-					continue;
-
-				$stat = ($end['stat'] - $start['stat']) / ($end['total'] - $start['total']);
-				$fullDate = $weekDate->format('Y-m-d\TH:i:s');
-				$goodData[$user][$fullDate] = $stat;
-			}
-		}
-		return json_encode($goodData);
+		return json_encode(WeekUtils::groupWeekly($datas, 0));
 	};
 
 	include 'graph.php';

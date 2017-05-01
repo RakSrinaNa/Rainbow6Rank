@@ -144,7 +144,8 @@
                         valueLineEnabled: true,
                         zoomable: true,
                         valueZoomable: true,
-                        categoryBalloonDateFormat: 'MMMM-DD HH:NN'
+                        categoryBalloonDateFormat: 'MMMM DD HH:NN',
+                        showNextAvailable: true
                     },
                     numberFormatter: {
                         precision: -1,
@@ -153,7 +154,7 @@
                     },
                     guides: <?php echo $guides() ?>,
                     categoryField: 'date',
-                    minPeriod: 'hh',
+                    minPeriod: 'dd',
                     autoGridCount: true,
                     axisColor: '#555555',
                     gridAlpha: 0.1,
