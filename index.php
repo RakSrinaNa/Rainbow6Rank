@@ -138,7 +138,7 @@
     </div>
     <hr/>
     <div class="chartHolder" id="chartHolderACC">
-        <span class="chartName">Assists</span>
+        <span class="chartName">Accuracy</span>
         <div class="chartDiv" id="chartDivACC"></div>
     </div>
     <?php
