@@ -22,9 +22,7 @@
 		$content = curl_exec($cURL);
 		logg($fpLog, 'HTTP Response: ' . curl_getinfo($cURL, CURLINFO_HTTP_CODE) . "\n");
 		if(!$content)
-		{
 			logg($fpLog, 'Error getting from API (' . curl_errno($cURL) . ')' . curl_error($cURL) . "\n");
-		}
 		curl_close($cURL);
 		return $content;
 	}
@@ -56,6 +54,7 @@
 		}
 		$json['player'] = json_decode($c1, true)['player'];
 		$json['seasons'] = json_decode($c2, true)['seasons'];
+		$json['operators'] = json_decode($c2, true)['operator_records'];
 
 		$temp = $json['player']['updated_at'];
 		$date = date_create_from_format($timeFormat, $temp);
