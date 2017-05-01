@@ -127,5 +127,6 @@
 <?php include $chartDir . "chartWLRR.php"; ?>
 <?php include $chartDir . "chartKDC.php"; ?>
 <?php include $chartDir . "chartWLRC.php"; ?>
+<?php if(isset($_GET['weekly']))include $chartDir . "chartASS.php"; ?>
 </body>
 </html>
