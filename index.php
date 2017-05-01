@@ -141,6 +141,7 @@
         <div class="chartDiv" id="chartDivACC"></div>
     </div>
     <?php
+	include $chartDir . "chartASS.php";
 	include $chartDir . "chartACC.php";
 } ?>
 </body>
