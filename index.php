@@ -134,8 +134,12 @@
         <span class="chartName">Assists</span>
         <div class="chartDiv" id="chartDivASS"></div>
     </div>
+    <div class="chartHolder" id="chartHolderACC">
+        <span class="chartName">Assists</span>
+        <div class="chartDiv" id="chartDivACC"></div>
+    </div>
     <?php
-	include $chartDir . "chartASS.php";
+	include $chartDir . "chartACC.php";
 } ?>
 </body>
 </html>
