@@ -1,6 +1,6 @@
 <?php
-	$divName = 'KDC';
-	$title = 'K/D Ratio Casual';
+	$divName = 'ASS';
+	$title = 'Assists';
 
 	$guides = function()
 	{

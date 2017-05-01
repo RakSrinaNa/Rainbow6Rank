@@ -64,20 +64,20 @@
     <div class="rightNav inline">
         <ul>
             <li>
-		        <?php
-			        if(!isset($_GET['weekly']))
-			        {
-				        ?>
+				<?php
+					if(!isset($_GET['weekly']))
+					{
+						?>
                         <a href="?weekly=1">See weekly data</a>
-				        <?php
-			        }
-			        else
-			        {
-				        ?>
+						<?php
+					}
+					else
+					{
+						?>
                         <a href=".">See every data</a>
-				        <?php
-			        }
-		        ?>
+						<?php
+					}
+				?>
             </li>
             <li>
 				<?php
@@ -127,6 +127,15 @@
 <?php include $chartDir . "chartWLRR.php"; ?>
 <?php include $chartDir . "chartKDC.php"; ?>
 <?php include $chartDir . "chartWLRC.php"; ?>
-<?php if(isset($_GET['weekly']))include $chartDir . "chartASS.php"; ?>
+<?php if(isset($_GET['weekly']))
+{
+    ?>
+    <div class="chartHolder" id="chartHolderASS">
+        <span class="chartName">Assists</span>
+        <div class="chartDiv" id="chartDivASS"></div>
+    </div>
+    <?php
+	include $chartDir . "chartASS.php";
+} ?>
 </body>
 </html>
