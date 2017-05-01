@@ -130,10 +130,12 @@
 <?php if(isset($_GET['weekly']))
 {
     ?>
+    <hr/>
     <div class="chartHolder" id="chartHolderASS">
         <span class="chartName">Assists</span>
         <div class="chartDiv" id="chartDivASS"></div>
     </div>
+    <hr/>
     <div class="chartHolder" id="chartHolderACC">
         <span class="chartName">Assists</span>
         <div class="chartDiv" id="chartDivACC"></div>
