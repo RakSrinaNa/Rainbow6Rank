@@ -8,7 +8,7 @@
 	 */
 	class WeekUtils
 	{
-		static function groupWeekly($datas, $extraDenominator = 1)
+		static function groupWeekly($datas)
 		{
 			$tempDatas = array();
 			foreach($datas as $user => $userData)
@@ -53,7 +53,8 @@
 					if($end['stat'] - $start['stat'] == 0 && $end['total'] - $start['total'] == 0)
 						continue;
 
-					$stat = ($end['stat'] - $start['stat']) / ($end['total'] - $start['total'] + $extraDenominator);
+					$den = $end['total'] - $start['total'];
+					$stat = ($end['stat'] - $start['stat']) / ($den === 0 ? 1 : $den);
 					$fullDate = $weekDate->format('Y-m-d\TH:i:s');
 					$goodData[$user][$fullDate] = $stat;
 				}

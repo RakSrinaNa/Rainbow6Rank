@@ -30,7 +30,7 @@
 			$datas[$username][$player['player']['updated_at']]['stat'] = $player['player']['stats']['casual']['wins'];
 			$datas[$username][$player['player']['updated_at']]['total'] = $player['player']['stats']['casual']['losses'];
 		}
-		return json_encode(WeekUtils::groupWeekly($datas, 1));
+		return json_encode(WeekUtils::groupWeekly($datas));
 	};
 
 	include 'graph.php';

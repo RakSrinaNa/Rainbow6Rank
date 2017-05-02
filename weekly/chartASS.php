@@ -27,7 +27,7 @@
 			$datas[$username][$player['player']['updated_at']] = array('stat' => 0, 'timestamp' => $timestamp);
 			$datas[$username][$player['player']['updated_at']]['stat'] = $player['player']['stats']['overall']['assists'];
 		}
-		return json_encode(WeekUtils::groupWeekly($datas, 0));
+		return json_encode(WeekUtils::groupWeekly($datas));
 	};
 
 	include 'graph.php';
