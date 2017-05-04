@@ -123,27 +123,26 @@
     <span class="chartName">Ratio W/L Casual</span>
     <div class="chartDiv" id="chartDivWLRC"></div>
 </div>
+<hr/>
+<div class="chartHolder" id="chartHolderACC">
+    <span class="chartName">Accuracy</span>
+    <div class="chartDiv" id="chartDivACC"></div>
+</div>
 <?php include $chartDir . "chartRanked5.php"; ?>
 <?php include $chartDir . "chartKDR.php"; ?>
 <?php include $chartDir . "chartWLRR.php"; ?>
 <?php include $chartDir . "chartKDC.php"; ?>
 <?php include $chartDir . "chartWLRC.php"; ?>
+<?php include $chartDir . "chartACC.php"; ?>
 <?php if(isset($_GET['weekly']))
 {
     ?>
-    <hr/>
     <div class="chartHolder" id="chartHolderASS">
         <span class="chartName">Assists</span>
         <div class="chartDiv" id="chartDivASS"></div>
     </div>
-    <hr/>
-    <div class="chartHolder" id="chartHolderACC">
-        <span class="chartName">Accuracy</span>
-        <div class="chartDiv" id="chartDivACC"></div>
-    </div>
     <?php
 	include $chartDir . "chartASS.php";
-	include $chartDir . "chartACC.php";
 } ?>
 </body>
 </html>
