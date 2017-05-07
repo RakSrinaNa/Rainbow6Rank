@@ -66,7 +66,7 @@
 									bulletSize: 8,
 									balloonFunction: function (graphDataItem) {
 										var date = graphDataItem.category;
-										return username + '<br>' + ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + '<br/><b><span style="font-size:14px;">' + graphDataItem.values.value + '</span></b>';
+										return username + '<br>' + ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + '<br/><b><span style="font-size:14px;">' + <?php echo $this->isValuePercentage() ? '100 *' : ''; ?> graphDataItem.values.value + '<?php echo $this->isValuePercentage() ? '%' : ''; ?></span></b>';
 									}
 								});
 
@@ -217,6 +217,11 @@
 		}
 
 		abstract function getPoint($player);
+
+		function isValuePercentage()
+		{
+			return true;
+		}
 
 		abstract function getTitle();
 

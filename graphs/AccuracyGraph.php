@@ -20,4 +20,9 @@
 		{
 			return 'ACC';
 		}
+
+		function isValuePercentage()
+		{
+			return true;
+		}
 	}
