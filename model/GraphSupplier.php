@@ -1,5 +1,5 @@
 <?php
-	require_once dirname(__FILE__) . '/model/GraphUtils.php';
+	require_once __DIR__ . '/GraphUtils.php';
 
 	/**
 	 * Created by PhpStorm.
@@ -203,7 +203,7 @@
 				if(!isset($datas[$username]))
 					$datas[$username] = array();
 				$data = $this->getPoint($player);
-				if($datas === null)
+				if($data === null)
 					continue;
 				$data['timestamp'] = $timestamp;
 				$datas[$username][$player['player']['updated_at']] = $data;

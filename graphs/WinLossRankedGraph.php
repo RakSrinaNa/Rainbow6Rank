@@ -1,5 +1,5 @@
 <?php
-	require_once dirname(__FILE__) . '/model/GraphSupplier.php';
+	require_once __DIR__ . '/../model/GraphSupplier.php';
 
 	class WinLossRankedGraph extends GraphSupplier
 	{
