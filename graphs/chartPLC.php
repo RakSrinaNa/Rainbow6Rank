@@ -32,4 +32,4 @@
 		return json_encode(GraphUtils::process($datas));
 	};
 
-	include 'graph.php';
+	include dirname(__FILE__) . '/graph.php';
