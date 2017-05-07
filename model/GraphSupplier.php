@@ -220,7 +220,7 @@
 
 		function isValuePercentage()
 		{
-			return true;
+			return false;
 		}
 
 		abstract function getTitle();
