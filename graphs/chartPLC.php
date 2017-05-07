@@ -1,5 +1,5 @@
 <?php
-	require_once 'GraphUtils.php';
+	require_once dirname(__FILE__) . '/GraphUtils.php';
 
 	$divName = 'PLC';
 	$title = 'Match played Casual';
