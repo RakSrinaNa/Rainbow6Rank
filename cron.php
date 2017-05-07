@@ -2,10 +2,13 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors', '1');
 
-	function logg($fpLog, $message)
+	require_once __DIR__ . '/model/DBConnection.php';
+
+	function logg($message, $fpLog = null)
 	{
-		echo $message;
-		fwrite($fpLog, $message);
+		var_dump($message);
+		if($fpLog !== null)
+			fwrite($fpLog, $message);
 	}
 
 	function readAPI($fpLog, $path)
@@ -19,9 +22,9 @@
 		curl_setopt($cURL, CURLOPT_HTTPGET, true);
 		curl_setopt($cURL, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Accept: application/json'));
 		$content = curl_exec($cURL);
-		logg($fpLog, 'HTTP Response: ' . curl_getinfo($cURL, CURLINFO_HTTP_CODE) . "\n");
+		logg('HTTP Response: ' . curl_getinfo($cURL, CURLINFO_HTTP_CODE) . "\n", $fpLog);
 		if(!$content)
-			logg($fpLog, 'Error getting from API (' . curl_errno($cURL) . ')' . curl_error($cURL) . "\n");
+			logg('Error getting from API (' . curl_errno($cURL) . ')' . curl_error($cURL) . "\n", $fpLog);
 		curl_close($cURL);
 		return $content;
 	}
@@ -40,6 +43,17 @@
 		return $result;
 	}
 
+	function getLastUpdate($user) use (&$conn)
+	{
+		$query = $this->conn->query('SELECT MAX(`ValueDate`) AS `LastDate` FROM  `Rainbow6` WHERE `Username`="' . $user . '";');
+		if(!$query)
+			return 0;
+		if($query->num_rows > 0)
+			if($row = $query->fetch_assoc())
+				return $row['LastDate'];
+		return 0;
+	}
+
 	$rootDirectory = 'www/subdomains/rainbow/';
 	$timeFormat = 'Y-m-d\TH:i:s+';
 
@@ -47,7 +61,7 @@
 
 	$fpLog = fopen('log.log', 'w');
 
-	logg($fpLog, 'Working directory: ' . getcwd() . "\n\n");
+	logg('Working directory: ' . getcwd() . "\n\n", $fpLog);
 
 	{
 		$fp = fopen($rootDirectory . 'players/last.update', 'w');
@@ -55,9 +69,13 @@
 		fclose($fp);
 	}
 
+	/** @noinspection SqlNoDataSourceInspection */
+	/** @noinspection SqlResolve */
+	$conn = DBConnection::getConnection();
+
 	foreach($players as $player => $platform)
 	{
-		logg($fpLog, 'Doing player ' . $player . ':' . "\n");
+		logg('Doing player ' . $player . ':' . "\n", $fpLog);
 		$json = array();
 		$c1 = readAPI($fpLog, $player . '?platform=' . $platform);
 		$c2 = readAPI($fpLog, $player . '/seasons?platform=' . $platform);
@@ -74,7 +92,15 @@
 		{
 			$time = $date->getTimestamp() * 1000;
 
-			logg($fpLog, 'Time ' . $time . "\n");
+			logg('Time ' . $time . "\n", $fpLog);
+
+			$flat = array_flat($json);
+			foreach($flat as $key => $value)
+			{
+				$conn->query('INSERT INTO Rainbow6(`Username`, `ValueKey`, `ValueDate`, `Value`) VALUES("' . $player . '", "' . $key . '", FROM_UNIXTIME(' . $date->getTimestamp() . '), "' . $value . '");');
+			}
+			$lastUpdate = getLastUpdate($player);
+			logg($lastUpdate);
 
 			$folder = $rootDirectory . 'players/' . $player . '/';
 			$file = $folder . $time . '.json';
@@ -84,24 +110,24 @@
 
 			if(!file_exists($file))
 			{
-				logg($fpLog, 'Writing file ' . $file . "\n");
+				logg('Writing file ' . $file . "\n", $fpLog);
 				$fp = fopen($file, 'w');
 				if(!$fp)
 				{
-					logg($fpLog, 'Error opening file ' . $file . "\n");
+					logg('Error opening file ' . $file . "\n", $fpLog);
 				}
 				else
 				{
 					fwrite($fp, json_encode($json));
 					fclose($fp);
-					logg($fpLog, 'Writing file done' . "\n");
+					logg('Writing file done' . "\n", $fpLog);
 				}
 			}
 			else
 			{
-				logg($fpLog, "File " . $file . ' already exists, skipping' . "\n");
+				logg("File " . $file . ' already exists, skipping' . "\n", $fpLog);
 			}
-			logg($fpLog, "\n");
+			logg("\n", $fpLog);
 		}
 		else
 		{
@@ -109,5 +135,5 @@
 		}
 	}
 
-	logg($fpLog, 'Done' . "\n");
+	logg('Done' . "\n", $fpLog);
 	fclose($fpLog);
