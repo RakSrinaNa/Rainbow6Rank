@@ -6,7 +6,7 @@
 
 	function logg($message, $fpLog = null)
 	{
-		var_dump($message);
+		echo $message;
 		if($fpLog !== null)
 			fwrite($fpLog, $message);
 	}
