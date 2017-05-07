@@ -114,6 +114,11 @@
     <div class="chartDiv" id="chartDivWLRR"></div>
 </div>
 <hr/>
+<div class="chartHolder" id="chartHolderPLR">
+    <span class="chartName">Match played Ranked</span>
+    <div class="chartDiv" id="chartDivPLR"></div>
+</div>
+<hr/>
 <div class="chartHolder" id="chartHolderKDC">
     <span class="chartName">Ratio K/D Casual</span>
     <div class="chartDiv" id="chartDivKDC"></div>
@@ -122,6 +127,11 @@
 <div class="chartHolder" id="chartHolderWLRC">
     <span class="chartName">Ratio W/L Casual</span>
     <div class="chartDiv" id="chartDivWLRC"></div>
+</div>
+<hr/>
+<div class="chartHolder" id="chartHolderPLC">
+    <span class="chartName">Match played Casual</span>
+    <div class="chartDiv" id="chartDivPLC"></div>
 </div>
 <hr/>
 <div class="chartHolder" id="chartHolderACC">
