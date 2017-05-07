@@ -128,21 +128,16 @@
     <span class="chartName">Accuracy</span>
     <div class="chartDiv" id="chartDivACC"></div>
 </div>
+<div class="chartHolder" id="chartHolderASS">
+    <span class="chartName">Assists</span>
+    <div class="chartDiv" id="chartDivASS"></div>
+</div>
 <?php include "chartRanked5.php"; ?>
 <?php include "chartKDR.php"; ?>
 <?php include "chartWLRR.php"; ?>
 <?php include "chartKDC.php"; ?>
 <?php include "chartWLRC.php"; ?>
 <?php include "chartACC.php"; ?>
-<?php if(isset($_GET['weekly']))
-{
-    ?>
-    <div class="chartHolder" id="chartHolderASS">
-        <span class="chartName">Assists</span>
-        <div class="chartDiv" id="chartDivASS"></div>
-    </div>
-    <?php
-	include "chartASS.php";
-} ?>
+<?php include "chartASS.php"; ?>
 </body>
 </html>

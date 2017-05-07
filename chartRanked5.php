@@ -38,9 +38,8 @@
 				$datas[$username] = array();
 			if($player['seasons']['5']['emea']['ranking']['rank'] <= 0)
 				continue;
-			$datas[$username][$player['player']['updated_at']] = array('stat' => 0, 'total' => 0, 'timestamp' => $timestamp);
+			$datas[$username][$player['player']['updated_at']] = array('stat' => 0, 'timestamp' => $timestamp);
 			$datas[$username][$player['player']['updated_at']]['stat'] = $player['seasons']['5']['emea']['ranking']['rating'];
-			$datas[$username][$player['player']['updated_at']]['total'] = 1;
 		}
 		return json_encode(GraphUtils::process($datas));
 	};

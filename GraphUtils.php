@@ -79,9 +79,11 @@
 					$goodData[$user] = array();
 				foreach($userData as $date => $dateDatas)
 				{
+					if(!isset($dateDatas['total']))
+						$dateDatas['total'] = 1;
 					if(!isset($goodData[$user][$date]))
 						$goodData[$user][$date] = array();
-					$goodData[$user][$date] = $dateDatas['stat'] / ($dateDatas['total'] === 0 ? 1 : $dateDatas['total']);
+					$goodData[$user][$date] = $dateDatas['stat'] / (isset($dateDatas['total']) && $dateDatas['total'] !== 0 ? $dateDatas['total'] : 1);
 				}
 			}
 
