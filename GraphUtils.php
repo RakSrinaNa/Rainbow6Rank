@@ -53,7 +53,8 @@
 					if($end['stat'] - $start['stat'] == 0 && $end['total'] - $start['total'] == 0)
 						continue;
 
-					$stat = ($end['stat'] - $start['stat']) / (($end['total'] - $start['total']) || 1);
+					$det = ($end['total'] - $start['total']);
+					$stat = ($end['stat'] - $start['stat']) / ($det === 0 ? 1 : $det);
 					$fullDate = $weekDate->format('Y-m-d\TH:i:s');
 					$goodData[$user][$fullDate] = $stat;
 				}
@@ -80,7 +81,7 @@
 				{
 					if(!isset($goodData[$user][$date]))
 						$goodData[$user][$date] = array();
-					$goodData[$user][$date] = $dateDatas['stat'] / ($dateDatas['total'] || 1);
+					$goodData[$user][$date] = $dateDatas['stat'] / ($dateDatas['total'] === 0 ? 1 : $dateDatas['total']);
 				}
 			}
 
