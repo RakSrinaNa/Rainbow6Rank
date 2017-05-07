@@ -66,7 +66,7 @@
 									bulletSize: 8,
 									balloonFunction: function (graphDataItem) {
 										var date = graphDataItem.category;
-										return username + '<br>' + ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + '<br/><b><span style="font-size:14px;">' + <?php echo $this->isValuePercentage() ? '100 *' : ''; ?> graphDataItem.values.value + '<?php echo $this->isValuePercentage() ? '%' : ''; ?></span></b>';
+										return username + '<br>' + ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + '<br/><b><span style="font-size:14px;">' + <?php echo $this->getBalloonValueModifier() . '*'; ?> graphDataItem.values.value + '<?php echo $this->getBalloonValueSuffix(); ?></span></b>';
 									}
 								});
 
@@ -218,9 +218,14 @@
 
 		abstract function getPoint($player);
 
-		function isValuePercentage()
+		function getBalloonValueModifier()
 		{
-			return false;
+			return 1;
+		}
+
+		function getBalloonValueSuffix()
+		{
+			return '';
 		}
 
 		abstract function getTitle();

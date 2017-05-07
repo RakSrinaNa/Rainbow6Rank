@@ -21,8 +21,13 @@
 			return 'ACC';
 		}
 
-		function isValuePercentage()
+		function getBalloonValueModifier()
 		{
-			return true;
+			return 100;
+		}
+
+		function getBalloonValueSuffix()
+		{
+			return '%';
 		}
 	}
