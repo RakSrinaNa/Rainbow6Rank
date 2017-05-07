@@ -136,13 +136,20 @@
     <span class="chartName">Accuracy</span>
     <div class="chartDiv" id="chartDivACC"></div>
 </div>
+<hr/>
 <div class="chartHolder" id="chartHolderASS">
     <span class="chartName">Assists</span>
     <div class="chartDiv" id="chartDivASS"></div>
 </div>
+<hr/>
+<div class="chartHolder" id="chartHolderHDS">
+    <span class="chartName">Assists</span>
+    <div class="chartDiv" id="chartDivHDS"></div>
+</div>
 <?php
 	require_once dirname(__FILE__) . '/graphs/AccuracyGraph.php';
 	require_once dirname(__FILE__) . '/graphs/AssistsGraph.php';
+	require_once dirname(__FILE__) . '/graphs/HeadshotsGraph.php';
 	require_once dirname(__FILE__) . '/graphs/KillDeathCasualGraph.php';
 	require_once dirname(__FILE__) . '/graphs/KillDeathRankedGraph.php';
 	require_once dirname(__FILE__) . '/graphs/PlayCountCasualGraph.php';
@@ -155,6 +162,9 @@
 	$plot->plot();
 
 	$plot = new AssistsGraph();
+	$plot->plot();
+
+	$plot = new HeadshotsGraph();
 	$plot->plot();
 
 	$plot = new KillDeathCasualGraph();
