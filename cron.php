@@ -29,31 +29,6 @@
 		return $content;
 	}
 
-	function array_flat($array, $prefix = '')
-	{
-		$result = array();
-		foreach($array as $key => $value)
-		{
-			$new_key = $prefix . (empty($prefix) ? '' : '.') . $key;
-			if(is_array($value))
-				$result = array_merge($result, array_flat($value, $new_key));
-			else
-				$result[$new_key] = $value;
-		}
-		return $result;
-	}
-
-	function getLastUpdate($user) use (&$conn)
-	{
-		$query = $this->conn->query('SELECT MAX(`ValueDate`) AS `LastDate` FROM  `Rainbow6` WHERE `Username`="' . $user . '";');
-		if(!$query)
-			return 0;
-		if($query->num_rows > 0)
-			if($row = $query->fetch_assoc())
-				return $row['LastDate'];
-		return 0;
-	}
-
 	$rootDirectory = 'www/subdomains/rainbow/';
 	$timeFormat = 'Y-m-d\TH:i:s+';
 
@@ -62,16 +37,6 @@
 	$fpLog = fopen('log.log', 'w');
 
 	logg('Working directory: ' . getcwd() . "\n\n", $fpLog);
-
-	{
-		$fp = fopen($rootDirectory . 'players/last.update', 'w');
-		fwrite($fp, '-');
-		fclose($fp);
-	}
-
-	/** @noinspection SqlNoDataSourceInspection */
-	/** @noinspection SqlResolve */
-	$conn = DBConnection::getConnection();
 
 	foreach($players as $player => $platform)
 	{
@@ -93,14 +58,6 @@
 			$time = $date->getTimestamp() * 1000;
 
 			logg('Time ' . $time . "\n", $fpLog);
-
-			$flat = array_flat($json);
-			foreach($flat as $key => $value)
-			{
-				$conn->query('INSERT INTO Rainbow6(`Username`, `ValueKey`, `ValueDate`, `Value`) VALUES("' . $player . '", "' . $key . '", FROM_UNIXTIME(' . $date->getTimestamp() . '), "' . $value . '");');
-			}
-			$lastUpdate = getLastUpdate($player);
-			logg($lastUpdate);
 
 			$folder = $rootDirectory . 'players/' . $player . '/';
 			$file = $folder . $time . '.json';
@@ -133,6 +90,12 @@
 		{
 			echo DateTime::getLastErrors();
 		}
+	}
+
+	{
+		$fp = fopen($rootDirectory . 'players/last.update', 'w');
+		fwrite($fp, '-');
+		fclose($fp);
 	}
 
 	logg('Done' . "\n", $fpLog);
