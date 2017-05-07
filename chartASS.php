@@ -1,8 +1,8 @@
 <?php
-	require_once 'WeekUtils.php';
+	require_once 'GraphUtils.php';
 
-	$divName = 'WLRR';
-	$title = 'W/L Ratio Ranked';
+	$divName = 'ASS';
+	$title = 'Assists';
 
 	$guides = function()
 	{
@@ -24,13 +24,10 @@
 			$username = $player['player']['username'];
 			if(!isset($datas[$username]))
 				$datas[$username] = array();
-			if(!isset($datas[$username]))
-				$datas[$username] = array();
-			$datas[$username][$player['player']['updated_at']] = array('stat' => 0, 'total' => 0, 'timestamp' => $timestamp);
-			$datas[$username][$player['player']['updated_at']]['stat'] = $player['player']['stats']['ranked']['wins'];
-			$datas[$username][$player['player']['updated_at']]['total'] = $player['player']['stats']['ranked']['losses'];
+			$datas[$username][$player['player']['updated_at']] = array('stat' => 0, 'timestamp' => $timestamp);
+			$datas[$username][$player['player']['updated_at']]['stat'] = $player['player']['stats']['overall']['assists'];
 		}
-		return json_encode(WeekUtils::groupWeekly($datas));
+		return json_encode(GraphUtils::process($datas));
 	};
 
 	include 'graph.php';

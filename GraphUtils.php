@@ -6,7 +6,7 @@
 	 * Date: 01/05/2017
 	 * Time: 20:29
 	 */
-	class WeekUtils
+	class GraphUtils
 	{
 		static function groupWeekly($datas)
 		{
@@ -53,12 +53,37 @@
 					if($end['stat'] - $start['stat'] == 0 && $end['total'] - $start['total'] == 0)
 						continue;
 
-					$den = $end['total'] - $start['total'];
-					$stat = ($end['stat'] - $start['stat']) / ($den === 0 ? 1 : $den);
+					$stat = ($end['stat'] - $start['stat']) / (($end['total'] - $start['total']) || 1);
 					$fullDate = $weekDate->format('Y-m-d\TH:i:s');
 					$goodData[$user][$fullDate] = $stat;
 				}
 			}
+			return $goodData;
+		}
+
+		public static function process($datas)
+		{
+			if(isset($_GET['weekly']))
+				return self::groupWeekly($datas);
+			return self::group($datas);
+		}
+
+		private static function group($datas)
+		{
+			$goodData = array();
+
+			foreach($datas as $user => $userData)
+			{
+				if(!isset($goodData[$user]))
+					$goodData[$user] = array();
+				foreach($userData as $date => $dateDatas)
+				{
+					if(!isset($goodData[$user][$date]))
+						$goodData[$user][$date] = array();
+					$goodData[$user][$date] = $dateDatas['stat'] / ($dateDatas['total'] || 1);
+				}
+			}
+
 			return $goodData;
 		}
 	}

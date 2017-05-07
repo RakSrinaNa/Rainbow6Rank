@@ -1,4 +1,6 @@
 <?php
+	require_once "GraphUtils.php";
+
 	$divName = 'Ranked5';
 	$title = 'Ranked points';
 
@@ -23,7 +25,8 @@
 		$files = glob('players/*/*.json', GLOB_BRACE);
 		foreach($files as $file)
 		{
-			if(!isset($_GET['all']) && time() - (explode('.', array_values(array_slice(explode('/', $file), -1))[0])[0] / 1000) > $monthRange)
+			$timestamp = (explode('.', array_values(array_slice(explode('/', $file), -1))[0])[0] / 1000);
+			if(!isset($_GET['all']) && time() - $timestamp > $monthRange)
 				continue;
 			$player = json_decode(file_get_contents($file), true);
 			if(!isset($player['seasons']) || !isset($player['seasons']['5']))
@@ -33,10 +36,13 @@
 			$username = $player['player']['username'];
 			if(!isset($datas[$username]))
 				$datas[$username] = array();
-			if($player['seasons']['5']['emea']['ranking']['rank'] > 0)
-				$datas[$username][$player['player']['updated_at']] = $player['seasons']['5']['emea']['ranking']['rating'];
+			if($player['seasons']['5']['emea']['ranking']['rank'] <= 0)
+				continue;
+			$datas[$username][$player['player']['updated_at']] = array('stat' => 0, 'total' => 0, 'timestamp' => $timestamp);
+			$datas[$username][$player['player']['updated_at']]['stat'] = $player['seasons']['5']['emea']['ranking']['rating'];
+			$datas[$username][$player['player']['updated_at']]['total'] = 1;
 		}
-		return json_encode($datas);
+		return json_encode(GraphUtils::process($datas));
 	};
 
 	include 'graph.php';

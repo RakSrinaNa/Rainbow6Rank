@@ -128,12 +128,12 @@
     <span class="chartName">Accuracy</span>
     <div class="chartDiv" id="chartDivACC"></div>
 </div>
-<?php include $chartDir . "chartRanked5.php"; ?>
-<?php include $chartDir . "chartKDR.php"; ?>
-<?php include $chartDir . "chartWLRR.php"; ?>
-<?php include $chartDir . "chartKDC.php"; ?>
-<?php include $chartDir . "chartWLRC.php"; ?>
-<?php include $chartDir . "chartACC.php"; ?>
+<?php include "chartRanked5.php"; ?>
+<?php include "chartKDR.php"; ?>
+<?php include "chartWLRR.php"; ?>
+<?php include "chartKDC.php"; ?>
+<?php include "chartWLRC.php"; ?>
+<?php include "chartACC.php"; ?>
 <?php if(isset($_GET['weekly']))
 {
     ?>
@@ -142,7 +142,7 @@
         <div class="chartDiv" id="chartDivASS"></div>
     </div>
     <?php
-	include $chartDir . "chartASS.php";
+	include "chartASS.php";
 } ?>
 </body>
 </html>
