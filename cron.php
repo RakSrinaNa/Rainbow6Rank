@@ -1,5 +1,4 @@
 <?php
-
 	error_reporting(E_ALL);
 	ini_set('display_errors', '1');
 
@@ -25,6 +24,20 @@
 			logg($fpLog, 'Error getting from API (' . curl_errno($cURL) . ')' . curl_error($cURL) . "\n");
 		curl_close($cURL);
 		return $content;
+	}
+
+	function array_flat($array, $prefix = '')
+	{
+		$result = array();
+		foreach($array as $key => $value)
+		{
+			$new_key = $prefix . (empty($prefix) ? '' : '.') . $key;
+			if(is_array($value))
+				$result = array_merge($result, array_flat($value, $new_key));
+			else
+				$result[$new_key] = $value;
+		}
+		return $result;
 	}
 
 	$rootDirectory = 'www/subdomains/rainbow/';

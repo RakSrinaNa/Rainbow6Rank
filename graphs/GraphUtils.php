@@ -8,6 +8,13 @@
 	 */
 	class GraphUtils
 	{
+		public static function process($datas)
+		{
+			if(isset($_GET['weekly']))
+				return self::groupWeekly($datas);
+			return self::group($datas);
+		}
+
 		static function groupWeekly($datas)
 		{
 			$tempDatas = array();
@@ -60,13 +67,6 @@
 				}
 			}
 			return $goodData;
-		}
-
-		public static function process($datas)
-		{
-			if(isset($_GET['weekly']))
-				return self::groupWeekly($datas);
-			return self::group($datas);
 		}
 
 		private static function group($datas)

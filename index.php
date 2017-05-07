@@ -50,53 +50,56 @@
     <title>Rainbow6 stats</title>
 </head>
 <body>
-<header id="topContainer">
-    <div class="leftNav inline">
-        <ul>
-            <li><a href="https://r6stats.com/" target="_blank">Datas from R6Stats</a></li>
-        </ul>
-    </div>
-    <div class="inline">
-        <ul>
-            <li class="centerNav"><a href="#">Last update at: <?php echo getLastCheckDate() ?></a></li>
-            <li class="centerNav"><a href="#">Last data from: <?php echo getLastUpdateDate(); ?></a></li>
-        </ul>
-    </div>
-    <div class="rightNav inline">
-        <ul>
-            <li>
-				<?php
-					if(!isset($_GET['weekly']))
-					{
-						?>
-                        <a href="?weekly=1">See weekly data</a>
-						<?php
-					}
-					else
-					{
-						?>
-                        <a href=".">See every data</a>
-						<?php
-					}
-				?>
-            </li>
-            <li>
-				<?php
-					if(!isset($_GET['all']))
-					{
-						?>
-                        <a href="?all=1">See all gathered data</a>
-						<?php
-					}
-					else
-					{
-						?>
-                        <a href=".">See current month data</a>
-						<?php
-					}
-				?>
-            </li>
-        </ul>
+<header>
+    <div class="headerContainer">
+        <div class="leftNav inline">
+            <ul>
+                <li><a href="https://r6stats.com/" target="_blank">Datas from R6Stats</a></li>
+            </ul>
+        </div>
+        <div class="inline">
+            <ul>
+                <li class="centerNav"><a href="#">Last update at: <?php echo getLastCheckDate() ?></a></li>
+                <li class="centerNav"><a href="#">Last data from: <?php echo getLastUpdateDate(); ?></a></li>
+            </ul>
+            <br/>
+        </div>
+        <div class="rightNav inline">
+            <ul>
+                <li>
+					<?php
+						if(!isset($_GET['weekly']))
+						{
+							?>
+                            <a href="?weekly=1">See weekly data</a>
+							<?php
+						}
+						else
+						{
+							?>
+                            <a href=".">See every data</a>
+							<?php
+						}
+					?>
+                </li>
+                <li>
+					<?php
+						if(!isset($_GET['all']))
+						{
+							?>
+                            <a href="?all=1">See all gathered data</a>
+							<?php
+						}
+						else
+						{
+							?>
+                            <a href=".">See current month data</a>
+							<?php
+						}
+					?>
+                </li>
+            </ul>
+        </div>
     </div>
 </header>
 <div class="chartHolder" id="chartHolderRanked5">
@@ -142,14 +145,14 @@
     <span class="chartName">Assists</span>
     <div class="chartDiv" id="chartDivASS"></div>
 </div>
-<?php include "chartRanked5.php"; ?>
-<?php include "chartKDR.php"; ?>
-<?php include "chartWLRR.php"; ?>
-<?php include "chartPLR.php"; ?>
-<?php include "chartKDC.php"; ?>
-<?php include "chartWLRC.php"; ?>
-<?php include "chartPLC.php"; ?>
-<?php include "chartACC.php"; ?>
-<?php include "chartASS.php"; ?>
+<?php include "graphs/chartRanked5.php"; ?>
+<?php include "graphs/chartKDR.php"; ?>
+<?php include "graphs/chartWLRR.php"; ?>
+<?php include "graphs/chartPLR.php"; ?>
+<?php include "graphs/chartKDC.php"; ?>
+<?php include "graphs/chartWLRC.php"; ?>
+<?php include "graphs/chartPLC.php"; ?>
+<?php include "graphs/chartACC.php"; ?>
+<?php include "graphs/chartASS.php"; ?>
 </body>
 </html>
