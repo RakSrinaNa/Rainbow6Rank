@@ -1,14 +1,12 @@
 <?php
 
-	if(false)
+	if(true)
 	{
 		error_reporting(E_ALL);
 		ini_set('display_errors', '1');
 	}
 	date_default_timezone_set('Europe/Paris');
 	$dev = isset($_GET['dev']);
-	$monthRange = isset($_GET['weekly']) ? 31536000 : 2592000;
-	$chartDir = isset($_GET['weekly']) ? 'weekly/' : '';
 
 	function getLastCheckDate()
 	{
@@ -112,7 +110,7 @@
     <div class="chartDiv" id="chartDivKDR"></div>
 </div>
 <hr/>
-<div class="chartHolder" id="chartHolderWLRR">
+<div class="chartHolder" id="chartHolderWLR">
     <span class="chartName">Ratio W/L Ranked</span>
     <div class="chartDiv" id="chartDivWLRR"></div>
 </div>
@@ -127,7 +125,7 @@
     <div class="chartDiv" id="chartDivKDC"></div>
 </div>
 <hr/>
-<div class="chartHolder" id="chartHolderWLRC">
+<div class="chartHolder" id="chartHolderWLC">
     <span class="chartName">Ratio W/L Casual</span>
     <div class="chartDiv" id="chartDivWLRC"></div>
 </div>
@@ -145,14 +143,43 @@
     <span class="chartName">Assists</span>
     <div class="chartDiv" id="chartDivASS"></div>
 </div>
-<?php include "graphs/chartRanked5.php"; ?>
-<?php include "graphs/chartKDR.php"; ?>
-<?php include "graphs/chartWLRR.php"; ?>
-<?php include "graphs/chartPLR.php"; ?>
-<?php include "graphs/chartKDC.php"; ?>
-<?php include "graphs/chartWLRC.php"; ?>
-<?php include "graphs/chartPLC.php"; ?>
-<?php include "graphs/chartACC.php"; ?>
-<?php include "graphs/chartASS.php"; ?>
+<?php
+	require_once dirname(__FILE__) . '/graphs/AccuracyGraph.php';
+	require_once dirname(__FILE__) . '/graphs/AssistsGraph.php';
+	require_once dirname(__FILE__) . '/graphs/KillDeathCasualGraph.php';
+	require_once dirname(__FILE__) . '/graphs/KillDeathRankedGraph.php';
+	require_once dirname(__FILE__) . '/graphs/PlayCountCasualGraph.php';
+	require_once dirname(__FILE__) . '/graphs/PlayCountRankedGraph.php';
+	require_once dirname(__FILE__) . '/graphs/RankedSeason5Graph.php';
+	require_once dirname(__FILE__) . '/graphs/WinLossCasualGraph.php';
+	require_once dirname(__FILE__) . '/graphs/WinLossRankedGraph.php';
+
+	$plot = new AccuracyGraph();
+	$plot->plot();
+
+	$plot = new AssistsGraph();
+	$plot->plot();
+
+	$plot = new KillDeathCasualGraph();
+	$plot->plot();
+
+	$plot = new KillDeathRankedGraph();
+	$plot->plot();
+
+	$plot = new PlayCountCasualGraph();
+	$plot->plot();
+
+	$plot = new PlayCountRankedGraph();
+	$plot->plot();
+
+	$plot = new RankedSeason5Graph();
+	$plot->plot();
+
+	$plot = new WinLossCasualGraph();
+	$plot->plot();
+
+	$plot = new WinLossRankedGraph();
+	$plot->plot();
+?>
 </body>
 </html>
