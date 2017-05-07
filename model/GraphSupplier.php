@@ -65,7 +65,8 @@
 									lineThickness: 2,
 									bulletSize: 8,
 									balloonFunction: function (graphDataItem) {
-										<?php $this->getBalloonFunction() ?>
+										var date = graphDataItem.category;
+										return username + '<br>' + ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + '<br/><b><span style="font-size:14px;">' + graphDataItem.values.value + '</span></b>';
 									}
 								});
 
@@ -157,8 +158,7 @@
 									zoomable: true,
 									valueZoomable: true,
 									categoryBalloonDateFormat: 'MMMM DD HH:NN',
-									showNextAvailable: true,
-
+									showNextAvailable: true
 								},
 								numberFormatter: {
 									precision: -1,
@@ -217,11 +217,6 @@
 		}
 
 		abstract function getPoint($player);
-
-		function getBalloonFunction()
-		{
-			return 'var date = graphDataItem.category; return username + \'<br>\' + ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + \'<br/><b><span style="font-size:14px;">\' + graphDataItem.values.value + \'</span></b>\';';
-		}
 
 		abstract function getTitle();
 
