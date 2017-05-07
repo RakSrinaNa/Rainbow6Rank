@@ -145,8 +145,10 @@
 <?php include "chartRanked5.php"; ?>
 <?php include "chartKDR.php"; ?>
 <?php include "chartWLRR.php"; ?>
+<?php include "chartPLR.php"; ?>
 <?php include "chartKDC.php"; ?>
 <?php include "chartWLRC.php"; ?>
+<?php include "chartPLC.php"; ?>
 <?php include "chartACC.php"; ?>
 <?php include "chartASS.php"; ?>
 </body>
