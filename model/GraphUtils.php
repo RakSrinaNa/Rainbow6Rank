@@ -10,9 +10,9 @@
 	{
 		public static function process($datas)
 		{
-			if(isset($_GET['weekly']))
-				return self::groupWeekly($datas);
-			return self::group($datas);
+			if(isset($_GET['detailled']) || isset($_GET['all']))
+				return self::group($datas);
+			return self::groupWeekly($datas);
 		}
 
 		static function groupWeekly($datas)
@@ -63,7 +63,14 @@
 					$det = ($end['total'] - $start['total']);
 					$stat = ($end['stat'] - $start['stat']) / ($det === 0 ? 1 : $det);
 					$fullDate = $weekDate->format('Y-m-d\TH:i:s');
-					$goodData[$user][$fullDate] = $stat;
+					$goodData[$user][$fullDate] = array('value' => $stat);
+					foreach($start as $key => $value)
+					{
+						if($key !== 'timestamp' && isset($end[$key]))
+						{
+							$goodData[$user][$fullDate][$user . $key] = $end[$key] - $value;
+						}
+					}
 				}
 			}
 			return $goodData;
@@ -83,7 +90,14 @@
 						$dateDatas['total'] = 1;
 					if(!isset($goodData[$user][$date]))
 						$goodData[$user][$date] = array();
-					$goodData[$user][$date] = $dateDatas['stat'] / (isset($dateDatas['total']) && $dateDatas['total'] !== 0 ? $dateDatas['total'] : 1);
+					$goodData[$user][$date] = array('value' => $dateDatas['stat'] / (isset($dateDatas['total']) && $dateDatas['total'] !== 0 ? $dateDatas['total'] : 1));
+					foreach($dateDatas as $key => $value)
+					{
+						if($key !== 'timestamp')
+						{
+							$goodData[$user][$date][$user . $key] = $value;
+						}
+					}
 				}
 			}
 

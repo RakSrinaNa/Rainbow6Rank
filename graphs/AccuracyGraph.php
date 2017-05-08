@@ -30,4 +30,9 @@
 		{
 			return '%';
 		}
+
+		function getAdditionalBalloon()
+		{
+			return array('stat' => 'Hit: ', 'total' => 'Fired: ');
+		}
 	}

@@ -20,4 +20,9 @@
 		{
 			return 'WLR';
 		}
+
+		function getAdditionalBalloon()
+		{
+			return array('stat' => 'Wins: ', 'total' => 'Losses: ');
+		}
 	}

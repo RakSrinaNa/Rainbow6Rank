@@ -66,7 +66,19 @@
 									bulletSize: 8,
 									balloonFunction: function (graphDataItem) {
 										var date = graphDataItem.category;
-										return username + '<br>' + ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + '<br/><b><span style="font-size:14px;">' + <?php echo $this->getBalloonValueModifier() . '*'; ?> graphDataItem.values.value + '<?php echo $this->getBalloonValueSuffix(); ?></span></b>';
+										var balloon = username + '<br>' + ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + '<br/><b><span style="font-size:14px;">' + <?php echo $this->getBalloonValueModifier() . '*'; ?> graphDataItem.values.value + '<?php echo $this->getBalloonValueSuffix(); ?></span></b>';
+										console.log(JSON.parse('<?php echo json_encode($this->getAdditionalBalloon()); ?>'));
+										<?php
+										foreach($this->getAdditionalBalloon() as $field => $text)
+										{ ?>
+										var key = username + '<?php echo $field; ?>';
+										console.log(key);
+										if (graphDataItem.dataContext.hasOwnProperty(key)) {
+											balloon += '<br/><?php echo $text; ?>' + graphDataItem.dataContext[key];
+										}
+										<?php
+										}?>
+										return balloon;
 									}
 								});
 
@@ -85,8 +97,17 @@
 								var dateData = {};
 								dateData['date'] = date;
 								for (var user in tempDatas[date])
-									if (tempDatas[date].hasOwnProperty(user))
-										dateData[user] = tempDatas[date][user];
+									if (tempDatas[date].hasOwnProperty(user)) {
+										for (var valueData in tempDatas[date][user]) {
+											if (tempDatas[date][user].hasOwnProperty(valueData)) {
+												if (valueData === 'value')
+													dateData[user] = tempDatas[date][user][valueData];
+												else
+													dateData[valueData] = tempDatas[date][user][valueData];
+											}
+										}
+
+									}
 
 								datas.push(dateData);
 							}
@@ -233,5 +254,10 @@
 		function getGuides()
 		{
 			return json_encode(array());
+		}
+
+		function getAdditionalBalloon()
+		{
+			return array();
 		}
 	}

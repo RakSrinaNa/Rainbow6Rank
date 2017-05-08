@@ -64,32 +64,44 @@
         <ul>
             <li>
 				<?php
-					if(!isset($_GET['weekly']))
-					{
-						?>
-                        <a href="?weekly=1">See weekly data</a>
-						<?php
-					}
-					else
-					{
-						?>
-                        <a href=".">See every data</a>
-						<?php
-					}
+					if(isset($_GET['all']))
+                    {
+	                    ?>
+                        <a href=".">See weekly data</a>
+	                    <?php
+                    }
+                    else if(isset($_GET['detailled']))
+                    {
+	                    ?>
+                        <a href=".">See weekly data</a>
+	                    <?php
+                    }
+                    else
+                    {
+	                    ?>
+                        <a href="?detailled=1">See detailled data</a>
+	                    <?php
+                    }
 				?>
             </li>
             <li>
 				<?php
-					if(!isset($_GET['all']))
+					if(isset($_GET['all']))
 					{
 						?>
-                        <a href="?all=1">See all gathered data</a>
+                        <a href="?detailled=1">See detailled data</a>
+						<?php
+					}
+					else if(isset($_GET['detailled']))
+					{
+						?>
+                        <a href="?all=1">See all data</a>
 						<?php
 					}
 					else
 					{
 						?>
-                        <a href=".">See current month data</a>
+                        <a href="?all=1">See all data</a>
 						<?php
 					}
 				?>

@@ -20,4 +20,9 @@
 		{
 			return 'KDR';
 		}
+
+		function getAdditionalBalloon()
+		{
+			return array('stat' => 'Kills: ', 'total' => 'Deaths: ');
+		}
 	}
