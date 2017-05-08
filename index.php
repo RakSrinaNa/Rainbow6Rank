@@ -124,11 +124,6 @@
     <div class="chartDiv" id="chartDivWLR"></div>
 </div>
 <hr/>
-<div class="chartHolder" id="chartHolderPLR">
-    <span class="chartName">Match played Ranked</span>
-    <div class="chartDiv" id="chartDivPLR"></div>
-</div>
-<hr/>
 <div class="chartHolder" id="chartHolderKDC">
     <span class="chartName">Ratio K/D Casual</span>
     <div class="chartDiv" id="chartDivKDC"></div>
@@ -137,11 +132,6 @@
 <div class="chartHolder" id="chartHolderWLC">
     <span class="chartName">Ratio W/L Casual</span>
     <div class="chartDiv" id="chartDivWLC"></div>
-</div>
-<hr/>
-<div class="chartHolder" id="chartHolderPLC">
-    <span class="chartName">Match played Casual</span>
-    <div class="chartDiv" id="chartDivPLC"></div>
 </div>
 <hr/>
 <div class="chartHolder" id="chartHolderACC">
@@ -164,8 +154,6 @@
 	require_once dirname(__FILE__) . '/graphs/HeadshotsGraph.php';
 	require_once dirname(__FILE__) . '/graphs/KillDeathCasualGraph.php';
 	require_once dirname(__FILE__) . '/graphs/KillDeathRankedGraph.php';
-	require_once dirname(__FILE__) . '/graphs/PlayCountCasualGraph.php';
-	require_once dirname(__FILE__) . '/graphs/PlayCountRankedGraph.php';
 	require_once dirname(__FILE__) . '/graphs/RankedSeason5Graph.php';
 	require_once dirname(__FILE__) . '/graphs/WinLossCasualGraph.php';
 	require_once dirname(__FILE__) . '/graphs/WinLossRankedGraph.php';
@@ -183,12 +171,6 @@
 	$plot->plot();
 
 	$plot = new KillDeathRankedGraph();
-	$plot->plot();
-
-	$plot = new PlayCountCasualGraph();
-	$plot->plot();
-
-	$plot = new PlayCountRankedGraph();
 	$plot->plot();
 
 	$plot = new RankedSeason5Graph();

@@ -8,6 +8,7 @@
 			$point = array('stat' => 0, 'total' => 0);
 			$point['stat'] = $player['player']['stats']['casual']['wins'];
 			$point['total'] = $player['player']['stats']['casual']['losses'];
+			$point['played'] = $player['player']['stats']['casual']['wins'] + $player['player']['stats']['casual']['losses'];
 			return $point;
 		}
 
@@ -23,6 +24,6 @@
 
 		function getAdditionalBalloon()
 		{
-			return array('stat' => 'Wins: ', 'total' => 'Losses: ');
+			return array('played' => 'Played: ', 'stat' => 'Wins: ', 'total' => 'Losses: ');
 		}
 	}
