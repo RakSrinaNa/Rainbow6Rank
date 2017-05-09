@@ -15,6 +15,34 @@
 			return self::groupWeekly($datas);
 		}
 
+		private static function group($datas)
+		{
+			$goodData = array();
+
+			foreach($datas as $user => $userData)
+			{
+				if(!isset($goodData[$user]))
+					$goodData[$user] = array();
+				foreach($userData as $date => $dateDatas)
+				{
+					if(!isset($dateDatas['total']))
+						$dateDatas['total'] = 1;
+					if(!isset($goodData[$user][$date]))
+						$goodData[$user][$date] = array();
+					$goodData[$user][$date] = array('value' => $dateDatas['stat'] / (isset($dateDatas['total']) && $dateDatas['total'] !== 0 ? $dateDatas['total'] : 1));
+					foreach($dateDatas as $key => $value)
+					{
+						if($key !== 'timestamp')
+						{
+							$goodData[$user][$date][$user . $key] = $value;
+						}
+					}
+				}
+			}
+
+			return $goodData;
+		}
+
 		static function groupWeekly($datas)
 		{
 			$tempDatas = array();
@@ -57,8 +85,8 @@
 						$start['total'] = 0;
 						$end['total'] = 1;
 					}
-					if($end['stat'] - $start['stat'] == 0 && $end['total'] - $start['total'] == 0)
-						continue;
+					//if($end['stat'] - $start['stat'] == 0 && $end['total'] - $start['total'] == 0)
+					//	continue;
 
 					$det = ($end['total'] - $start['total']);
 					$stat = ($end['stat'] - $start['stat']) / ($det === 0 ? 1 : $det);
@@ -73,34 +101,6 @@
 					}
 				}
 			}
-			return $goodData;
-		}
-
-		private static function group($datas)
-		{
-			$goodData = array();
-
-			foreach($datas as $user => $userData)
-			{
-				if(!isset($goodData[$user]))
-					$goodData[$user] = array();
-				foreach($userData as $date => $dateDatas)
-				{
-					if(!isset($dateDatas['total']))
-						$dateDatas['total'] = 1;
-					if(!isset($goodData[$user][$date]))
-						$goodData[$user][$date] = array();
-					$goodData[$user][$date] = array('value' => $dateDatas['stat'] / (isset($dateDatas['total']) && $dateDatas['total'] !== 0 ? $dateDatas['total'] : 1));
-					foreach($dateDatas as $key => $value)
-					{
-						if($key !== 'timestamp')
-						{
-							$goodData[$user][$date][$user . $key] = $value;
-						}
-					}
-				}
-			}
-
 			return $goodData;
 		}
 	}
