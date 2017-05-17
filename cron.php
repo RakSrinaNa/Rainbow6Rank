@@ -2,8 +2,6 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors', '1');
 
-	require_once __DIR__ . '/model/DBConnection.php';
-
 	function logg($message, $fpLog = null)
 	{
 		echo $message;
