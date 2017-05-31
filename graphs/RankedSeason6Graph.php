@@ -5,7 +5,7 @@
 	{
 		function getPoint($player)
 		{
-			if(!isset($player['seasons']) || !isset($player['seasons']['5']))
+			if(!isset($player['seasons']) || !isset($player['seasons']['6']))
 				return null;
 			if($player['seasons']['6']['emea']['ranking']['rank'] <= 0)
 				return null;
