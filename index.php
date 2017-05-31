@@ -109,9 +109,9 @@
         </ul>
     </div>
 </header>
-<div class="chartHolder" id="chartHolderRanked5">
-    <span class="chartName">Season 5</span>
-    <div class="chartDiv" id="chartDivRanked5"></div>
+<div class="chartHolder" id="chartHolderRanked6">
+    <span class="chartName">Season 6</span>
+    <div class="chartDiv" id="chartDivRanked6"></div>
 </div>
 <hr/>
 <div class="chartHolder" id="chartHolderKDR">
@@ -154,7 +154,7 @@
 	require_once dirname(__FILE__) . '/graphs/HeadshotsGraph.php';
 	require_once dirname(__FILE__) . '/graphs/KillDeathCasualGraph.php';
 	require_once dirname(__FILE__) . '/graphs/KillDeathRankedGraph.php';
-	require_once dirname(__FILE__) . '/graphs/RankedSeason5Graph.php';
+	require_once dirname(__FILE__) . '/graphs/RankedSeason6Graph.php';
 	require_once dirname(__FILE__) . '/graphs/WinLossCasualGraph.php';
 	require_once dirname(__FILE__) . '/graphs/WinLossRankedGraph.php';
 
@@ -173,7 +173,7 @@
 	$plot = new KillDeathRankedGraph();
 	$plot->plot();
 
-	$plot = new RankedSeason5Graph();
+	$plot = new RankedSeason6Graph();
 	$plot->plot();
 
 	$plot = new WinLossCasualGraph();
