@@ -11,16 +11,17 @@
 				return null;
 			$point = array('stat' => 0);
 			$point['stat'] = $player['seasons']['6']['emea']['ranking']['rating'];
-			$point['rank'] = $this->getRank($point['stat']);
+			$point['rank'] = $this->getRank($player);
 			return $point;
 		}
 
-		function getRank($score)
+		function getRank($player)
 		{
+			$score = $player['seasons']['6']['emea']['ranking']['rating'];
 			foreach($this->ranks as $index => $value)
 			{
 				if($score >= $value['from'] && $score < $value['to'])
-					return $index;
+					return ($player['seasons']['6']['emea']['ranking']['rank'] > 0 ? 'Unranked: ' : '') . $index;
 			}
 			return 'Unranked';
 		}
