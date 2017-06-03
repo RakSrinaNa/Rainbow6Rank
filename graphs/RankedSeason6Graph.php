@@ -9,8 +9,6 @@
 		{
 			if(!isset($player['seasons']) || !isset($player['seasons']['6']))
 				return null;
-			if($player['seasons']['6']['emea']['ranking']['rank'] <= 0)
-				return null;
 			$point = array('stat' => 0);
 			$point['stat'] = $player['seasons']['6']['emea']['ranking']['rating'];
 			$point['rank'] = $this->getRank($point['stat']);
@@ -48,5 +46,10 @@
 				$guides[] = array('fillAlpha' => 0.3, 'lineAlpha' => 1, 'lineThickness' => 1, 'value' => $rankDatas['from'], 'toValue' => $rankDatas['to'], 'valueAxis' => 'pointsAxis', 'label' => $rankName, 'inside' => true, 'position' => 'right', 'fillColor' => $guideColors[$i++ % count($guideColors)]);
 			}
 			return json_encode($guides);
+		}
+
+		function getAdditionalBalloon()
+		{
+			return array('rank' => 'Rank: ');
 		}
 	}
