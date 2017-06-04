@@ -21,7 +21,7 @@
 			foreach($this->ranks as $index => $value)
 			{
 				if($score >= $value['from'] && $score < $value['to'])
-					return ($player['seasons']['6']['emea']['ranking']['rank'] > 0 ? 'Unranked: ' : '') . $index;
+					return ($player['seasons']['6']['emea']['ranking']['rank'] <= 0 ? 'Unranked: ' : '') . $index;
 			}
 			return 'Unranked';
 		}
