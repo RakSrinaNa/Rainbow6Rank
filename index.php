@@ -164,8 +164,8 @@
 	require_once dirname(__FILE__) . '/graphs/HeadshotsGraph.php';
 	require_once dirname(__FILE__) . '/graphs/KillDeathCasualGraph.php';
 	require_once dirname(__FILE__) . '/graphs/KillDeathRankedGraph.php';
-	require_once dirname(__FILE__) . '/graphs/PlayCountCasualGraph.php';
-	require_once dirname(__FILE__) . '/graphs/PlayCountRankedGraph.php';
+	require_once dirname(__FILE__) . '/graphs/PlayTimeCasualGraph.php';
+	require_once dirname(__FILE__) . '/graphs/PlayTimeRankedGraph.php';
 	require_once dirname(__FILE__) . '/graphs/RankedSeason6Graph.php';
 	require_once dirname(__FILE__) . '/graphs/WinLossCasualGraph.php';
 	require_once dirname(__FILE__) . '/graphs/WinLossRankedGraph.php';
