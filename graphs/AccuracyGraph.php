@@ -21,14 +21,9 @@
 			return 'ACC';
 		}
 
-		function getBalloonValueModifier()
+		function getParser()
 		{
-			return 100;
-		}
-
-		function getBalloonValueSuffix()
-		{
-			return '%';
+			return 'function(data){return (100 * data) + "%"};';
 		}
 
 		function getAdditionalBalloon()

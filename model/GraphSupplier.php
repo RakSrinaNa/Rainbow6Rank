@@ -65,8 +65,9 @@
 									lineThickness: 2,
 									bulletSize: 8,
 									balloonFunction: function (graphDataItem) {
+										var parser = <?php echo $this->getParser(); ?>;
 										var date = graphDataItem.category;
-										var balloon = username + '<br>' + ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + '<br/><b><span style="font-size:14px;">' + <?php echo $this->getBalloonValueModifier() . '*'; ?> graphDataItem.values.value + '<?php echo $this->getBalloonValueSuffix(); ?></span></b>';
+										var balloon = username + '<br>' + ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + '<br/><b><span style="font-size:14px;">' + parser(graphDataItem.values.value) + '</span></b>';
 										<?php
 										foreach($this->getAdditionalBalloon() as $field => $text)
 										{ ?>
@@ -237,22 +238,17 @@
 
 		abstract function getPoint($player);
 
-		function getBalloonValueModifier()
-		{
-			return 1;
-		}
-
-		function getBalloonValueSuffix()
-		{
-			return '';
-		}
-
 		function getAdditionalBalloon()
 		{
 			return array();
 		}
 
 		abstract function getTitle();
+
+		function getParser()
+		{
+			return 'function(data){return data;}';
+		}
 
 		function getGuides()
 		{
