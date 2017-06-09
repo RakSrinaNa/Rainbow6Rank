@@ -21,11 +21,7 @@
 				$(document).ready(function () {
 
 					//Resize chart to fit height
-					var chartHolderWatched = document.getElementById('chartHolder' + '<?php echo $this->getID(); ?>');
 					var chartdivWatched = document.getElementById('chartDiv' + '<?php echo $this->getID(); ?>');
-					new ResizeSensor(chartHolderWatched, function () {
-						chartdivWatched.style.height = '' + chartHolderWatched.clientHeight + 'px';
-					});
 
 					AmCharts.ready(function () {
 						var chartColors = {

@@ -11,11 +11,16 @@ body
 	background-color : #777777;
 }
 
+header
+{
+	margin-bottom : 10px;
+}
+
 #headerContainer
 {
 	background-color : #333333;
-	width       : 100%;
-	padding-top : 3px;
+	width            : 100%;
+	padding-top      : 3px;
 }
 
 header ul
@@ -82,11 +87,93 @@ header ul > li > a:hover
 .chartHolder
 {
 	width  : 95%;
-	height : 85%;
+	height : 650px;
 	margin : auto;
 }
 
 .chartDiv
 {
-	width : 100%;
+	width  : 100%;
+	height : 100%;
+}
+
+button.accordion
+{
+	background-color : #555555;
+	color            : #CCCCCC;
+	cursor           : pointer;
+	padding          : 10px;
+	width            : 99%;
+	text-align       : center;
+	outline          : none;
+	transition       : 0.4s;
+	border-radius    : 9px;
+	margin           : 2px 5px 0;
+	border           : 1px solid black;
+}
+
+button.accordion.active
+{
+	background-color : #999999;
+	color            : black;
+}
+
+button.accordion:hover
+{
+	background-color : #888888;
+	color            : black;
+}
+
+div.panel
+{
+	margin  : 0 10px;
+	padding : 0 5px;
+	display : none;
+	opacity : 0;
+}
+
+div.panel.active
+{
+	display   : block;
+	opacity   : 1;
+	animation : fade 1s;
+}
+
+@keyframes fade
+{
+	0%
+	{
+		opacity : 0;
+	}
+
+	100%
+	{
+		opacity : 1;
+	}
+}
+
+.accordion.level1
+{
+	font-size : 1em;
+}
+
+button.accordion:after, button.accordion:before
+{
+	content : url('/assets/arrow_down.png');
+}
+
+button.accordion:after
+{
+	float : right;
+}
+
+button.accordion:before
+{
+	float : left;
+}
+
+button.accordion.active:after, button.accordion.active:before
+{
+	content : url('/assets/arrow_up.png');
+	filter: invert(100%) hue-rotate(200deg);
 }

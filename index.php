@@ -38,12 +38,11 @@
 <head>
     <link rel="stylesheet" href="css/main.css"/>
     <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
-    <script type="text/javascript" src="js/libs/ElementQueries/ResizeSensor.js"></script>
-    <script type="text/javascript" src="js/libs/ElementQueries/ElementQueries.js"></script>
     <script type="text/javascript" src="js/libs/amcharts/amcharts.js"></script>
     <script type="text/javascript" src="js/libs/amcharts/serial.js"></script>
     <script type="text/javascript" src="js/libs/amcharts/themes/light.js"></script>
     <script type="text/javascript" src="js/libs/amcharts/plugins/responsive/responsive.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
     <meta charset="UTF-8">
     <title>Rainbow6 stats</title>
 </head>
@@ -65,23 +64,23 @@
             <li>
 				<?php
 					if(isset($_GET['all']))
-                    {
-	                    ?>
+					{
+						?>
                         <a href=".">See weekly data</a>
-	                    <?php
-                    }
-                    else if(isset($_GET['detailled']))
-                    {
-	                    ?>
+						<?php
+					}
+                    elseif(isset($_GET['detailled']))
+					{
+						?>
                         <a href=".">See weekly data</a>
-	                    <?php
-                    }
-                    else
-                    {
-	                    ?>
+						<?php
+					}
+					else
+					{
+						?>
                         <a href="?detailled=1">See detailled data</a>
-	                    <?php
-                    }
+						<?php
+					}
 				?>
             </li>
             <li>
@@ -92,7 +91,7 @@
                         <a href="?detailled=1">See detailled data</a>
 						<?php
 					}
-					else if(isset($_GET['detailled']))
+                    elseif(isset($_GET['detailled']))
 					{
 						?>
                         <a href="?all=1">See all data</a>
@@ -109,54 +108,65 @@
         </ul>
     </div>
 </header>
-<div class="chartHolder" id="chartHolderRanked6">
-    <span class="chartName">Season 6</span>
-    <div class="chartDiv" id="chartDivRanked6"></div>
+<button class="accordion level1">Ranked</button>
+<div class="panel">
+	<?php
+		if(isset($_GET['all']))
+		{
+			?>
+            <button class="accordion">Season 5</button>
+            <div class="chartHolder panel" id="chartHolderRanked5">
+                <div class="chartDiv" id="chartDivRanked5"></div>
+            </div>
+			<?php
+		}
+	?>
+    <button class="accordion">Season 6</button>
+    <div class="chartHolder panel" id="chartHolderRanked6">
+        <div class="chartDiv" id="chartDivRanked6"></div>
+    </div>
+    <button class="accordion">Ratio K/D Ranked</button>
+    <div class="chartHolder panel" id="chartHolderKDR">
+        <div class="chartDiv" id="chartDivKDR"></div>
+    </div>
+    <button class="accordion">Ration W/L Ranked</button>
+    <div class="chartHolder panel" id="chartHolderWLR">
+        <div class="chartDiv" id="chartDivWLR"></div>
+    </div>
+    <button class="accordion">Playtime Ranked</button>
+    <div class="chartHolder panel" id="chartHolderPTR">
+        <div class="chartDiv" id="chartDivPTR"></div>
+    </div>
 </div>
-<hr/>
-<div class="chartHolder" id="chartHolderKDR">
-    <span class="chartName">Ratio K/D Ranked</span>
-    <div class="chartDiv" id="chartDivKDR"></div>
+<button class="accordion level1">Casual</button>
+<div class="panel">
+    <button class="accordion">Ratio K/D Casual</button>
+    <div class="chartHolder panel" id="chartHolderKDC">
+        <div class="chartDiv" id="chartDivKDC"></div>
+    </div>
+    <button class="accordion">Ratio W/L Casual</button>
+    <div class="chartHolder panel" id="chartHolderWLC">
+        <div class="chartDiv" id="chartDivWLC"></div>
+    </div>
+    <button class="accordion">Playtime Casual</button>
+    <div class="chartHolder panel" id="chartHolderPTC">
+        <div class="chartDiv" id="chartDivPTC"></div>
+    </div>
 </div>
-<hr/>
-<div class="chartHolder" id="chartHolderWLR">
-    <span class="chartName">Ratio W/L Ranked</span>
-    <div class="chartDiv" id="chartDivWLR"></div>
-</div>
-<hr/>
-<div class="chartHolder" id="chartHolderPTR">
-    <span class="chartName">Playtime Ranked</span>
-    <div class="chartDiv" id="chartDivPTR"></div>
-</div>
-<hr/>
-<div class="chartHolder" id="chartHolderKDC">
-    <span class="chartName">Ratio K/D Casual</span>
-    <div class="chartDiv" id="chartDivKDC"></div>
-</div>
-<hr/>
-<div class="chartHolder" id="chartHolderWLC">
-    <span class="chartName">Ratio W/L Casual</span>
-    <div class="chartDiv" id="chartDivWLC"></div>
-</div>
-<hr/>
-<div class="chartHolder" id="chartHolderPTC">
-    <span class="chartName">Playtime Casual</span>
-    <div class="chartDiv" id="chartDivPTC"></div>
-</div>
-<hr/>
-<div class="chartHolder" id="chartHolderACC">
-    <span class="chartName">Accuracy</span>
-    <div class="chartDiv" id="chartDivACC"></div>
-</div>
-<hr/>
-<div class="chartHolder" id="chartHolderASS">
-    <span class="chartName">Assists</span>
-    <div class="chartDiv" id="chartDivASS"></div>
-</div>
-<hr/>
-<div class="chartHolder" id="chartHolderHDS">
-    <span class="chartName">Assists</span>
-    <div class="chartDiv" id="chartDivHDS"></div>
+<button class="accordion level1">Other</button>
+<div class="panel">
+    <button class="accordion">Accuracy</button>
+    <div class="chartHolder panel" id="chartHolderACC">
+        <div class="chartDiv" id="chartDivACC"></div>
+    </div>
+    <button class="accordion">Assists</button>
+    <div class="chartHolder panel" id="chartHolderASS">
+        <div class="chartDiv" id="chartDivASS"></div>
+    </div>
+    <button class="accordion">Headshots</button>
+    <div class="chartHolder panel" id="chartHolderHDS">
+        <div class="chartDiv" id="chartDivHDS"></div>
+    </div>
 </div>
 <?php
 	require_once dirname(__FILE__) . '/graphs/AccuracyGraph.php';
@@ -167,6 +177,7 @@
 	require_once dirname(__FILE__) . '/graphs/PlayTimeCasualGraph.php';
 	require_once dirname(__FILE__) . '/graphs/PlayTimeRankedGraph.php';
 	require_once dirname(__FILE__) . '/graphs/RankedSeason6Graph.php';
+	require_once dirname(__FILE__) . '/graphs/RankedSeason5Graph.php';
 	require_once dirname(__FILE__) . '/graphs/WinLossCasualGraph.php';
 	require_once dirname(__FILE__) . '/graphs/WinLossRankedGraph.php';
 
@@ -190,6 +201,12 @@
 
 	$plot = new PlayTimeRankedGraph();
 	$plot->plot();
+
+	if(isset($_GET['all']))
+	{
+		$plot = new RankedSeason5Graph();
+		$plot->plot();
+	}
 
 	$plot = new RankedSeason6Graph();
 	$plot->plot();
