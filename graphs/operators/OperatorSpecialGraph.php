@@ -15,16 +15,4 @@
 			$point['stat'] = $operator['specials'][$this->id];
 			return $point;
 		}
-
-		function processPoint($player, $timestamp, $operator = array())
-		{
-			$username = $player['player']['username'];
-			if(!isset($this->datas[$username]))
-				$this->datas[$username] = array();
-			$data = $this->getPoint($operator);
-			if($data === null)
-				return;
-			$data['timestamp'] = $timestamp;
-			$this->datas[$username][$player['player']['updated_at']] = $data;
-		}
 	}
