@@ -59,7 +59,7 @@
             <li><a href="https://r6stats.com/" target="_blank">Datas from R6Stats</a></li>
             <?php
                 if($beta)
-                    echo '<li><a href="https://rainbow.mrcraftcod.fr" target="_blank">Release version</a></li>';
+                    echo '<li><a href="https://rainbow.mrcraftcod.fr" target="_self">Release version</a></li>';
                 else
                     echo '<li><a href="https://rainbowb.mrcraftcod.fr" target="_self">Beta version</a></li>';
             ?>
@@ -184,7 +184,9 @@
 <?php
 	foreach(glob("graphs/*/*.php") as $filename)
 		/** @noinspection PhpIncludeInspection */
-		include $filename;
+		require_once __DIR__ . '/' . $filename;
+
+	$operatorHandler = new OperatorsHandler();
 
 	$plots = array();
 
@@ -200,6 +202,7 @@
 	$plots[] = new RankedSeason6Graph();
 	$plots[] = new WinLossCasualGraph();
 	$plots[] = new WinLossRankedGraph();
+    $plots[] = $operatorHandler;
 
 	$files = glob($rootDir . '/players/*/*.json', GLOB_BRACE);
 	foreach($files as $file)
@@ -213,6 +216,8 @@
 		foreach($plots as $plotIndex => $plot)
 			$plot->processPoint($player, $timestamp);
 	}
+
+	$operatorHandler->buildDivs();
 
 	foreach($plots as $plotIndex => $plot)
 		$plot->plot();
