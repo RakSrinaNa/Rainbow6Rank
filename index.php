@@ -1,12 +1,12 @@
 <?php
+    $beta = $_SERVER['HTTP_HOST'] === 'rainbowb.mrcraftcod.fr';
 
-	if(true)
+	if($beta)
 	{
 		error_reporting(E_ALL);
 		ini_set('display_errors', '1');
 	}
 	date_default_timezone_set('Europe/Paris');
-	$dev = isset($_GET['dev']);
 
 	function getLastCheckDate()
 	{
@@ -181,41 +181,38 @@
 	require_once dirname(__FILE__) . '/graphs/WinLossCasualGraph.php';
 	require_once dirname(__FILE__) . '/graphs/WinLossRankedGraph.php';
 
-	$plot = new AccuracyGraph();
-	$plot->plot();
+	$plots = array();
 
-	$plot = new AssistsGraph();
-	$plot->plot();
-
-	$plot = new HeadshotsGraph();
-	$plot->plot();
-
-	$plot = new KillDeathCasualGraph();
-	$plot->plot();
-
-	$plot = new KillDeathRankedGraph();
-	$plot->plot();
-
-	$plot = new PlayTimeCasualGraph();
-	$plot->plot();
-
-	$plot = new PlayTimeRankedGraph();
-	$plot->plot();
-
+	$plots[] = new AccuracyGraph();
+	$plots[] = new AssistsGraph();
+	$plots[] = new HeadshotsGraph();
+	$plots[] = new KillDeathCasualGraph();
+	$plots[] = new KillDeathRankedGraph();
+	$plots[] = new PlayTimeCasualGraph();
+	$plots[] = new PlayTimeRankedGraph();
 	if(isset($_GET['all']))
+		$plots[] = new RankedSeason5Graph();
+	$plots[] = new RankedSeason6Graph();
+	$plots[] = new WinLossCasualGraph();
+	$plots[] = new WinLossRankedGraph();
+
+	echo json_encode($_SERVER);
+
+	$files = glob('/homez.2349/mrcraftcgg/www/subdomains/rainbow/players/*/*.json', GLOB_BRACE);
+	foreach($files as $file)
 	{
-		$plot = new RankedSeason5Graph();
-		$plot->plot();
+		$timestamp = (explode('.', array_values(array_slice(explode('/', $file), -1))[0])[0] / 1000);
+		if(!isset($_GET['all']) && time() - $timestamp > $this->getRange())
+			continue;
+		$player = json_decode(file_get_contents($file), true);
+		if(!isset($player['player']['username']) || $player['player']['username'] === '')
+			continue;
+		foreach($plots as $plotIndex => $plot)
+			$plot->processPoint($player, $timestamp);
 	}
 
-	$plot = new RankedSeason6Graph();
-	$plot->plot();
-
-	$plot = new WinLossCasualGraph();
-	$plot->plot();
-
-	$plot = new WinLossRankedGraph();
-	$plot->plot();
+	foreach($plots as $plotIndex => $plot)
+		$plot->plot();
 ?>
 </body>
 </html>

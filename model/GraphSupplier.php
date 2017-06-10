@@ -9,6 +9,8 @@
 	 */
 	abstract class GraphSupplier
 	{
+	    private $datas = array();
+
 		final function plot()
 		{ ?>
             <!--suppress JSDuplicatedDeclaration -->
@@ -205,27 +207,20 @@
 
 		function getDatas()
 		{
-			$datas = array();
-			$files = glob('players/*/*.json', GLOB_BRACE);
-			foreach($files as $file)
-			{
-				$timestamp = (explode('.', array_values(array_slice(explode('/', $file), -1))[0])[0] / 1000);
-				if(!isset($_GET['all']) && time() - $timestamp > $this->getRange())
-					continue;
-				$player = json_decode(file_get_contents($file), true);
-				if(!isset($player['player']['username']) || $player['player']['username'] === '')
-					continue;
-				$username = $player['player']['username'];
-				if(!isset($datas[$username]))
-					$datas[$username] = array();
-				$data = $this->getPoint($player);
-				if($data === null)
-					continue;
-				$data['timestamp'] = $timestamp;
-				$datas[$username][$player['player']['updated_at']] = $data;
-			}
-			return json_encode(GraphUtils::process($datas));
+			return json_encode(GraphUtils::process($this->datas));
 		}
+
+		function processPoint($player, $timestamp)
+        {
+	        $username = $player['player']['username'];
+	        if(!isset($this->datas[$username]))
+		        $this->datas[$username] = array();
+	        $data = $this->getPoint($player);
+	        if($data === null)
+		        return;
+	        $data['timestamp'] = $timestamp;
+	        $this->datas[$username][$player['player']['updated_at']] = $data;
+        }
 
 		final function getRange()
 		{
