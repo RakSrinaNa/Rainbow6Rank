@@ -14,13 +14,14 @@
 
 		function processPoint($player, $timestamp)
 		{
-			foreach($player['operators'] as $operator)
-			{
-				$name = $operator['operator']['name'];
-				if(!isset($this->operatorGraphs[$name]))
-					$this->operatorGraphs[$name] = new OperatorGraph($name);
-				$this->operatorGraphs[$name]->processPoint($player, $timestamp, $operator['stats']);
-			}
+			if(isset($player['operators']))
+				foreach($player['operators'] as $operator)
+				{
+					$name = $operator['operator']['name'];
+					if(!isset($this->operatorGraphs[$name]))
+						$this->operatorGraphs[$name] = new OperatorGraph($name);
+					$this->operatorGraphs[$name]->processPoint($player, $timestamp, $operator['stats']);
+				}
 		}
 
 		function getID()
