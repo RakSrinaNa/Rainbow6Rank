@@ -9,9 +9,9 @@
 	 */
 	abstract class GraphSupplier
 	{
-		private $datas = array();
+		protected $datas = array();
 
-		final function plot()
+		function plot()
 		{ ?>
             <!--suppress JSDuplicatedDeclaration -->
             <script type='text/javascript'>
@@ -210,7 +210,7 @@
 			return json_encode(GraphUtils::process($this->datas));
 		}
 
-		final function processPoint($player, $timestamp)
+        function processPoint($player, $timestamp)
 		{
 			$username = $player['player']['username'];
 			if(!isset($this->datas[$username]))

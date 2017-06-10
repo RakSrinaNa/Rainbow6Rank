@@ -13,8 +13,11 @@ branches:
   - master
 before_script:
 - chmod +x deploy.sh
-after_success:
-- ./deploy.sh
+deploy:
+  provider: script
+  script: ./deploy.sh
+  on:
+    branch: master
 env:
   global:
   - secure: MZH/AFGY/KBhIbx7lHIGDGnTp+ATwzJAoWEcTj9jZzcmtRcV/1JxmcM3MvMkWVN5pkI9ZcIh0lkje/H6xVTVrohJ97PmnmtZNiW60sLBLmlCZUUgeKriqjezN5m8G79XOb6WjHj/BzV+FWuGYLaPzMVfTEY8XulNu7GjL02hViAOkZmJcKByKxKn9koJzkxgRbjWcdct+SQqt3L1BO+dVIV/bmTGm8LMMVLVzAP+opHVxCo6BbOk+OInijiGd0XsmjSZP+q67joqbtINiP27XLMvn4/NF0Y9j9m9di9ts++qBf9QxuZl/IUU7RZ7EF0P0PaGtTB+IX+jjcxacGUtk359S8znTsXWJg5rjaiFAVvfoOGfb0ehpP8gcp5XlbagdrFBKNwN6udCmcj7TVopQbyUXi0Zj8qxSx63DTcbDKrwZVcKZ8ay90Jq8yOWqbiPWDgCfyMs2c7YJL+YxopLiQNqeTTCYs5AkuspVYNscImmsGmkFeuWxArTwaPL3f8tZjnIbxTnJ+eog8fGYcFir1fCURQ5ljeOfQp81R5nym0wHSDH6ZmaslbNpdNZgg90pcMZo8h2j5z1GzU31b4KZrNtSlnOcL8z7FTQT5y++X9YXxV8DvccpeEviwfF7QOKVX5LA1vDYSGBqNGZw3dGIcZPTv4wUY/6YfmcEmOlkk8=

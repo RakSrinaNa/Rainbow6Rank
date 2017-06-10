@@ -59,7 +59,7 @@
             <li><a href="https://r6stats.com/" target="_blank">Datas from R6Stats</a></li>
             <?php
                 if($beta)
-                    echo '<li><a href="https://rainbow.mrcraftcod.fr" target="_blank">Release version</a></li>';
+                    echo '<li><a href="https://rainbow.mrcraftcod.fr" target="_self">Release version</a></li>';
                 else
                     echo '<li><a href="https://rainbowb.mrcraftcod.fr" target="_self">Beta version</a></li>';
             ?>
@@ -127,72 +127,66 @@
 		if(isset($_GET['all']))
 		{
 			?>
-            <button class="accordion">Season 5</button>
+            <button class="accordion level2">Season 5</button>
             <div class="chartHolder panel" id="chartHolderRanked5">
                 <div class="chartDiv" id="chartDivRanked5"></div>
             </div>
 			<?php
 		}
 	?>
-    <button class="accordion">Season 6</button>
+    <button class="accordion level2">Season 6</button>
     <div class="chartHolder panel" id="chartHolderRanked6">
         <div class="chartDiv" id="chartDivRanked6"></div>
     </div>
-    <button class="accordion">Ratio K/D Ranked</button>
+    <button class="accordion level2">Ratio K/D Ranked</button>
     <div class="chartHolder panel" id="chartHolderKDR">
         <div class="chartDiv" id="chartDivKDR"></div>
     </div>
-    <button class="accordion">Ration W/L Ranked</button>
+    <button class="accordion level2">Ration W/L Ranked</button>
     <div class="chartHolder panel" id="chartHolderWLR">
         <div class="chartDiv" id="chartDivWLR"></div>
     </div>
-    <button class="accordion">Playtime Ranked</button>
+    <button class="accordion level2">Playtime Ranked</button>
     <div class="chartHolder panel" id="chartHolderPTR">
         <div class="chartDiv" id="chartDivPTR"></div>
     </div>
 </div>
 <button class="accordion level1">Casual</button>
 <div class="panel">
-    <button class="accordion">Ratio K/D Casual</button>
+    <button class="accordion level2">Ratio K/D Casual</button>
     <div class="chartHolder panel" id="chartHolderKDC">
         <div class="chartDiv" id="chartDivKDC"></div>
     </div>
-    <button class="accordion">Ratio W/L Casual</button>
+    <button class="accordion level2">Ratio W/L Casual</button>
     <div class="chartHolder panel" id="chartHolderWLC">
         <div class="chartDiv" id="chartDivWLC"></div>
     </div>
-    <button class="accordion">Playtime Casual</button>
+    <button class="accordion level2">Playtime Casual</button>
     <div class="chartHolder panel" id="chartHolderPTC">
         <div class="chartDiv" id="chartDivPTC"></div>
     </div>
 </div>
 <button class="accordion level1">Other</button>
 <div class="panel">
-    <button class="accordion">Accuracy</button>
+    <button class="accordion level2">Accuracy</button>
     <div class="chartHolder panel" id="chartHolderACC">
         <div class="chartDiv" id="chartDivACC"></div>
     </div>
-    <button class="accordion">Assists</button>
+    <button class="accordion level2">Assists</button>
     <div class="chartHolder panel" id="chartHolderASS">
         <div class="chartDiv" id="chartDivASS"></div>
     </div>
-    <button class="accordion">Headshots</button>
+    <button class="accordion level2">Headshots</button>
     <div class="chartHolder panel" id="chartHolderHDS">
         <div class="chartDiv" id="chartDivHDS"></div>
     </div>
 </div>
 <?php
-	require_once dirname(__FILE__) . '/graphs/other/AccuracyGraph.php';
-	require_once dirname(__FILE__) . '/graphs/other/AssistsGraph.php';
-	require_once dirname(__FILE__) . '/graphs/other/HeadshotsGraph.php';
-	require_once dirname(__FILE__) . '/graphs/casual/KillDeathCasualGraph.php';
-	require_once dirname(__FILE__) . '/graphs/ranked/KillDeathRankedGraph.php';
-	require_once dirname(__FILE__) . '/graphs/casual/PlayTimeCasualGraph.php';
-	require_once dirname(__FILE__) . '/graphs/ranked/PlayTimeRankedGraph.php';
-	require_once dirname(__FILE__) . '/graphs/ranked/RankedSeason6Graph.php';
-	require_once dirname(__FILE__) . '/graphs/ranked/RankedSeason5Graph.php';
-	require_once dirname(__FILE__) . '/graphs/casual/WinLossCasualGraph.php';
-	require_once dirname(__FILE__) . '/graphs/ranked/WinLossRankedGraph.php';
+	foreach(glob("graphs/*/*.php") as $filename)
+		/** @noinspection PhpIncludeInspection */
+		require_once __DIR__ . '/' . $filename;
+
+	$operatorHandler = new OperatorsHandler();
 
 	$plots = array();
 
@@ -208,6 +202,7 @@
 	$plots[] = new RankedSeason6Graph();
 	$plots[] = new WinLossCasualGraph();
 	$plots[] = new WinLossRankedGraph();
+    $plots[] = $operatorHandler;
 
 	$files = glob($rootDir . '/players/*/*.json', GLOB_BRACE);
 	foreach($files as $file)
@@ -221,6 +216,8 @@
 		foreach($plots as $plotIndex => $plot)
 			$plot->processPoint($player, $timestamp);
 	}
+
+	$operatorHandler->buildDivs();
 
 	foreach($plots as $plotIndex => $plot)
 		$plot->plot();
