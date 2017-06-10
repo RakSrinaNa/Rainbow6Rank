@@ -9,7 +9,7 @@
 	 */
 	abstract class GraphSupplier
 	{
-	    private $datas = array();
+		private $datas = array();
 
 		final function plot()
 		{ ?>
@@ -205,26 +205,21 @@
 
 		abstract function getID();
 
-		function getDatas()
+		final function getDatas()
 		{
 			return json_encode(GraphUtils::process($this->datas));
 		}
 
-		function processPoint($player, $timestamp)
-        {
-	        $username = $player['player']['username'];
-	        if(!isset($this->datas[$username]))
-		        $this->datas[$username] = array();
-	        $data = $this->getPoint($player);
-	        if($data === null)
-		        return;
-	        $data['timestamp'] = $timestamp;
-	        $this->datas[$username][$player['player']['updated_at']] = $data;
-        }
-
-		final function getRange()
+		final function processPoint($player, $timestamp)
 		{
-			return isset($_GET['weekly']) ? 31536000 : 2592000;
+			$username = $player['player']['username'];
+			if(!isset($this->datas[$username]))
+				$this->datas[$username] = array();
+			$data = $this->getPoint($player);
+			if($data === null)
+				return;
+			$data['timestamp'] = $timestamp;
+			$this->datas[$username][$player['player']['updated_at']] = $data;
 		}
 
 		abstract function getPoint($player);

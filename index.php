@@ -1,5 +1,6 @@
 <?php
-    $beta = $_SERVER['HTTP_HOST'] === 'rainbowb.mrcraftcod.fr';
+	$beta = $_SERVER['HTTP_HOST'] === 'rainbowb.mrcraftcod.fr';
+    $rootDir = '/homez.2349/mrcraftcgg/www/subdomains/rainbow';
 
 	if($beta)
 	{
@@ -8,10 +9,15 @@
 	}
 	date_default_timezone_set('Europe/Paris');
 
-	function getLastCheckDate()
+	function getRange()
+	{
+		return isset($_GET['weekly']) ? 31536000 : 2592000;
+	}
+
+	function getLastCheckDate($rootDir)
 	{
 		$date = 0;
-		$files = glob('players/last.update', GLOB_BRACE);
+		$files = glob($rootDir . '/players/last.update', GLOB_BRACE);
 		foreach($files as $file)
 		{
 			$fDate = filemtime($file);
@@ -20,10 +26,10 @@
 		return $date === 0 ? 'UNKNOWN' : date("H:i:s", $date);
 	}
 
-	function getLastUpdateDate()
+	function getLastUpdateDate($rootDir)
 	{
 		$date = 0;
-		$files = glob('players/*/*.json', GLOB_BRACE);
+		$files = glob($rootDir . '/players/*/*.json', GLOB_BRACE);
 		foreach($files as $file)
 		{
 			$fDate = filemtime($file);
@@ -44,19 +50,26 @@
     <script type="text/javascript" src="js/libs/amcharts/plugins/responsive/responsive.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <meta charset="UTF-8">
-    <title>Rainbow6 stats</title>
+    <title>Rainbow6 stats<?php if($beta)echo ' BETA'; ?></title>
 </head>
 <body>
 <header id="headerContainer">
     <div class="leftNav inline">
         <ul>
             <li><a href="https://r6stats.com/" target="_blank">Datas from R6Stats</a></li>
+            <?php
+                if($beta)
+                    echo '<li><a href="https://rainbow.mrcraftcod.fr" target="_blank">Release version</a></li>';
+                else
+                    echo '<li><a href="https://rainbowb.mrcraftcod.fr" target="_self">Beta version</a></li>';
+            ?>
+            <li></li>
         </ul>
     </div>
     <div class="inline">
         <ul>
-            <li class="centerNav"><a href="#">Last update at: <?php echo getLastCheckDate() ?></a></li>
-            <li class="centerNav"><a href="#">Last data from: <?php echo getLastUpdateDate(); ?></a></li>
+            <li class="centerNav"><a href="#">Last update at: <?php echo getLastCheckDate($rootDir) ?></a></li>
+            <li class="centerNav"><a href="#">Last data from: <?php echo getLastUpdateDate($rootDir); ?></a></li>
         </ul>
     </div>
     <div class="rightNav inline">
@@ -169,17 +182,17 @@
     </div>
 </div>
 <?php
-	require_once dirname(__FILE__) . '/graphs/AccuracyGraph.php';
-	require_once dirname(__FILE__) . '/graphs/AssistsGraph.php';
-	require_once dirname(__FILE__) . '/graphs/HeadshotsGraph.php';
-	require_once dirname(__FILE__) . '/graphs/KillDeathCasualGraph.php';
-	require_once dirname(__FILE__) . '/graphs/KillDeathRankedGraph.php';
-	require_once dirname(__FILE__) . '/graphs/PlayTimeCasualGraph.php';
-	require_once dirname(__FILE__) . '/graphs/PlayTimeRankedGraph.php';
-	require_once dirname(__FILE__) . '/graphs/RankedSeason6Graph.php';
-	require_once dirname(__FILE__) . '/graphs/RankedSeason5Graph.php';
-	require_once dirname(__FILE__) . '/graphs/WinLossCasualGraph.php';
-	require_once dirname(__FILE__) . '/graphs/WinLossRankedGraph.php';
+	require_once dirname(__FILE__) . '/graphs/other/AccuracyGraph.php';
+	require_once dirname(__FILE__) . '/graphs/other/AssistsGraph.php';
+	require_once dirname(__FILE__) . '/graphs/other/HeadshotsGraph.php';
+	require_once dirname(__FILE__) . '/graphs/casual/KillDeathCasualGraph.php';
+	require_once dirname(__FILE__) . '/graphs/ranked/KillDeathRankedGraph.php';
+	require_once dirname(__FILE__) . '/graphs/casual/PlayTimeCasualGraph.php';
+	require_once dirname(__FILE__) . '/graphs/ranked/PlayTimeRankedGraph.php';
+	require_once dirname(__FILE__) . '/graphs/ranked/RankedSeason6Graph.php';
+	require_once dirname(__FILE__) . '/graphs/ranked/RankedSeason5Graph.php';
+	require_once dirname(__FILE__) . '/graphs/casual/WinLossCasualGraph.php';
+	require_once dirname(__FILE__) . '/graphs/ranked/WinLossRankedGraph.php';
 
 	$plots = array();
 
@@ -196,13 +209,11 @@
 	$plots[] = new WinLossCasualGraph();
 	$plots[] = new WinLossRankedGraph();
 
-	echo json_encode($_SERVER);
-
-	$files = glob('/homez.2349/mrcraftcgg/www/subdomains/rainbow/players/*/*.json', GLOB_BRACE);
+	$files = glob($rootDir . '/players/*/*.json', GLOB_BRACE);
 	foreach($files as $file)
 	{
 		$timestamp = (explode('.', array_values(array_slice(explode('/', $file), -1))[0])[0] / 1000);
-		if(!isset($_GET['all']) && time() - $timestamp > $this->getRange())
+		if(!isset($_GET['all']) && time() - $timestamp > getRange())
 			continue;
 		$player = json_decode(file_get_contents($file), true);
 		if(!isset($player['player']['username']) || $player['player']['username'] === '')
