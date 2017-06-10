@@ -20,7 +20,7 @@
 		curl_setopt($cURL, CURLOPT_HTTPGET, true);
 		curl_setopt($cURL, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Accept: application/json'));
 		$content = curl_exec($cURL);
-		logg('HTTP Response: ' . curl_getinfo($cURL, CURLINFO_HTTP_CODE) . "\n", $fpLog);
+		logg($path . ' => HTTP Response: ' . curl_getinfo($cURL, CURLINFO_HTTP_CODE) . "\n", $fpLog);
 		if(!$content)
 			logg('Error getting from API (' . curl_errno($cURL) . ')' . curl_error($cURL) . "\n", $fpLog);
 		curl_close($cURL);
