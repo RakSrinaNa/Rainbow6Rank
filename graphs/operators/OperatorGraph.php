@@ -38,11 +38,14 @@
 
 		function buildDivs()
 		{
+			echo '<button class="accordion level">' . $this->name . '</button>';
+			echo '<div class="panel">';
 			foreach($this->graphs as $graphValue => $graph)
 			{
-				echo '<button class="accordion level1">' . $graphValue . '</button>';
-				echo '<div class="chartHolder panel" id="chartHolder' . $graph->getID() . '"><div class="chartDiv" id="chartDiv' . $graph->getID() . '"></div></div></div>';
+				echo '<button class="accordion level">' . $graph->getTitle() . '</button>';
+				echo '<div class="chartHolder panel" id="chartHolder' . $graph->getID() . '"><div class="chartDiv" id="chartDiv' . $graph->getID() . '"></div></div>';
 			}
+			echo '</div>';
 		}
 
 		function plot()
