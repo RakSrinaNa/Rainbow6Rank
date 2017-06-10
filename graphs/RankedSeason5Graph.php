@@ -17,6 +17,9 @@
 			$point = array('stat' => 0);
 			$point['stat'] = $player['seasons']['5']['emea']['ranking']['rating'];
 			$point['rank'] = $this->getRank($player);
+			$point['wins'] = $player['seasons']['5']['emea']['wins'];
+			$point['losses'] = $player['seasons']['5']['emea']['losses'];
+			$point['abandons'] = $player['seasons']['5']['emea']['abandons'];
 			return $point;
 		}
 
@@ -56,6 +59,6 @@
 
 		function getAdditionalBalloon()
 		{
-			return array('rank' => 'Rank: ');
+			return array('rank' => 'Rank: ', 'wins' => 'Wins: ', 'losses' => 'Losses: ', 'abandons' => 'Abandons: ');
 		}
 	}

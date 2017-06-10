@@ -8,7 +8,6 @@
 			$point = array('stat' => 0, 'total' => 0);
 			$point['stat'] = $player['player']['stats']['ranked']['wins'];
 			$point['total'] = $player['player']['stats']['ranked']['losses'];
-			$point['played'] = $player['player']['stats']['ranked']['wins'] + $player['player']['stats']['ranked']['losses'];
 			return $point;
 		}
 

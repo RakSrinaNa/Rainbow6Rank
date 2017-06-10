@@ -9,7 +9,7 @@
 
 		function getPoint($player)
 		{
-			if(!isset($player['seasons']) || !isset($player['seasons']['6']) )
+			if(!isset($player['seasons']) || !isset($player['seasons']['6']))
 				return null;
 			$date = $date = date_create_from_format('Y-m-d\TH:i:s+', $player['player']['updated_at']);
 			if($this->endDate > 0 && $date->getTimestamp() >= $this->endDate)
@@ -17,6 +17,9 @@
 			$point = array('stat' => 0);
 			$point['stat'] = $player['seasons']['6']['emea']['ranking']['rating'];
 			$point['rank'] = $this->getRank($player);
+			$point['wins'] = $player['seasons']['6']['emea']['wins'];
+			$point['losses'] = $player['seasons']['6']['emea']['losses'];
+			$point['abandons'] = $player['seasons']['6']['emea']['abandons'];
 			return $point;
 		}
 
@@ -56,6 +59,6 @@
 
 		function getAdditionalBalloon()
 		{
-			return array('rank' => 'Rank: ');
+			return array('rank' => 'Rank: ', 'wins' => 'Wins: ', 'losses' => 'Losses: ', 'abandons' => 'Abandons: ');
 		}
 	}
