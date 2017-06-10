@@ -182,17 +182,9 @@
     </div>
 </div>
 <?php
-	require_once dirname(__FILE__) . '/graphs/other/AccuracyGraph.php';
-	require_once dirname(__FILE__) . '/graphs/other/AssistsGraph.php';
-	require_once dirname(__FILE__) . '/graphs/other/HeadshotsGraph.php';
-	require_once dirname(__FILE__) . '/graphs/casual/KillDeathCasualGraph.php';
-	require_once dirname(__FILE__) . '/graphs/ranked/KillDeathRankedGraph.php';
-	require_once dirname(__FILE__) . '/graphs/casual/PlayTimeCasualGraph.php';
-	require_once dirname(__FILE__) . '/graphs/ranked/PlayTimeRankedGraph.php';
-	require_once dirname(__FILE__) . '/graphs/ranked/RankedSeason6Graph.php';
-	require_once dirname(__FILE__) . '/graphs/ranked/RankedSeason5Graph.php';
-	require_once dirname(__FILE__) . '/graphs/casual/WinLossCasualGraph.php';
-	require_once dirname(__FILE__) . '/graphs/ranked/WinLossRankedGraph.php';
+	foreach(glob("graphs/*/*.php") as $filename)
+		/** @noinspection PhpIncludeInspection */
+		include $filename;
 
 	$plots = array();
 
