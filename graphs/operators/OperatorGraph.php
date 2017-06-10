@@ -59,7 +59,7 @@
 				$this->graphs['kd'] = new OperatorWinLossGraph($this->name, 'kd');
 			if(!isset($this->graphs['pt']))
 				$this->graphs['pt'] = new OperatorPlaytimeGraph($this->name, 'py');
-			foreach($operator['specials'] as $specialIndex)
+			foreach($operator['specials'] as $specialIndex => $specialValue)
 				if(!isset($this->graphs[$specialIndex]))
 					$this->graphs[$specialIndex] = new OperatorSpecialGraph($this->name, $specialIndex);
 
