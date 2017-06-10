@@ -8,8 +8,9 @@
 
 		function plot()
 		{
-			foreach($this->operatorGraphs as $graphIndex => $graph)
-				$graph->plot();
+			foreach($this->operatorGraphs as $ctuIndex => $ctu)
+				foreach($ctu as $graphIndex => $graph)
+					$graph->plot();
 		}
 
 		function processPoint($player, $timestamp)
@@ -18,9 +19,12 @@
 				foreach($player['operators'] as $operator)
 				{
 					$name = $operator['operator']['name'];
-					if(!isset($this->operatorGraphs[$name]))
-						$this->operatorGraphs[$name] = new OperatorGraph($name);
-					$this->operatorGraphs[$name]->processPoint($player, $timestamp, $operator['stats']);
+					$ctu = $operator['operator']['ctu'];
+					if(!isset($this->operatorGraphs[$ctu]))
+						$this->operatorGraphs[$ctu] = array();
+					if(!isset($this->operatorGraphs[$ctu][$name]))
+						$this->operatorGraphs[$ctu][$name] = new OperatorGraph($name);
+					$this->operatorGraphs[$ctu][$name]->processPoint($player, $timestamp, $operator['stats']);
 				}
 		}
 
@@ -43,8 +47,14 @@
 		{
 			echo '<button class="accordion level1">Operators</button>';
 			echo '<div class="panel">';
-			foreach($this->operatorGraphs as $graphIndex => $graph)
-				$graph->buildDivs();
+			foreach($this->operatorGraphs as $ctuIndex => $ctu)
+			{
+				echo '<button class="accordion level2">' . $ctuIndex . '</button>';
+				echo '<div class="panel">';
+				foreach($ctu as $graphIndex => $graph)
+					$graph->buildDivs();
+				echo '</div>';
+			}
 			echo '</div>';
 		}
 	}

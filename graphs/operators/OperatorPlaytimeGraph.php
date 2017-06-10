@@ -21,11 +21,6 @@
 			return $point;
 		}
 
-		function getAdditionalBalloon()
-		{
-			return array('stat' => 'Kills: ', 'total' => 'Deaths: ');
-		}
-
 		function getParser()
 		{
 			return /** @lang JavaScript 1.8 */

@@ -127,56 +127,56 @@
 		if(isset($_GET['all']))
 		{
 			?>
-            <button class="accordion">Season 5</button>
+            <button class="accordion level2">Season 5</button>
             <div class="chartHolder panel" id="chartHolderRanked5">
                 <div class="chartDiv" id="chartDivRanked5"></div>
             </div>
 			<?php
 		}
 	?>
-    <button class="accordion">Season 6</button>
+    <button class="accordion level2">Season 6</button>
     <div class="chartHolder panel" id="chartHolderRanked6">
         <div class="chartDiv" id="chartDivRanked6"></div>
     </div>
-    <button class="accordion">Ratio K/D Ranked</button>
+    <button class="accordion level2">Ratio K/D Ranked</button>
     <div class="chartHolder panel" id="chartHolderKDR">
         <div class="chartDiv" id="chartDivKDR"></div>
     </div>
-    <button class="accordion">Ration W/L Ranked</button>
+    <button class="accordion level2">Ration W/L Ranked</button>
     <div class="chartHolder panel" id="chartHolderWLR">
         <div class="chartDiv" id="chartDivWLR"></div>
     </div>
-    <button class="accordion">Playtime Ranked</button>
+    <button class="accordion level2">Playtime Ranked</button>
     <div class="chartHolder panel" id="chartHolderPTR">
         <div class="chartDiv" id="chartDivPTR"></div>
     </div>
 </div>
 <button class="accordion level1">Casual</button>
 <div class="panel">
-    <button class="accordion">Ratio K/D Casual</button>
+    <button class="accordion level2">Ratio K/D Casual</button>
     <div class="chartHolder panel" id="chartHolderKDC">
         <div class="chartDiv" id="chartDivKDC"></div>
     </div>
-    <button class="accordion">Ratio W/L Casual</button>
+    <button class="accordion level2">Ratio W/L Casual</button>
     <div class="chartHolder panel" id="chartHolderWLC">
         <div class="chartDiv" id="chartDivWLC"></div>
     </div>
-    <button class="accordion">Playtime Casual</button>
+    <button class="accordion level2">Playtime Casual</button>
     <div class="chartHolder panel" id="chartHolderPTC">
         <div class="chartDiv" id="chartDivPTC"></div>
     </div>
 </div>
 <button class="accordion level1">Other</button>
 <div class="panel">
-    <button class="accordion">Accuracy</button>
+    <button class="accordion level2">Accuracy</button>
     <div class="chartHolder panel" id="chartHolderACC">
         <div class="chartDiv" id="chartDivACC"></div>
     </div>
-    <button class="accordion">Assists</button>
+    <button class="accordion level2">Assists</button>
     <div class="chartHolder panel" id="chartHolderASS">
         <div class="chartDiv" id="chartDivASS"></div>
     </div>
-    <button class="accordion">Headshots</button>
+    <button class="accordion level2">Headshots</button>
     <div class="chartHolder panel" id="chartHolderHDS">
         <div class="chartDiv" id="chartDivHDS"></div>
     </div>

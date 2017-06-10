@@ -38,11 +38,11 @@
 
 		function buildDivs()
 		{
-			echo '<button class="accordion level">' . $this->name . '</button>';
+			echo '<button class="accordion level3">' . $this->name . '</button>';
 			echo '<div class="panel">';
 			foreach($this->graphs as $graphValue => $graph)
 			{
-				echo '<button class="accordion level">' . $graph->getTitle() . '</button>';
+				echo '<button class="accordion level4">' . $graph->getTitle() . '</button>';
 				echo '<div class="chartHolder panel" id="chartHolder' . $graph->getID() . '"><div class="chartDiv" id="chartDiv' . $graph->getID() . '"></div></div>';
 			}
 			echo '</div>';
@@ -59,9 +59,9 @@
 			if(!isset($this->graphs['wl']))
 				$this->graphs['wl'] = new OperatorWinLossGraph($this->name, 'wl');
 			if(!isset($this->graphs['kd']))
-				$this->graphs['kd'] = new OperatorWinLossGraph($this->name, 'kd');
+				$this->graphs['kd'] = new OperatorKillDeathGraph($this->name, 'kd');
 			if(!isset($this->graphs['pt']))
-				$this->graphs['pt'] = new OperatorPlaytimeGraph($this->name, 'py');
+				$this->graphs['pt'] = new OperatorPlaytimeGraph($this->name, 'pt');
 			foreach($operator['specials'] as $specialIndex => $specialValue)
 				if(!isset($this->graphs[$specialIndex]))
 					$this->graphs[$specialIndex] = new OperatorSpecialGraph($this->name, $specialIndex);
