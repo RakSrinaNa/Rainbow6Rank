@@ -42,12 +42,14 @@
 		$json = array();
 		$c1 = readAPI($fpLog, $player . '?platform=' . $platform);
 		$c2 = readAPI($fpLog, $player . '/seasons?platform=' . $platform);
-		if(!$c1 || !$c2)
+		$c3 = readAPI($fpLog, $player . '/operators?platform=' . $platform);
+		if(!$c1 || !$c2 || !$c3)
 		{
 			continue;
 		}
 		$json['player'] = json_decode($c1, true)['player'];
 		$json['seasons'] = json_decode($c2, true)['seasons'];
+		$json['operators'] = json_decode($c3, true)['operator_records'];
 
 		$temp = $json['player']['updated_at'];
 		$date = date_create_from_format($timeFormat, $temp);
