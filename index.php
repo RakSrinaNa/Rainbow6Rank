@@ -180,6 +180,34 @@
     <div class="chartHolder panel" id="chartHolderHDS">
         <div class="chartDiv" id="chartDivHDS"></div>
     </div>
+    <button class="accordion level2">Steps Moved</button>
+    <div class="chartHolder panel" id="chartHolderSM">
+        <div class="chartDiv" id="chartDivSM"></div>
+    </div>
+    <button class="accordion level2">Revives</button>
+    <div class="chartHolder panel" id="chartHolderRV">
+        <div class="chartDiv" id="chartDivRV"></div>
+    </div>
+    <button class="accordion level2">Suicides</button>
+    <div class="chartHolder panel" id="chartHolderSC">
+        <div class="chartDiv" id="chartDivSC"></div>
+    </div>
+    <button class="accordion level2">Reinforcements deployed</button>
+    <div class="chartHolder panel" id="chartHolderRD">
+        <div class="chartDiv" id="chartDivRD"></div>
+    </div>
+    <button class="accordion level2">Barricades built</button>
+    <div class="chartHolder panel" id="chartHolderBB">
+        <div class="chartDiv" id="chartDivBB"></div>
+    </div>
+    <button class="accordion level2">Melee kills</button>
+    <div class="chartHolder panel" id="chartHolderMK">
+        <div class="chartDiv" id="chartDivMK"></div>
+    </div>
+    <button class="accordion level2">Penetration kills</button>
+    <div class="chartHolder panel" id="chartHolderPK">
+        <div class="chartDiv" id="chartDivPK"></div>
+    </div>
 </div>
 <?php
 	foreach(glob("graphs/*/*.php") as $filename)
@@ -192,14 +220,21 @@
 
 	$plots[] = new AccuracyGraph();
 	$plots[] = new AssistsGraph();
+	$plots[] = new BarricadesGraph();
 	$plots[] = new HeadshotsGraph();
 	$plots[] = new KillDeathCasualGraph();
 	$plots[] = new KillDeathRankedGraph();
+	$plots[] = new MeleeGraph();
+	$plots[] = new PenetrationKillsGraph();
 	$plots[] = new PlayTimeCasualGraph();
 	$plots[] = new PlayTimeRankedGraph();
 	if(isset($_GET['all']))
 		$plots[] = new RankedSeason5Graph();
 	$plots[] = new RankedSeason6Graph();
+	$plots[] = new ReinforcementsGraph();
+	$plots[] = new RevivesGraph();
+	$plots[] = new StepsGraph();
+	$plots[] = new SuicidesGraph();
 	$plots[] = new WinLossCasualGraph();
 	$plots[] = new WinLossRankedGraph();
     $plots[] = $operatorHandler;
