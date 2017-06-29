@@ -142,7 +142,7 @@
     <div class="chartHolder panel" id="chartHolderKDR">
         <div class="chartDiv" id="chartDivKDR"></div>
     </div>
-    <button class="accordion level2">Ration W/L Ranked</button>
+    <button class="accordion level2">Ratio W/L Ranked</button>
     <div class="chartHolder panel" id="chartHolderWLR">
         <div class="chartDiv" id="chartDivWLR"></div>
     </div>
