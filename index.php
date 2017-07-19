@@ -11,7 +11,7 @@
 
 	function getRange()
 	{
-		return isset($_GET['weekly']) ? 31536000 : 2592000;
+		return isset($_GET['weekly']) ? 31536000 : (3 * 2592000);
 	}
 
 	function getLastCheckDate($rootDir)
@@ -142,7 +142,7 @@
     <div class="chartHolder panel" id="chartHolderKDR">
         <div class="chartDiv" id="chartDivKDR"></div>
     </div>
-    <button class="accordion level2">Ration W/L Ranked</button>
+    <button class="accordion level2">Ratio W/L Ranked</button>
     <div class="chartHolder panel" id="chartHolderWLR">
         <div class="chartDiv" id="chartDivWLR"></div>
     </div>

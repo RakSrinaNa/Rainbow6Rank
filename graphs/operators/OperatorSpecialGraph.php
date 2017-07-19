@@ -123,7 +123,7 @@
 		function getPoint($operator)
 		{
 			$point = array('stat' => 0);
-			$point['stat'] = $operator['specials'][$this->id];
+			$point['stat'] = isset($operator['specials'][$this->id]) ? $operator['specials'][$this->id] : 0;
 			return $point;
 		}
 	}
