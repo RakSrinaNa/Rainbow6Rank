@@ -11,7 +11,7 @@
 
 	function getRange()
 	{
-		return isset($_GET['weekly']) ? 31536000 : 2592000;
+		return isset($_GET['weekly']) ? 31536000 : (3 * 2592000);
 	}
 
 	function getLastCheckDate($rootDir)
