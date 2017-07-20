@@ -15,10 +15,12 @@
 	{
 		private $graphs = array();
 		private $name;
+		private $imageURL;
 
-		public function __construct($name)
+		public function __construct($name, $imageURL)
 		{
 			$this->name = $name;
+			$this->imageURL = $imageURL;
 		}
 
 		function getID()
@@ -38,7 +40,7 @@
 
 		function buildDivs()
 		{
-			echo '<button class="accordion level3">' . $this->name . '</button>';
+			echo '<button class="accordion level3">' . $this->name . '<img src="' . $this->imageURL . '"/></button>';
 			echo '<div class="panel">';
 			foreach($this->graphs as $graphValue => $graph)
 			{

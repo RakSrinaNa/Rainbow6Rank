@@ -23,7 +23,7 @@
 					if(!isset($this->operatorGraphs[$ctu]))
 						$this->operatorGraphs[$ctu] = array();
 					if(!isset($this->operatorGraphs[$ctu][$name]))
-						$this->operatorGraphs[$ctu][$name] = new OperatorGraph($name);
+						$this->operatorGraphs[$ctu][$name] = new OperatorGraph($name, $operator['operator']['images']['badge']);
 					$this->operatorGraphs[$ctu][$name]->processPoint($player, $timestamp, $operator['stats']);
 				}
 		}
