@@ -176,6 +176,7 @@ button.accordion.active:after, button.accordion.active:before
 {
 	content : url('/assets/arrow_up.png');
 	filter: invert(100%) hue-rotate(200deg);
+	vertical-align: middle;
 }
 
 button.accordion>img
