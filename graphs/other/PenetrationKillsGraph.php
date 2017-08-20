@@ -1,22 +1,26 @@
 <?php
-	require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-	class PenetrationKillsGraph extends GraphSupplier
+	namespace R6
 	{
-		function getPoint($player)
-		{
-			$point = array('stat' => 0);
-			$point['stat'] = $player['player']['stats']['overall']['penetration_kills'];
-			return $point;
-		}
+		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		function getTitle()
+		class PenetrationKillsGraph extends GraphSupplier
 		{
-			return 'Penetration kills';
-		}
+			function getPoint($player)
+			{
+				$point = array('stat' => 0);
+				$point['stat'] = $player['player']['stats']['overall']['penetration_kills'];
+				return $point;
+			}
 
-		function getID()
-		{
-			return 'PK';
+			function getTitle()
+			{
+				return 'Penetration kills';
+			}
+
+			function getID()
+			{
+				return 'PK';
+			}
 		}
 	}

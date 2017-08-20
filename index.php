@@ -214,29 +214,29 @@
 		/** @noinspection PhpIncludeInspection */
 		require_once __DIR__ . '/' . $filename;
 
-	$operatorHandler = new OperatorsHandler();
+	$operatorHandler = new R6\OperatorsHandler();
 
 	$plots = array();
 
-	$plots[] = new AccuracyGraph();
-	$plots[] = new AssistsGraph();
-	$plots[] = new BarricadesGraph();
-	$plots[] = new HeadshotsGraph();
-	$plots[] = new KillDeathCasualGraph();
-	$plots[] = new KillDeathRankedGraph();
-	$plots[] = new MeleeGraph();
-	$plots[] = new PenetrationKillsGraph();
-	$plots[] = new PlayTimeCasualGraph();
-	$plots[] = new PlayTimeRankedGraph();
+	$plots[] = new R6\AccuracyGraph();
+	$plots[] = new R6\AssistsGraph();
+	$plots[] = new R6\BarricadesGraph();
+	$plots[] = new R6\HeadshotsGraph();
+	$plots[] = new R6\KillDeathCasualGraph();
+	$plots[] = new R6\KillDeathRankedGraph();
+	$plots[] = new R6\MeleeGraph();
+	$plots[] = new R6\PenetrationKillsGraph();
+	$plots[] = new R6\PlayTimeCasualGraph();
+	$plots[] = new R6\PlayTimeRankedGraph();
 	if(isset($_GET['all']))
-		$plots[] = new RankedSeason5Graph();
-	$plots[] = new RankedSeason6Graph();
-	$plots[] = new ReinforcementsGraph();
-	$plots[] = new RevivesGraph();
-	$plots[] = new StepsGraph();
-	$plots[] = new SuicidesGraph();
-	$plots[] = new WinLossCasualGraph();
-	$plots[] = new WinLossRankedGraph();
+		$plots[] = new R6\RankedSeason5Graph();
+	$plots[] = new R6\RankedSeason6Graph();
+	$plots[] = new R6\ReinforcementsGraph();
+	$plots[] = new R6\RevivesGraph();
+	$plots[] = new R6\StepsGraph();
+	$plots[] = new R6\SuicidesGraph();
+	$plots[] = new R6\WinLossCasualGraph();
+	$plots[] = new R6\WinLossRankedGraph();
     $plots[] = $operatorHandler;
 
 	$files = glob($rootDir . '/players/*/*.json', GLOB_BRACE);

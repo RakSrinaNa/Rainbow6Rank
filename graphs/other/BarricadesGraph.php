@@ -1,22 +1,26 @@
 <?php
-	require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-	class BarricadesGraph extends GraphSupplier
+	namespace R6
 	{
-		function getPoint($player)
-		{
-			$point = array('stat' => 0);
-			$point['stat'] = $player['player']['stats']['overall']['barricades_built'];
-			return $point;
-		}
+		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		function getTitle()
+		class BarricadesGraph extends GraphSupplier
 		{
-			return 'Barricades built';
-		}
+			function getPoint($player)
+			{
+				$point = array('stat' => 0);
+				$point['stat'] = $player['player']['stats']['overall']['barricades_built'];
+				return $point;
+			}
 
-		function getID()
-		{
-			return 'BB';
+			function getTitle()
+			{
+				return 'Barricades built';
+			}
+
+			function getID()
+			{
+				return 'BB';
+			}
 		}
 	}

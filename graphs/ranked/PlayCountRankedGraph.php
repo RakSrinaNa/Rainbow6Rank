@@ -1,22 +1,26 @@
 <?php
-	require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-	class PlayCountRankedGraph extends GraphSupplier
+	namespace R6
 	{
-		function getPoint($player)
-		{
-			$point = array('stat' => 0);
-			$point['stat'] = $player['player']['stats']['ranked']['wins'] + $player['player']['stats']['ranked']['losses'];
-			return $point;
-		}
+		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		function getTitle()
+		class PlayCountRankedGraph extends GraphSupplier
 		{
-			return 'Match played Ranked';
-		}
+			function getPoint($player)
+			{
+				$point = array('stat' => 0);
+				$point['stat'] = $player['player']['stats']['ranked']['wins'] + $player['player']['stats']['ranked']['losses'];
+				return $point;
+			}
 
-		function getID()
-		{
-			return 'PLR';
+			function getTitle()
+			{
+				return 'Match played Ranked';
+			}
+
+			function getID()
+			{
+				return 'PLR';
+			}
 		}
 	}

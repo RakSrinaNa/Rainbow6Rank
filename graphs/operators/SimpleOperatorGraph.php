@@ -6,38 +6,58 @@
 	 * Time: 11:44
 	 */
 
-	require_once __DIR__ . '/../../model/GraphSupplier.php';
-
-	abstract class SimpleOperatorGraph extends GraphSupplier
+	namespace R6
 	{
-		protected $id;
-		protected $operator;
+		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		public function __construct($operator, $id)
+		abstract class SimpleOperatorGraph extends GraphSupplier
 		{
-			$this->operator = $operator;
-			$this->id = $id;
-		}
+			protected $id;
+			protected $operator;
 
-		function getID()
-		{
-			return $this->operator . $this->id;
-		}
+			/**
+			 * SimpleOperatorGraph constructor.
+			 *
+			 * @param string $operator
+			 * @param string $id
+			 */
+			public function __construct($operator, $id)
+			{
+				$this->operator = $operator;
+				$this->id = $id;
+			}
 
-		function getTitle()
-		{
-			return $this->id . ' ' . $this->operator;
-		}
+			/**
+			 * @return string
+			 */
+			function getID()
+			{
+				return $this->operator . $this->id;
+			}
 
-		function processPoint($player, $timestamp, $operator = array())
-		{
-			$username = $player['player']['username'];
-			if(!isset($this->datas[$username]))
-				$this->datas[$username] = array();
-			$data = $this->getPoint($operator);
-			if($data === null)
-				return;
-			$data['timestamp'] = $timestamp;
-			$this->datas[$username][$player['player']['updated_at']] = $data;
+			/**
+			 * @return string
+			 */
+			function getTitle()
+			{
+				return $this->id . ' ' . $this->operator;
+			}
+
+			/**
+			 * @param array $player
+			 * @param string $timestamp
+			 * @param array $operator
+			 */
+			function processPoint($player, $timestamp, $operator = array())
+			{
+				$username = $player['player']['username'];
+				if(!isset($this->datas[$username]))
+					$this->datas[$username] = array();
+				$data = $this->getPoint($operator);
+				if($data === null)
+					return;
+				$data['timestamp'] = $timestamp;
+				$this->datas[$username][$player['player']['updated_at']] = $data;
+			}
 		}
 	}

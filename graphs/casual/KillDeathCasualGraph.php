@@ -1,28 +1,32 @@
 <?php
-	require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-	class KillDeathCasualGraph extends GraphSupplier
+	namespace R6
 	{
-		function getPoint($player)
-		{
-			$point = array('stat' => 0, 'total' => 0);
-			$point['stat'] = $player['player']['stats']['casual']['kills'];
-			$point['total'] = $player['player']['stats']['casual']['deaths'];
-			return $point;
-		}
+		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		function getTitle()
+		class KillDeathCasualGraph extends GraphSupplier
 		{
-			return 'K/D Ratio Casual';
-		}
+			function getPoint($player)
+			{
+				$point = array('stat' => 0, 'total' => 0);
+				$point['stat'] = $player['player']['stats']['casual']['kills'];
+				$point['total'] = $player['player']['stats']['casual']['deaths'];
+				return $point;
+			}
 
-		function getID()
-		{
-			return 'KDC';
-		}
+			function getTitle()
+			{
+				return 'K/D Ratio Casual';
+			}
 
-		function getAdditionalBalloon()
-		{
-			return array('stat' => 'Kills: ', 'total' => 'Deaths: ');
+			function getID()
+			{
+				return 'KDC';
+			}
+
+			function getAdditionalBalloon()
+			{
+				return array('stat' => 'Kills: ', 'total' => 'Deaths: ');
+			}
 		}
 	}

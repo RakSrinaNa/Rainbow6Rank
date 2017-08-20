@@ -1,33 +1,37 @@
 <?php
-	require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-	class AccuracyGraph extends GraphSupplier
+	namespace R6
 	{
-		function getPoint($player)
-		{
-			$point = array('stat' => 0, 'total' => 0);
-			$point['stat'] = $player['player']['stats']['overall']['bullets_hit'];
-			$point['total'] = $player['player']['stats']['overall']['bullets_fired'];
-			return $point;
-		}
+		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		function getTitle()
+		class AccuracyGraph extends GraphSupplier
 		{
-			return 'Accuracy';
-		}
+			function getPoint($player)
+			{
+				$point = array('stat' => 0, 'total' => 0);
+				$point['stat'] = $player['player']['stats']['overall']['bullets_hit'];
+				$point['total'] = $player['player']['stats']['overall']['bullets_fired'];
+				return $point;
+			}
 
-		function getID()
-		{
-			return 'ACC';
-		}
+			function getTitle()
+			{
+				return 'Accuracy';
+			}
 
-		function getParser()
-		{
-			return 'function(data){return (100 * data) + "%"};';
-		}
+			function getID()
+			{
+				return 'ACC';
+			}
 
-		function getAdditionalBalloon()
-		{
-			return array('stat' => 'Hit: ', 'total' => 'Fired: ');
+			function getParser()
+			{
+				return 'function(data){return (100 * data) + "%"};';
+			}
+
+			function getAdditionalBalloon()
+			{
+				return array('stat' => 'Hit: ', 'total' => 'Fired: ');
+			}
 		}
 	}

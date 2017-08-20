@@ -1,22 +1,26 @@
 <?php
-	require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-	class PlayCountCasualGraph extends GraphSupplier
+	namespace R6
 	{
-		function getPoint($player)
-		{
-			$point = array('stat' => 0);
-			$point['stat'] = $player['player']['stats']['casual']['wins'] + $player['player']['stats']['casual']['losses'];
-			return $point;
-		}
+		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		function getTitle()
+		class PlayCountCasualGraph extends GraphSupplier
 		{
-			return 'Match played Casual';
-		}
+			function getPoint($player)
+			{
+				$point = array('stat' => 0);
+				$point['stat'] = $player['player']['stats']['casual']['wins'] + $player['player']['stats']['casual']['losses'];
+				return $point;
+			}
 
-		function getID()
-		{
-			return 'PLC';
+			function getTitle()
+			{
+				return 'Match played Casual';
+			}
+
+			function getID()
+			{
+				return 'PLC';
+			}
 		}
 	}

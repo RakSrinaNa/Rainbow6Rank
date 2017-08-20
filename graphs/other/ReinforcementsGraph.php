@@ -1,22 +1,26 @@
 <?php
-	require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-	class ReinforcementsGraph extends GraphSupplier
+	namespace R6
 	{
-		function getPoint($player)
-		{
-			$point = array('stat' => 0);
-			$point['stat'] = $player['player']['stats']['overall']['reinforcements_deployed'];
-			return $point;
-		}
+		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		function getTitle()
+		class ReinforcementsGraph extends GraphSupplier
 		{
-			return 'Reinforcements deployed';
-		}
+			function getPoint($player)
+			{
+				$point = array('stat' => 0);
+				$point['stat'] = $player['player']['stats']['overall']['reinforcements_deployed'];
+				return $point;
+			}
 
-		function getID()
-		{
-			return 'RD';
+			function getTitle()
+			{
+				return 'Reinforcements deployed';
+			}
+
+			function getID()
+			{
+				return 'RD';
+			}
 		}
 	}

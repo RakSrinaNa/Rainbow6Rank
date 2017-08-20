@@ -6,101 +6,116 @@
 	 * Date: 01/05/2017
 	 * Time: 20:29
 	 */
-	class GraphUtils
+
+	namespace R6
 	{
-		public static function process($datas)
+		class GraphUtils
 		{
-			if(isset($_GET['detailled']) || isset($_GET['all']))
-				return self::group($datas);
-			return self::groupWeekly($datas);
-		}
-
-		private static function group($datas)
-		{
-			$goodData = array();
-
-			foreach($datas as $user => $userData)
+			/**
+			 * @param array $datas
+			 * @return array
+			 */
+			public static function process($datas)
 			{
-				if(!isset($goodData[$user]))
-					$goodData[$user] = array();
-				foreach($userData as $date => $dateDatas)
+				if(isset($_GET['detailled']) || isset($_GET['all']))
+					return self::group($datas);
+				return self::groupWeekly($datas);
+			}
+
+			/**
+			 * @param array $datas
+			 * @return array
+			 */
+			private static function group($datas)
+			{
+				$goodData = array();
+
+				foreach($datas as $user => $userData)
 				{
-					if(!isset($dateDatas['total']))
-						$dateDatas['total'] = 1;
-					if(!isset($goodData[$user][$date]))
-						$goodData[$user][$date] = array();
-					$goodData[$user][$date] = array('value' => $dateDatas['stat'] / (isset($dateDatas['total']) && $dateDatas['total'] !== 0 ? $dateDatas['total'] : 1));
-					foreach($dateDatas as $key => $value)
+					if(!isset($goodData[$user]))
+						$goodData[$user] = array();
+					foreach($userData as $date => $dateDatas)
 					{
-						if($key !== 'timestamp')
+						if(!isset($dateDatas['total']))
+							$dateDatas['total'] = 1;
+						if(!isset($goodData[$user][$date]))
+							$goodData[$user][$date] = array();
+						$goodData[$user][$date] = array('value' => $dateDatas['stat'] / (isset($dateDatas['total']) && $dateDatas['total'] !== 0 ? $dateDatas['total'] : 1));
+						foreach($dateDatas as $key => $value)
 						{
-							$goodData[$user][$date][$user . $key] = $value;
+							if($key !== 'timestamp')
+							{
+								$goodData[$user][$date][$user . $key] = $value;
+							}
 						}
 					}
 				}
+
+				return $goodData;
 			}
 
-			return $goodData;
-		}
-
-		static function groupWeekly($datas)
-		{
-			$tempDatas = array();
-			foreach($datas as $user => $userData)
+			/**
+			 * @param array $datas
+			 * @return array
+			 */
+			static function groupWeekly($datas)
 			{
-				if(!isset($tempDatas[$user]))
-					$tempDatas[$user] = array();
-				foreach($userData as $date => $dateDatas)
+				$tempDatas = array();
+				foreach($datas as $user => $userData)
 				{
-					$week = date("W-Y", $dateDatas['timestamp']);
-					if(!isset($tempDatas[$user][$week]))
-						$tempDatas[$user][$week] = array();
-					$tempDatas[$user][$week][] = $dateDatas;
-				}
-			}
-			foreach($tempDatas as $user => $userData)
-				foreach($userData as $week => $weekDatas)
-					usort($weekDatas, function($a, $b)
+					if(!isset($tempDatas[$user]))
+						$tempDatas[$user] = array();
+					foreach($userData as $date => $dateDatas)
 					{
-						return $a['timestamp'] - $b['timestamp'];
-					});
-			$goodData = array();
-			foreach($tempDatas as $user => $userData)
-			{
-				if(!isset($goodData[$user]))
-					$goodData[$user] = array();
-				foreach($userData as $week => $weekDatas)
-				{
-					$weekDate = new DateTime();
-					$weekDate->setISODate(explode('-', $week)[1], explode('-', $week)[0]);
-					$weekDate->setTime(0, 0);
-
-					$start = array_values($weekDatas)[0];
-					$end = array_values(array_slice($weekDatas, -1))[0];
-
-					if($start['timestamp'] === $end['timestamp'])
-						continue;
-					if(!isset($start['total']) || !isset($end['total']))
-					{
-						$start['total'] = 0;
-						$end['total'] = 1;
+						$week = date("W-Y", $dateDatas['timestamp']);
+						if(!isset($tempDatas[$user][$week]))
+							$tempDatas[$user][$week] = array();
+						$tempDatas[$user][$week][] = $dateDatas;
 					}
-					//if($end['stat'] - $start['stat'] == 0 && $end['total'] - $start['total'] == 0)
-					//	continue;
-
-					$det = ($end['total'] - $start['total']);
-					$stat = ($end['stat'] - $start['stat']) / ($det === 0 ? 1 : $det);
-					$fullDate = $weekDate->format('Y-m-d\TH:i:s');
-					$goodData[$user][$fullDate] = array('value' => $stat);
-					foreach($start as $key => $value)
+				}
+				foreach($tempDatas as $user => $userData)
+					foreach($userData as $week => $weekDatas)
+						usort($weekDatas, function($a, $b){
+							return $a['timestamp'] - $b['timestamp'];
+						});
+				$goodData = array();
+				foreach($tempDatas as $user => $userData)
+				{
+					if(!isset($goodData[$user]))
+						$goodData[$user] = array();
+					foreach($userData as $week => $weekDatas)
 					{
-						if($key !== 'timestamp' && isset($end[$key]))
+						$weekDate = new \DateTime();
+						$weekDate->setISODate(explode('-', $week)[1], explode('-', $week)[0]);
+						$weekDate->setTime(0, 0);
+
+						$start = array_values($weekDatas)[0];
+						$end = array_values(array_slice($weekDatas, -1))[0];
+
+						if($start['timestamp'] === $end['timestamp'])
+							continue;
+						if(!isset($start['total']) || !isset($end['total']))
 						{
-							$goodData[$user][$fullDate][$user . $key] = $end[$key] - $value;
+							$start['total'] = 0;
+							$end['total'] = 1;
+						}
+						//if($end['stat'] - $start['stat'] == 0 && $end['total'] - $start['total'] == 0)
+						//	continue;
+
+						$det = ($end['total'] - $start['total']);
+						$stat = ($end['stat'] - $start['stat']) / ($det === 0 ? 1 : $det);
+						$fullDate = $weekDate->format('Y-m-d\TH:i:s');
+						$goodData[$user][$fullDate] = array('value' => $stat);
+						foreach($start as $key => $value)
+						{
+							if($key !== 'timestamp' && isset($end[$key]))
+							{
+								$goodData[$user][$fullDate][$user . $key] = $end[$key] - $value;
+							}
 						}
 					}
 				}
+				return $goodData;
 			}
-			return $goodData;
 		}
 	}

@@ -1,60 +1,67 @@
 <?php
-	require_once __DIR__ . '/../../model/GraphUtils.php';
-	require_once __DIR__ . '/OperatorGraph.php';
 
-	class OperatorsHandler extends GraphSupplier
+	namespace R6
 	{
-		private $operatorGraphs = array();
+		require_once __DIR__ . '/../../model/GraphUtils.php';
+		require_once __DIR__ . '/OperatorGraph.php';
 
-		function plot()
+		class OperatorsHandler extends GraphSupplier
 		{
-			foreach($this->operatorGraphs as $ctuIndex => $ctu)
-				foreach($ctu as $graphIndex => $graph)
-					$graph->plot();
-		}
+			private $operatorGraphs = array();
 
-		function processPoint($player, $timestamp)
-		{
-			if(isset($player['operators']))
-				foreach($player['operators'] as $operator)
-				{
-					$name = $operator['operator']['name'];
-					$ctu = $operator['operator']['ctu'];
-					if(!isset($this->operatorGraphs[$ctu]))
-						$this->operatorGraphs[$ctu] = array();
-					if(!isset($this->operatorGraphs[$ctu][$name]))
-						$this->operatorGraphs[$ctu][$name] = new OperatorGraph($name, $operator['operator']['images']['badge']);
-					$this->operatorGraphs[$ctu][$name]->processPoint($player, $timestamp, $operator['stats']);
-				}
-		}
-
-		function getID()
-		{
-			return null;
-		}
-
-		function getPoint($player)
-		{
-			return null;
-		}
-
-		function getTitle()
-		{
-			return null;
-		}
-
-		public function buildDivs()
-		{
-			echo '<button class="accordion level1">Operators</button>';
-			echo '<div class="panel">';
-			foreach($this->operatorGraphs as $ctuIndex => $ctu)
+			function plot()
 			{
-				echo '<button class="accordion level2">' . $ctuIndex . '</button>';
+				foreach($this->operatorGraphs as $ctuIndex => $ctu)
+					foreach($ctu as $graphIndex => $graph)
+						/** @noinspection PhpUndefinedMethodInspection */
+						$graph->plot();
+			}
+
+			function processPoint($player, $timestamp)
+			{
+				if(isset($player['operators']))
+					foreach($player['operators'] as $operator)
+					{
+						$name = $operator['operator']['name'];
+						$ctu = $operator['operator']['ctu'];
+						if(!isset($this->operatorGraphs[$ctu]))
+							$this->operatorGraphs[$ctu] = array();
+						if(!isset($this->operatorGraphs[$ctu][$name]))
+							$this->operatorGraphs[$ctu][$name] = new OperatorGraph($name, $operator['operator']['images']['badge']);
+						/** @noinspection PhpUndefinedMethodInspection */
+						$this->operatorGraphs[$ctu][$name]->processPoint($player, $timestamp, $operator['stats']);
+					}
+			}
+
+			function getID()
+			{
+				return null;
+			}
+
+			function getPoint($player)
+			{
+				return null;
+			}
+
+			function getTitle()
+			{
+				return null;
+			}
+
+			public function buildDivs()
+			{
+				echo '<button class="accordion level1">Operators</button>';
 				echo '<div class="panel">';
-				foreach($ctu as $graphIndex => $graph)
-					$graph->buildDivs();
+				foreach($this->operatorGraphs as $ctuIndex => $ctu)
+				{
+					echo '<button class="accordion level2">' . $ctuIndex . '</button>';
+					echo '<div class="panel">';
+					foreach($ctu as $graphIndex => $graph)
+						/** @noinspection PhpUndefinedMethodInspection */
+						$graph->buildDivs();
+					echo '</div>';
+				}
 				echo '</div>';
 			}
-			echo '</div>';
 		}
 	}

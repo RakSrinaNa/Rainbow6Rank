@@ -1,22 +1,26 @@
 <?php
-	require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-	class AssistsGraph extends GraphSupplier
+	namespace R6
 	{
-		function getPoint($player)
-		{
-			$point = array('stat' => 0);
-			$point['stat'] = $player['player']['stats']['overall']['assists'];
-			return $point;
-		}
+		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		function getTitle()
+		class AssistsGraph extends GraphSupplier
 		{
-			return 'Assists';
-		}
+			function getPoint($player)
+			{
+				$point = array('stat' => 0);
+				$point['stat'] = $player['player']['stats']['overall']['assists'];
+				return $point;
+			}
 
-		function getID()
-		{
-			return 'ASS';
+			function getTitle()
+			{
+				return 'Assists';
+			}
+
+			function getID()
+			{
+				return 'ASS';
+			}
 		}
 	}

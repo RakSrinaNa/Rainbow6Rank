@@ -1,29 +1,32 @@
 <?php
-	require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-	class PlayTimeCasualGraph extends GraphSupplier
+	namespace R6
 	{
-		function getPoint($player)
-		{
-			$point = array('stat' => 0);
-			$point['stat'] = $player['player']['stats']['casual']['playtime'];
-			return $point;
-		}
+		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		function getTitle()
+		class PlayTimeCasualGraph extends GraphSupplier
 		{
-			return 'Playtime Casual';
-		}
+			function getPoint($player)
+			{
+				$point = array('stat' => 0);
+				$point['stat'] = $player['player']['stats']['casual']['playtime'];
+				return $point;
+			}
 
-		function getID()
-		{
-			return 'PTC';
-		}
+			function getTitle()
+			{
+				return 'Playtime Casual';
+			}
 
-		function getParser()
-		{
-			return /** @lang JavaScript 1.8 */
-				'function(data){
+			function getID()
+			{
+				return 'PTC';
+			}
+
+			function getParser()
+			{
+				return /** @lang JavaScript 1.8 */
+					'a = function (data){
 	function getDurationAsMillisec(d) {
 		if (!d) return 0;
 		return (((((d.days || 0) * 24 + (d.hours || 0)) * 60 + (d.minutes || 0)) * 60 + (d.seconds || 0)) * 1000 + (d.milliseconds || 0)) || 0;
@@ -107,5 +110,6 @@
 	
 	return getDurationString({seconds: data})
 }';
+			}
 		}
 	}

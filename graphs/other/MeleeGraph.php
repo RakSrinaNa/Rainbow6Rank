@@ -1,22 +1,26 @@
 <?php
-	require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-	class MeleeGraph extends GraphSupplier
+	namespace R6
 	{
-		function getPoint($player)
-		{
-			$point = array('stat' => 0);
-			$point['stat'] = $player['player']['stats']['overall']['melee_kills'];
-			return $point;
-		}
+		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		function getTitle()
+		class MeleeGraph extends GraphSupplier
 		{
-			return 'Melee kills';
-		}
+			function getPoint($player)
+			{
+				$point = array('stat' => 0);
+				$point['stat'] = $player['player']['stats']['overall']['melee_kills'];
+				return $point;
+			}
 
-		function getID()
-		{
-			return 'MK';
+			function getTitle()
+			{
+				return 'Melee kills';
+			}
+
+			function getID()
+			{
+				return 'MK';
+			}
 		}
 	}

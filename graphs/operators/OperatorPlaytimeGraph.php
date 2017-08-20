@@ -5,26 +5,29 @@
 	 * Date: 10/06/2017
 	 * Time: 11:37
 	 */
-	require_once __DIR__ . '/SimpleOperatorGraph.php';
 
-	class OperatorPlaytimeGraph extends SimpleOperatorGraph
+	namespace R6
 	{
-		function getTitle()
-		{
-			return 'Playtime ' . $this->operator;
-		}
+		require_once __DIR__ . '/SimpleOperatorGraph.php';
 
-		function getPoint($player)
+		class OperatorPlaytimeGraph extends SimpleOperatorGraph
 		{
-			$point = array('stat' => 0);
-			$point['stat'] = $player['playtime'];
-			return $point;
-		}
+			function getTitle()
+			{
+				return 'Playtime ' . $this->operator;
+			}
 
-		function getParser()
-		{
-			return /** @lang JavaScript 1.8 */
-				'function(data){
+			function getPoint($player)
+			{
+				$point = array('stat' => 0);
+				$point['stat'] = $player['playtime'];
+				return $point;
+			}
+
+			function getParser()
+			{
+				return /** @lang JavaScript 1.8 */
+					'a = function(data){
 	function getDurationAsMillisec(d) {
 		if (!d) return 0;
 		return (((((d.days || 0) * 24 + (d.hours || 0)) * 60 + (d.minutes || 0)) * 60 + (d.seconds || 0)) * 1000 + (d.milliseconds || 0)) || 0;
@@ -108,5 +111,6 @@
 	
 	return getDurationString({seconds: data})
 }';
+			}
 		}
 	}
