@@ -1,6 +1,6 @@
 <?php
 	$beta = $_SERVER['HTTP_HOST'] === 'rainbowb.mrcraftcod.fr';
-    $rootDir = '/homez.2349/mrcraftcgg/www/subdomains/rainbow';
+	$rootDir = '/homez.2349/mrcraftcgg/www/subdomains/rainbow';
 
 	if($beta)
 	{
@@ -50,19 +50,20 @@
     <script type="text/javascript" src="js/libs/amcharts/plugins/responsive/responsive.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <meta charset="UTF-8">
-    <title>Rainbow6 stats<?php if($beta)echo ' BETA'; ?></title>
+    <title>Rainbow6 stats<?php if($beta)
+			echo ' BETA'; ?></title>
 </head>
 <body>
 <header id="headerContainer">
     <div class="leftNav inline">
         <ul>
             <li><a href="https://r6stats.com/" target="_blank">Datas from R6Stats</a></li>
-            <?php
-                if($beta)
-                    echo '<li><a href="https://rainbow.mrcraftcod.fr" target="_self">Release version</a></li>';
-                else
-                    echo '<li><a href="https://rainbowb.mrcraftcod.fr" target="_self">Beta version</a></li>';
-            ?>
+			<?php
+				if($beta)
+					echo '<li><a href="https://rainbow.mrcraftcod.fr" target="_self">Release version</a></li>';
+				else
+					echo '<li><a href="https://rainbowb.mrcraftcod.fr" target="_self">Beta version</a></li>';
+			?>
             <li></li>
         </ul>
     </div>
@@ -237,7 +238,7 @@
 	$plots[] = new R6\SuicidesGraph();
 	$plots[] = new R6\WinLossCasualGraph();
 	$plots[] = new R6\WinLossRankedGraph();
-    $plots[] = $operatorHandler;
+	$plots[] = $operatorHandler;
 
 	$files = glob($rootDir . '/players/*/*.json', GLOB_BRACE);
 	foreach($files as $file)

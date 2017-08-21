@@ -6,12 +6,10 @@ $(document).ready(function () {
 		acc[i].onclick = function () {
 			this.classList.toggle('active');
 			var panel = this.nextElementSibling;
-			if (this.classList.contains('active'))
-			{
+			if (this.classList.contains('active')) {
 				panel.classList.add('active');
 			}
-			else
-			{
+			else {
 				panel.classList.remove('active');
 			}
 		}
