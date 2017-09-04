@@ -239,7 +239,7 @@
 			 */
 			function processPoint($player, $timestamp)
 			{
-				$username = remapUsername($player['player']['username']);
+				$username = $this->remapUsername($player['player']['username']);
 				if(!isset($this->datas[$username]))
 					$this->datas[$username] = array();
 				$data = $this->getPoint($player);
