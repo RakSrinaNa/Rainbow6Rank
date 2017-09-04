@@ -132,12 +132,16 @@
             <div class="chartHolder panel" id="chartHolderRanked5">
                 <div class="chartDiv" id="chartDivRanked5"></div>
             </div>
+            <button class="accordion level2">Season 6</button>
+            <div class="chartHolder panel" id="chartHolderRanked6">
+                <div class="chartDiv" id="chartDivRanked6"></div>
+            </div>
 			<?php
 		}
 	?>
-    <button class="accordion level2">Season 6</button>
-    <div class="chartHolder panel" id="chartHolderRanked6">
-        <div class="chartDiv" id="chartDivRanked6"></div>
+    <button class="accordion level2">Season 7</button>
+    <div class="chartHolder panel" id="chartHolderRanked7">
+        <div class="chartDiv" id="chartDivRanked7"></div>
     </div>
     <button class="accordion level2">Ratio K/D Ranked</button>
     <div class="chartHolder panel" id="chartHolderKDR">
@@ -230,8 +234,11 @@
 	$plots[] = new R6\PlayTimeCasualGraph();
 	$plots[] = new R6\PlayTimeRankedGraph();
 	if(isset($_GET['all']))
+	{
 		$plots[] = new R6\RankedSeason5Graph();
+	}
 	$plots[] = new R6\RankedSeason6Graph();
+	//$plots[] = new R6\RankedSeason7Graph();
 	$plots[] = new R6\ReinforcementsGraph();
 	$plots[] = new R6\RevivesGraph();
 	$plots[] = new R6\StepsGraph();

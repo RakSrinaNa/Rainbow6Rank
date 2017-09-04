@@ -4,7 +4,7 @@
 	{
 		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		class RankedSeason6Graph extends GraphSupplier
+		class RankedSeason7Graph extends GraphSupplier
 		{
 			private $endDate = -1;
 
@@ -12,39 +12,39 @@
 
 			function getPoint($player)
 			{
-				if(!isset($player['seasons']) || !isset($player['seasons']['6']))
+				if(!isset($player['seasons']) || !isset($player['seasons']['7']))
 					return null;
 				$date = $date = date_create_from_format('Y-m-d\TH:i:s+', $player['player']['updated_at']);
 				if($this->endDate > 0 && $date->getTimestamp() >= $this->endDate)
 					return null;
 				$point = array('stat' => 0);
-				$point['stat'] = $player['seasons']['6']['emea']['ranking']['rating'];
+				$point['stat'] = $player['seasons']['7']['emea']['ranking']['rating'];
 				$point['rank'] = $this->getRank($player);
-				$point['wins'] = $player['seasons']['6']['emea']['wins'];
-				$point['losses'] = $player['seasons']['6']['emea']['losses'];
-				$point['abandons'] = $player['seasons']['6']['emea']['abandons'];
+				$point['wins'] = $player['seasons']['7']['emea']['wins'];
+				$point['losses'] = $player['seasons']['7']['emea']['losses'];
+				$point['abandons'] = $player['seasons']['7']['emea']['abandons'];
 				return $point;
 			}
 
 			function getRank($player)
 			{
-				$score = $player['seasons']['6']['emea']['ranking']['rating'];
+				$score = $player['seasons']['7']['emea']['ranking']['rating'];
 				foreach($this->ranks as $index => $value)
 				{
 					if($score >= $value['from'] && $score < $value['to'])
-						return ($player['seasons']['6']['emea']['ranking']['rank'] <= 0 ? 'Unranked: ' : '') . $index;
+						return ($player['seasons']['7']['emea']['ranking']['rank'] <= 0 ? 'Unranked: ' : '') . $index;
 				}
 				return 'Unranked';
 			}
 
 			function getTitle()
 			{
-				return 'Ranked points - Season 6';
+				return 'Ranked points - Season 7';
 			}
 
 			function getID()
 			{
-				return 'Ranked6';
+				return 'Ranked7';
 			}
 
 			function getGuides()

@@ -220,12 +220,26 @@
 			}
 
 			/**
+			 * @param string $username The username to remap.
+			 * @return string The mapped username.
+			 */
+			function remapUsername($username)
+			{
+				switch($username)
+				{
+					case 'PhoenixRS666':
+						return 'Fuel_Rainbow';
+				}
+				return $username;
+			}
+
+			/**
 			 * @param array $player
 			 * @param string $timestamp
 			 */
 			function processPoint($player, $timestamp)
 			{
-				$username = $player['player']['username'];
+				$username = remapUsername($player['player']['username']);
 				if(!isset($this->datas[$username]))
 					$this->datas[$username] = array();
 				$data = $this->getPoint($player);
