@@ -1,8 +1,7 @@
 <?php
-	$beta = $_SERVER['HTTP_HOST'] === 'rainbowb.mrcraftcod.fr';
 	$rootDir = '/homez.2349/mrcraftcgg/www/subdomains/rainbow';
 
-	if($beta)
+	if(false)
 	{
 		error_reporting(E_ALL);
 		ini_set('display_errors', '1');
@@ -50,21 +49,16 @@
     <script type="text/javascript" src="js/libs/amcharts/plugins/responsive/responsive.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <meta charset="UTF-8">
-    <title>Rainbow6 stats<?php if($beta)
-			echo ' BETA'; ?></title>
+    <title>Rainbow6 stats</title>
 </head>
 <body>
 <header id="headerContainer">
     <div class="leftNav inline">
         <ul>
             <li><a href="https://r6stats.com/" target="_blank">Datas from R6Stats</a></li>
-			<?php
-				if($beta)
-					echo '<li><a href="https://rainbow.mrcraftcod.fr" target="_self">Release version</a></li>';
-				else
-					echo '<li><a href="https://rainbowb.mrcraftcod.fr" target="_self">Beta version</a></li>';
-			?>
-            <li></li>
+            <li>
+                <a href="#" id="refreshCron">Request update</a>
+            </li>
         </ul>
     </div>
     <div class="inline">
@@ -173,6 +167,10 @@
 </div>
 <button class="accordion level1">Other</button>
 <div class="panel">
+    <button class="accordion level2">Level</button>
+    <div class="chartHolder panel" id="chartHolderLVL">
+        <div class="chartDiv" id="chartDivLVL"></div>
+    </div>
     <button class="accordion level2">Accuracy</button>
     <div class="chartHolder panel" id="chartHolderACC">
         <div class="chartDiv" id="chartDivACC"></div>
@@ -229,15 +227,13 @@
 	$plots[] = new R6\HeadshotsGraph();
 	$plots[] = new R6\KillDeathCasualGraph();
 	$plots[] = new R6\KillDeathRankedGraph();
+	$plots[] = new R6\LevelGraph();
 	$plots[] = new R6\MeleeGraph();
 	$plots[] = new R6\PenetrationKillsGraph();
 	$plots[] = new R6\PlayTimeCasualGraph();
 	$plots[] = new R6\PlayTimeRankedGraph();
-	if(isset($_GET['all']))
-	{
-		$plots[] = new R6\RankedSeason5Graph();
-		$plots[] = new R6\RankedSeason6Graph();
-	}
+	$plots[] = new R6\RankedSeason5Graph();
+	$plots[] = new R6\RankedSeason6Graph();
 	$plots[] = new R6\RankedSeason7Graph();
 	$plots[] = new R6\ReinforcementsGraph();
 	$plots[] = new R6\RevivesGraph();
@@ -257,13 +253,15 @@
 		if(!isset($player['player']['username']) || $player['player']['username'] === '')
 			continue;
 		foreach($plots as $plotIndex => $plot)
-			$plot->processPoint($player, $timestamp);
+			if(isset($_GET['all']) || !$plot->isOnlyAllView())
+				$plot->processPoint($player, $timestamp);
 	}
 
 	$operatorHandler->buildDivs();
 
 	foreach($plots as $plotIndex => $plot)
-		$plot->plot();
+		if(isset($_GET['all']) || !$plot->isOnlyAllView())
+			$plot->plot();
 ?>
 </body>
 </html>

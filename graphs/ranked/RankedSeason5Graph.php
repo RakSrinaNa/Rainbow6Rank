@@ -64,5 +64,10 @@
 			{
 				return array('rank' => 'Rank: ', 'wins' => 'Wins: ', 'losses' => 'Losses: ', 'abandons' => 'Abandons: ');
 			}
+
+			function isOnlyAllView()
+			{
+				return true;
+			}
 		}
 	}

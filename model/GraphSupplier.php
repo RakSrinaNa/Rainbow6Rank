@@ -283,5 +283,13 @@
 			{
 				return json_encode(array());
 			}
+
+			/**
+			 * @return bool
+			 */
+			function isOnlyAllView()
+			{
+				return false;
+			}
 		}
 	}
