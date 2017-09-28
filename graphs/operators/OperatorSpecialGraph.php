@@ -114,6 +114,13 @@
 						return 'Booby trap kills';
 					case 'operatorpvp_kapkan_boobytrapdeployed';
 						return 'Booby traps deployed';
+					case 'operatorpve_dazzler_gadget_detonate':
+						return 'Dazzler detonated';
+					case 'operatorpvp_caltrop_enemy_affected':
+						return 'Needles walked on';
+					case 'operatorpvp_concussionmine_detonate':
+						return 'Concussion mine detonated';
+
 				}
 				return parent::getTitle();
 			}
