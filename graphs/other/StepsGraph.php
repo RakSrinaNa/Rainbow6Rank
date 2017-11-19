@@ -10,6 +10,8 @@
 			{
 				$point = array('stat' => 0);
 				$point['stat'] = $player['player']['stats']['overall']['steps_moved'];
+				if($point['stat'] >= 808581577)
+					$point['stat'] -= 796066108;
 				return $point;
 			}
 
