@@ -30,7 +30,7 @@
 	$rootDirectory = 'www/subdomains/rainbow/';
 	$timeFormat = 'Y-m-d\TH:i:s+';
 
-	$players = array('MrCraftCod' => 'uplay', 'LokyDogma' => 'uplay', 'Fuel_Rainbow' => 'uplay');
+	$players = array('MrCraftCod' => 'uplay', 'LokyDogma' => 'uplay', 'Fuel_Rainbow' => 'uplay', 'Fuel_Velvet' => 'uplay');
 
 	$fpLog = fopen('log.log', 'w');
 
