@@ -225,11 +225,11 @@
 			 */
 			function remapUsername($username)
 			{
-				/*switch($username)
+				switch($username)
 				{
 					case 'PhoenixRS666':
 						return 'Fuel_Rainbow';
-				}*/
+				}
 				return $username;
 			}
 
