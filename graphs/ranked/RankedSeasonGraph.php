@@ -71,5 +71,17 @@
 			{
 				return $this->getEndDate() > 0;
 			}
+
+			function getMinimum()
+			{
+				if(isset($_GET['all']) || isset($_GET['detailled']))
+				{
+					$min = 9999999;
+					foreach($this->getRanks() as $rankName => $rankDatas)
+						$min = min($min, $rankDatas['from']);
+					return $min;
+				}
+				return null;
+			}
 		}
 	}

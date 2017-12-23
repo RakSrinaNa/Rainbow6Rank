@@ -145,6 +145,10 @@
 										color: chartColors['labelColor'],
 										position: 'left',
 										title: '<?php echo $this->getTitle() ?>'
+										<?php
+										if($this->getMinimum())
+											echo ', minimum: ' . $this->getMinimum();
+										?>
 									}],
 									categoryAxis: {
 										parseDates: true,
@@ -290,6 +294,14 @@
 			function isOnlyAllView()
 			{
 				return false;
+			}
+
+			/**
+			 * @return bool | null
+			 */
+			function getMinimum()
+			{
+				return null;
 			}
 		}
 	}
