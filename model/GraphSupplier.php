@@ -12,18 +12,20 @@
 
 		abstract class GraphSupplier
 		{
+            /**
+             * @var array
+             */
 			protected $datas = array();
 
 			function plot()
 			{ ?>
-                <!--suppress JSDuplicatedDeclaration, JSUnusedAssignment -->
                 <script type='text/javascript'>
 					function roundDate(date) {
 						var coeff = 1000 * 60 * 60;
 						return new Date(Math.floor(date.getTime() / coeff) * coeff)
 					}
 
-					$(document).ready(function () {
+					$(function () {
 
 						//Resize chart to fit height
 						var chartdivWatched = document.getElementById('chartDiv' + '<?php echo $this->getID(); ?>');
@@ -31,12 +33,12 @@
 						AmCharts.ready(function () {
 							var chartColors = {
 								theme: 'dark',
-								selectedBackgroundColor: '#444444',
+								selectedBackgroundColor: '#3c5077',
 								gridColor: '#999999',
 								color: '#111111',
-								scrollBarBackgroundColor: '#666666',
+								scrollBarBackgroundColor: '#3d5e77',
 								labelColor: '#000000',
-								backgroundColor: '#777777',
+								backgroundColor: '#2b3e50',
 								ratioLineColor: '#196E1F',
 								countLineColor: '#214DD1',
 								handDrawn: false
@@ -291,9 +293,9 @@
 			/**
 			 * @return bool
 			 */
-			function isOnlyAllView()
+			function shouldPlot()
 			{
-				return false;
+				return true;
 			}
 
 			/**

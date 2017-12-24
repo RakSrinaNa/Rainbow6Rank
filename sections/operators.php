@@ -1,0 +1,2 @@
+<?php
+    $operatorHandler->buildDivs();

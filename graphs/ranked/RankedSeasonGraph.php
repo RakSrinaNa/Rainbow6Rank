@@ -67,14 +67,14 @@
 				return array('rank' => 'Rank: ', 'wins' => 'Wins: ', 'losses' => 'Losses: ', 'abandons' => 'Abandons: ');
 			}
 
-			function isOnlyAllView()
+			function shouldPlot()
 			{
-				return $this->getEndDate() > 0;
+				return $this->getEndDate() < 0 || $_GET['section'] === 'all';
 			}
 
 			function getMinimum()
 			{
-				if(isset($_GET['all']) || isset($_GET['detailled']))
+				if($_GET['section'] === 'detailed' || $_GET['section'] === 'all')
 				{
 					$min = 9999999;
 					foreach($this->getRanks() as $rankName => $rankDatas)

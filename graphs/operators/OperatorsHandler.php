@@ -35,7 +35,7 @@
 
 			function getID()
 			{
-				return null;
+				return "OperatorsHandler";
 			}
 
 			function getPoint($player)
