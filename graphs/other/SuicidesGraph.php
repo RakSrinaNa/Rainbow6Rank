@@ -15,7 +15,7 @@
 
 			function getTitle()
 			{
-				return 'Suicides moved';
+				return 'Suicides';
 			}
 
 			function getID()

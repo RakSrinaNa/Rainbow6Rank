@@ -1,81 +1,47 @@
 html,
-body {
-    height: 100%;
-    text-align: center;
-    margin: auto;
+body
+{
+	height     : 100%;
+	text-align : center;
+	margin     : auto;
 }
 
-.inline {
-    display: inline-block;
+body
+{
+	padding-top : 65px;
 }
 
-.leftVerticalLine {
-    border-left: 3px solid;
-    border-color: inherit;
+.inline
+{
+	display : inline-block;
 }
 
-.lightVerticalLine {
-    border-left: 1px solid;
-    border-color: inherit;
+.leftVerticalLine
+{
+	border-left  : 3px solid;
+	border-color : inherit;
 }
 
-.chartName {
-    display: none;
+.lightVerticalLine
+{
+	border-left  : 1px solid;
+	border-color : inherit;
 }
 
-.chartHolder {
-    width: 95%;
-    height: 650px;
-    margin: auto;
+.chartName
+{
+	display : none;
 }
 
-.chartDiv {
-    width: 100%;
-    height: 100%;
+.chartHolder
+{
+	width  : 95%;
+	height : 650px;
+	margin : auto;
 }
 
-div.panel {
-    margin: 0 10px;
-    padding: 0 5px;
-    display: none;
-    opacity: 0;
-}
-
-div.panel.active {
-    display: block;
-    opacity: 1;
-    animation: fade 1s;
-}
-
-@keyframes fade {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-button.accordion:after, button.accordion:before {
-    content: url('/assets/arrow_down.png');
-}
-
-button.accordion:after {
-    float: right;
-}
-
-button.accordion:before {
-    float: left;
-}
-
-button.accordion.active:after, button.accordion.active:before {
-    content: url('/assets/arrow_up.png');
-    filter: invert(100%) hue-rotate(200deg);
-    vertical-align: middle;
-}
-
-button.accordion > img {
-    vertical-align: middle;
-    width: 23px;
+.chartDiv
+{
+	width  : 100%;
+	height : 100%;
 }

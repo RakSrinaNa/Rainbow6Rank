@@ -6,7 +6,7 @@ AmCharts.makeChart = function (a, b, c) {
     const item = $('#' + a.id);
 
     function handleScroll() {
-        if (true === b.lazyLoaded || !item.closest('.tab-pane').hasClass('show'))
+        if (true === b.lazyLoaded || !item.closest('.tab-pane').hasClass('active'))
             return;
         var hT = item.offset().top;
         var hH = item.outerHeight() / 4;

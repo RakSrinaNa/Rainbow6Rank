@@ -20,10 +20,31 @@
 			private $name;
 			private $imageURL;
 
+			public function __toString()
+			{
+				return "Operator graph [$this->name]";
+			}
+
 			public function __construct($name, $imageURL)
 			{
 				$this->name = $name;
 				$this->imageURL = $imageURL;
+			}
+
+			/**
+			 * @return mixed
+			 */
+			public function getName()
+			{
+				return $this->name;
+			}
+
+			/**
+			 * @return mixed
+			 */
+			public function getImageURL()
+			{
+				return $this->imageURL;
 			}
 
 			function getID()
@@ -43,20 +64,23 @@
 
 			function buildDivs()
 			{
-				echo '<button class="accordion level3">' . $this->name . '<img src="' . $this->imageURL . '"/></button>';
-				echo '<div class="panel">';
 				foreach($this->graphs as $graphValue => $graph)
 				{
-					echo '<button class="accordion level4">' . $graph->getTitle() . '</button>';
-					echo '<div class="chartHolder panel" id="chartHolder' . $graph->getID() . '"><div class="chartDiv" id="chartDiv' . $graph->getID() . '"></div></div>';
+					echo '<div class="chartHolder" id="chartHolder' . $graph->getID() . '"><div class="chartDiv" id="chartDiv' . $graph->getID() . '"></div></div>';
 				}
-				echo '</div>';
 			}
 
 			function plot()
 			{
 				foreach($this->graphs as $graphIndex => $graph)
+				{
+					/**
+					 * @var $graph GraphSupplier
+					 */
+					$name = $graph->getID();
+					echo "<!-- $name -->";
 					$graph->plot();
+				}
 			}
 
 			function processPoint($player, $timestamp, $operator = array())
