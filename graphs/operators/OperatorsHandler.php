@@ -7,14 +7,19 @@
 
 		class OperatorsHandler extends GraphSupplier
 		{
-			private $operatorGraphs = array();
+			private $ctuGraphs = array();
 
 			function plot()
 			{
-				foreach($this->operatorGraphs as $ctuIndex => $ctu)
-					foreach($ctu as $graphIndex => $graph)
-						/** @noinspection PhpUndefinedMethodInspection */
-						$graph->plot();
+				foreach($this->ctuGraphs as $ctuIndex => $ctu)
+				{
+					/**
+					 * @var $ctu CTUHandler
+					 */
+					$name = $ctu->getName();
+					echo "<!-- $name -->";
+					$ctu->plot();
+				}
 			}
 
 			function processPoint($player, $timestamp)
@@ -22,14 +27,10 @@
 				if(isset($player['operators']))
 					foreach($player['operators'] as $operator)
 					{
-						$name = $operator['operator']['name'];
 						$ctu = $operator['operator']['ctu'];
-						if(!isset($this->operatorGraphs[$ctu]))
-							$this->operatorGraphs[$ctu] = array();
-						if(!isset($this->operatorGraphs[$ctu][$name]))
-							$this->operatorGraphs[$ctu][$name] = new OperatorGraph($name, $operator['operator']['images']['badge']);
-						/** @noinspection PhpUndefinedMethodInspection */
-						$this->operatorGraphs[$ctu][$name]->processPoint($player, $timestamp, $operator['stats']);
+						if(!isset($this->ctuGraphs[$ctu]))
+							$this->ctuGraphs[$ctu] = new CTUHandler($ctu);
+						$this->ctuGraphs[$ctu]->processPoint($player, $timestamp, $operator);
 					}
 			}
 
@@ -50,18 +51,27 @@
 
 			public function buildDivs()
 			{
-				echo '<button class="accordion level1">Operators</button>';
-				echo '<div class="panel">';
-				foreach($this->operatorGraphs as $ctuIndex => $ctu)
+				$type = $_SESSION['menuStyle'];
+				echo "<ul class='nav nav-${type}s nav-justified'>";
+				foreach($this->ctuGraphs as $ctuIndex => $ctu)
 				{
-					echo '<button class="accordion level2">' . $ctuIndex . '</button>';
-					echo '<div class="panel">';
-					foreach($ctu as $graphIndex => $graph)
-						/** @noinspection PhpUndefinedMethodInspection */
-						$graph->buildDivs();
-					echo '</div>';
+					$name = str_replace(" ", "_", $ctuIndex);
+					echo "<li class='nav-item'><a class='nav-link' data-toggle='$type' href='#menuCTU$name'>$ctuIndex</a></li>";
 				}
-				echo '</div>';
+				echo "</ul>";
+				echo "<hr/>";
+				echo "<div class='tab-content'>";
+				foreach($this->ctuGraphs as $ctuIndex => $ctu)
+				{
+					/**
+					 * @var $ctu CTUHandler
+					 */
+					$name = str_replace(" ", "_", $ctuIndex);
+					echo "<div id='menuCTU$name' class='tab-pane fade'>";
+					$ctu->buildDivs();
+					echo "</div>";
+				}
+				echo "</div>";
 			}
 		}
 	}

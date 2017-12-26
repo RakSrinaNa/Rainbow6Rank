@@ -3,12 +3,11 @@ if (true) {
     error_reporting(E_ALL);
     ini_set('display_errors', '1');
 }
+session_start();
 date_default_timezone_set('Europe/Paris');
 
-function getRange()
-{
-    return $_GET['section'] === 'weekly' ? 31536000 : (3 * 2592000);
-}
+$_SESSION['menuStyle'] = 'pill';
+$_GET['section'] = isset($_GET['section']) ? $_GET['section'] : 'weekly';
 
 ?>
 <!DOCTYPE html>
@@ -19,8 +18,7 @@ function getRange()
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
             integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
@@ -39,6 +37,7 @@ function getRange()
     <title>Rainbow6 stats</title>
 
     <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/load6.css"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script type="text/javascript" src="js/main.js"></script>
 </head>
@@ -46,6 +45,11 @@ function getRange()
 <script src="js/init.js"></script>
 <?php
 include __DIR__ . "/header.php";
+
+function getRange()
+{
+    return $_GET['section'] === 'weekly' ? 31536000 : (3 * 2592000);
+}
 
 foreach (glob("graphs/*/*.php") as $filename)
     /** @noinspection PhpIncludeInspection */
@@ -100,34 +104,24 @@ foreach ($files as $file) {
         /**
          * @var $plot \R6\GraphSupplier
          */
+        $record['player']['username'] = \R6\GraphUtils::remapUsername($record['player']['username']);
         $plot->processPoint($record, $timestamp);
     }
 }
 ?>
 <div class="container-fluid" style="margin-top:80px">
-    <?php
-    if (true) {
-        ?>
-        <ul class="nav nav-tabs nav-justified">
-            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#menuCasual">Casual</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menuRanked">Ranked</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menuOther">Other</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menuOperators">Operators</a></li>
-        </ul>
-        <?php
-    } else {
-        ?>
-        <ul class="nav nav-pills nav-justified">
-            <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#menuCasual">Casual</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#menuRanked">Ranked</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#menuOther">Other</a></li>
-            <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#menuOperators">Operators</a></li>
-        </ul>
-        <?php
-    }
-    ?>
+    <ul id="mainPills" class="nav nav-<?php echo $_SESSION['menuStyle']; ?>s nav-justified">
+        <li class="nav-item"><a class="nav-link disabled" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuCasual">Casual</a>
+        </li>
+        <li class="nav-item"><a class="nav-link disabled" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuRanked">Ranked</a>
+        </li>
+        <li class="nav-item"><a class="nav-link disabled" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuOther">Other</a>
+        </li>
+        <li class="nav-item"><a class="nav-link disabled" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuOperators">Operators</a></li>
+    </ul>
+    <hr/>
     <div class="tab-content">
-        <div id="menuCasual" class="tab-pane fade active show">
+        <div id="menuCasual" class="tab-pane fade">
             <?php
             include __DIR__ . "/sections/casual.php";
             ?>
@@ -149,14 +143,16 @@ foreach ($files as $file) {
         </div>
     </div>
 </div>
-<hr/>
 <?php
 foreach ($plots as $plotIndex => $plot) {
     /**
      * @var $plot \R6\GraphSupplier
      */
+    $name = $plot->getID();
+    echo "<!-- $name -->";
     $plot->plot();
 }
 ?>
+<script src="js/last.js"></script>
 </body>
 </html>

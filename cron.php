@@ -27,7 +27,7 @@
 		return $content;
 	}
 
-	$rootDirectory = 'www/subdomains/rainbow/';
+	$rootDirectory = __DIR__ . "/";
 	$timeFormat = 'Y-m-d\TH:i:s+';
 
 	$players = array('MrCraftCod' => 'uplay', 'LokyDogma' => 'uplay', 'Fuel_Rainbow' => 'uplay', 'Fuel_Velvet' => 'uplay');
