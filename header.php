@@ -2,9 +2,6 @@
 {
     $rootDir = '/homez.2349/mrcraftcgg/www/subdomains/rainbow';
 
-    if(!isset($_GET['section']))
-        $_GET['section'] = 'weekly';
-
     function getLastCheckDate($rootDir)
     {
         $date = 0;
@@ -36,7 +33,7 @@
             <li class="nav-item"><a class="nav-link" href="https://r6stats.com/" target="_blank">Data from R6Stats</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="refreshCron">Request update</a>
+                <a class="nav-link" id="refreshCron">Request update <div id="refreshLoader" class="loader content-hide"></div></a>
             </li>
         </ul>
         <ul class="nav navbar-nav ml-auto">

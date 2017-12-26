@@ -1,47 +1,47 @@
 html,
-body
-{
-	height     : 100%;
-	text-align : center;
-	margin     : auto;
+body {
+    height: 100%;
+    text-align: center;
+    margin: auto;
 }
 
-body
-{
-	padding-top : 1px;
+body {
+    padding-top: 1px;
 }
 
-.inline
-{
-	display : inline-block;
+.content-hide{
+    display: none !important;
 }
 
-.leftVerticalLine
-{
-	border-left  : 3px solid;
-	border-color : inherit;
+::-webkit-scrollbar {
+    display: none;
 }
 
-.lightVerticalLine
-{
-	border-left  : 1px solid;
-	border-color : inherit;
+.inline {
+    display: inline-block;
 }
 
-.chartName
-{
-	display : none;
+.leftVerticalLine {
+    border-left: 3px solid;
+    border-color: inherit;
 }
 
-.chartHolder
-{
-	width  : 95%;
-	height : 650px;
-	margin : auto;
+.lightVerticalLine {
+    border-left: 1px solid;
+    border-color: inherit;
 }
 
-.chartDiv
-{
-	width  : 100%;
-	height : 100%;
+.chartName {
+    display: none;
+}
+
+.chartHolder {
+    width: 95%;
+    height: 650px;
+    margin: auto;
+}
+
+.chartDiv {
+    width: 100%;
+    height: 100%;
 }

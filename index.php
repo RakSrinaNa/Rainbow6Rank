@@ -7,6 +7,7 @@ session_start();
 date_default_timezone_set('Europe/Paris');
 
 $_SESSION['menuStyle'] = 'pill';
+$_GET['section'] = isset($_GET['section']) ? $_GET['section'] : 'weekly';
 
 ?>
 <!DOCTYPE html>
@@ -17,8 +18,7 @@ $_SESSION['menuStyle'] = 'pill';
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
             integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
@@ -37,6 +37,7 @@ $_SESSION['menuStyle'] = 'pill';
     <title>Rainbow6 stats</title>
 
     <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/load6.css"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script type="text/javascript" src="js/main.js"></script>
 </head>
@@ -103,19 +104,20 @@ foreach ($files as $file) {
         /**
          * @var $plot \R6\GraphSupplier
          */
+        $record['player']['username'] = \R6\GraphUtils::remapUsername($record['player']['username']);
         $plot->processPoint($record, $timestamp);
     }
 }
 ?>
 <div class="container-fluid" style="margin-top:80px">
-    <ul class="nav nav-<?php echo $_SESSION['menuStyle']; ?>s nav-justified">
-        <li class="nav-item"><a class="nav-link" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuCasual">Casual</a>
+    <ul id="mainPills" class="nav nav-<?php echo $_SESSION['menuStyle']; ?>s nav-justified">
+        <li class="nav-item"><a class="nav-link disabled" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuCasual">Casual</a>
         </li>
-        <li class="nav-item"><a class="nav-link" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuRanked">Ranked</a>
+        <li class="nav-item"><a class="nav-link disabled" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuRanked">Ranked</a>
         </li>
-        <li class="nav-item"><a class="nav-link" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuOther">Other</a>
+        <li class="nav-item"><a class="nav-link disabled" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuOther">Other</a>
         </li>
-        <li class="nav-item"><a class="nav-link" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuOperators">Operators</a></li>
+        <li class="nav-item"><a class="nav-link disabled" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuOperators">Operators</a></li>
     </ul>
     <hr/>
     <div class="tab-content">
@@ -151,5 +153,6 @@ foreach ($plots as $plotIndex => $plot) {
     $plot->plot();
 }
 ?>
+<script src="js/last.js"></script>
 </body>
 </html>

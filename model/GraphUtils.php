@@ -108,5 +108,19 @@ namespace R6 {
             }
             return $goodData;
         }
+
+        /**
+         * @param string $username The username to remap.
+         * @return string The mapped username.
+         */
+        static function remapUsername($username)
+        {
+            switch($username)
+            {
+                case 'PhoenixRS666':
+                    return 'Fuel_Rainbow';
+            }
+            return $username;
+        }
     }
 }
