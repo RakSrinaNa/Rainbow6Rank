@@ -5,8 +5,9 @@ body {
     margin: auto;
 }
 
-body {
-    padding-top: 1px;
+body>.container-fluid
+{
+    margin-top: 20px!important;
 }
 
 .content-hide{
