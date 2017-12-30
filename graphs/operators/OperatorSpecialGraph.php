@@ -120,6 +120,14 @@
 						return 'Needles walked on';
 					case 'operatorpvp_concussionmine_detonate':
 						return 'Concussion mine detonated';
+					case 'operatorpvp_concussiongrenade_detonate':
+						return 'Concussion grenade detonated';
+					case 'operatorpvp_dazzler_gadget_detonate':
+						return 'Dazzler detonated';
+					case 'operatorpvp_phoneshacked':
+						return 'Phones called';
+					case 'operatorpvp_attackerdrone_diminishedrealitymode':
+						return 'Drones fooled';
 
 				}
 				return parent::getTitle();
