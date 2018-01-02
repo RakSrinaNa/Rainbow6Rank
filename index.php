@@ -1,13 +1,14 @@
 <?php
-if (true) {
-    error_reporting(E_ALL);
-    ini_set('display_errors', '1');
-}
-session_start();
-date_default_timezone_set('Europe/Paris');
+	if(true)
+	{
+		error_reporting(E_ALL);
+		ini_set('display_errors', '1');
+	}
+	session_start();
+	date_default_timezone_set('Europe/Paris');
 
-$_SESSION['menuStyle'] = 'pill';
-$_GET['section'] = isset($_GET['section']) ? $_GET['section'] : 'weekly';
+	$_SESSION['menuStyle'] = 'pill';
+	$_GET['section'] = isset($_GET['section']) ? $_GET['section'] : 'weekly';
 
 ?>
 <!DOCTYPE html>
@@ -44,70 +45,72 @@ $_GET['section'] = isset($_GET['section']) ? $_GET['section'] : 'weekly';
 <body>
 <script src="js/init.js"></script>
 <?php
-include __DIR__ . "/header.php";
+	include __DIR__ . "/header.php";
 
-function getRange()
-{
-    return $_GET['section'] === 'weekly' ? 31536000 : (3 * 2592000);
-}
+	function getRange()
+	{
+		return $_GET['section'] === 'weekly' ? 31536000 : (3 * 2592000);
+	}
 
-foreach (glob("graphs/*/*.php") as $filename)
-    /** @noinspection PhpIncludeInspection */
-    require_once __DIR__ . '/' . $filename;
+	foreach(glob("graphs/*/*.php") as $filename)
+		/** @noinspection PhpIncludeInspection */
+		require_once __DIR__ . '/' . $filename;
 
-$operatorHandler = new R6\OperatorsHandler();
+	$operatorHandler = new R6\OperatorsHandler();
 
-/**
- * @var array
- */
-$plots = array();
+	/**
+	 * @var array
+	 */
+	$plots = array();
 
-$plots[] = new R6\AccuracyGraph();
-$plots[] = new R6\AssistsGraph();
-$plots[] = new R6\BarricadesGraph();
-$plots[] = new R6\HeadshotsGraph();
-$plots[] = new R6\KillDeathCasualGraph();
-$plots[] = new R6\KillDeathRankedGraph();
-$plots[] = new R6\LevelGraph();
-$plots[] = new R6\MeleeGraph();
-$plots[] = new R6\PenetrationKillsGraph();
-$plots[] = new R6\PlayTimeCasualGraph();
-$plots[] = new R6\PlayTimeRankedGraph();
-$plots[] = new R6\RankedSeason5Graph();
-$plots[] = new R6\RankedSeason6Graph();
-$plots[] = new R6\RankedSeason7Graph();
-$plots[] = new R6\RankedSeason8Graph();
-$plots[] = new R6\ReinforcementsGraph();
-$plots[] = new R6\RevivesGraph();
-$plots[] = new R6\StepsGraph();
-$plots[] = new R6\SuicidesGraph();
-$plots[] = new R6\WinLossCasualGraph();
-$plots[] = new R6\WinLossRankedGraph();
-$plots[] = $operatorHandler;
+	$plots[] = new R6\AccuracyGraph();
+	$plots[] = new R6\AssistsGraph();
+	$plots[] = new R6\BarricadesGraph();
+	$plots[] = new R6\HeadshotsGraph();
+	$plots[] = new R6\KillDeathCasualGraph();
+	$plots[] = new R6\KillDeathRankedGraph();
+	$plots[] = new R6\LevelGraph();
+	$plots[] = new R6\MeleeGraph();
+	$plots[] = new R6\PenetrationKillsGraph();
+	$plots[] = new R6\PlayTimeCasualGraph();
+	$plots[] = new R6\PlayTimeRankedGraph();
+	$plots[] = new R6\RankedSeason5Graph();
+	$plots[] = new R6\RankedSeason6Graph();
+	$plots[] = new R6\RankedSeason7Graph();
+	$plots[] = new R6\RankedSeason8Graph();
+	$plots[] = new R6\ReinforcementsGraph();
+	$plots[] = new R6\RevivesGraph();
+	$plots[] = new R6\StepsGraph();
+	$plots[] = new R6\SuicidesGraph();
+	$plots[] = new R6\WinLossCasualGraph();
+	$plots[] = new R6\WinLossRankedGraph();
+	$plots[] = $operatorHandler;
 
-$plots = array_filter($plots, function ($plot) {
-    /**
-     * @var $plot \R6\GraphSupplier
-     */
-    return $plot->shouldPlot();
-});
+	$plots = array_filter($plots, function($plot){
+		/**
+		 * @var $plot \R6\GraphSupplier
+		 */
+		return $plot->shouldPlot();
+	});
 
-$files = glob($rootDir . '/players/*/*.json', GLOB_BRACE);
-foreach ($files as $file) {
-    $timestamp = (explode('.', array_values(array_slice(explode('/', $file), -1))[0])[0] / 1000);
-    if ($_GET['section'] !== 'all' && time() - $timestamp > getRange())
-        continue;
-    $record = json_decode(file_get_contents($file), true);
-    if (!isset($record['player']['username']) || $record['player']['username'] === '')
-        continue;
-    foreach ($plots as $plotIndex => $plot) {
-        /**
-         * @var $plot \R6\GraphSupplier
-         */
-        $record['player']['username'] = \R6\GraphUtils::remapUsername($record['player']['username']);
-        $plot->processPoint($record, $timestamp);
-    }
-}
+	$files = glob($rootDir . '/players/*/*.json', GLOB_BRACE);
+	foreach($files as $file)
+	{
+		$timestamp = (explode('.', array_values(array_slice(explode('/', $file), -1))[0])[0] / 1000);
+		if($_GET['section'] !== 'all' && time() - $timestamp > getRange())
+			continue;
+		$record = json_decode(file_get_contents($file), true);
+		if(!isset($record['player']['username']) || $record['player']['username'] === '')
+			continue;
+		foreach($plots as $plotIndex => $plot)
+		{
+			/**
+			 * @var $plot \R6\GraphSupplier
+			 */
+			$record['player']['username'] = \R6\GraphUtils::remapUsername($record['player']['username']);
+			$plot->processPoint($record, $timestamp);
+		}
+	}
 ?>
 <div class="container-fluid" style="margin-top:80px">
     <ul id="mainPills" class="nav nav-<?php echo $_SESSION['menuStyle']; ?>s nav-justified">
@@ -122,36 +125,37 @@ foreach ($files as $file) {
     <hr/>
     <div class="tab-content">
         <div id="menuCasual" class="tab-pane fade">
-            <?php
-            include __DIR__ . "/sections/casual.php";
-            ?>
+			<?php
+				include __DIR__ . "/sections/casual.php";
+			?>
         </div>
         <div id="menuRanked" class="tab-pane fade">
-            <?php
-            include __DIR__ . "/sections/ranked.php";
-            ?>
+			<?php
+				include __DIR__ . "/sections/ranked.php";
+			?>
         </div>
         <div id="menuOther" class="tab-pane fade">
-            <?php
-            include __DIR__ . "/sections/other.php";
-            ?>
+			<?php
+				include __DIR__ . "/sections/other.php";
+			?>
         </div>
         <div id="menuOperators" class="tab-pane fade">
-            <?php
-            include __DIR__ . "/sections/operators.php";
-            ?>
+			<?php
+				include __DIR__ . "/sections/operators.php";
+			?>
         </div>
     </div>
 </div>
 <?php
-foreach ($plots as $plotIndex => $plot) {
-    /**
-     * @var $plot \R6\GraphSupplier
-     */
-    $name = $plot->getID();
-    echo "<!-- $name -->";
-    $plot->plot();
-}
+	foreach($plots as $plotIndex => $plot)
+	{
+		/**
+		 * @var $plot \R6\GraphSupplier
+		 */
+		$name = $plot->getID();
+		echo "<!-- $name -->";
+		$plot->plot();
+	}
 ?>
 <script src="js/last.js"></script>
 </body>

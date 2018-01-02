@@ -12,9 +12,9 @@
 
 		abstract class GraphSupplier
 		{
-            /**
-             * @var array
-             */
+			/**
+			 * @var array
+			 */
 			protected $datas = array();
 
 			function plot()
@@ -30,7 +30,7 @@
 						//Resize chart to fit height
 						var chartdivWatched = document.getElementById('chartDiv' + '<?php echo $this->getID(); ?>');
 
-						AmCharts.ready(function () {
+						function loadTheChart() {
 							var chartColors = {
 								theme: 'dark',
 								selectedBackgroundColor: '#3c5077',
@@ -206,7 +206,14 @@
 									}
 								}
 							);
-						});
+						}
+
+						if (AmCharts.isReady) {
+							loadTheChart();
+						} else {
+							AmCharts.ready(loadTheChart());
+						}
+
 					});
                 </script>
 				<?php
