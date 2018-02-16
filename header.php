@@ -39,8 +39,8 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link">Last update at: <?php echo getLastCheckDate($rootDir) ?></a></li>
-                <li class="nav-item"><a class="nav-link">Last data from: <?php echo getLastUpdateDate($rootDir); ?></a></li>
+                <li class="nav-item"><a class="nav-link">Last refresh: <?php echo getLastCheckDate($rootDir) ?></a></li>
+                <li class="nav-item"><a class="nav-link">Last data: <?php echo getLastUpdateDate($rootDir); ?></a></li>
             </ul>
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item <?php echo $_GET['section'] === 'weekly' ? 'active' : ''; ?>">
