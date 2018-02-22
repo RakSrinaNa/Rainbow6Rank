@@ -119,6 +119,8 @@ namespace R6 {
             {
                 case 'PhoenixRS666':
                     return 'Fuel_Rainbow';
+	            case 'MrCraftCod':
+		            return 'RakSrinaNa';
             }
             return $username;
         }
