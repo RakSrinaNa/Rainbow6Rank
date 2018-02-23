@@ -12,7 +12,7 @@
 				$point['stat'] = $player['player']['stats']['overall']['steps_moved'];
 				if($point['stat'] >= 808581577)
 					$point['stat'] -= 796066108;
-				if($player['player']['username'] === 'MrCraftCod')
+				if($player['player']['username'] === GraphUtils::remapUsername('MrCraftCod'))
 					$point['stat'] -= 11935086;
 				return $point;
 			}

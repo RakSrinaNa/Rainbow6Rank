@@ -63,7 +63,8 @@
 	 */
 	$plots = array();
 
-	$plots[] = new R6\AccuracyGraph();
+	//$plots[] = new R6\AccuracyGraph();
+	$plots[] = new R6\BulletsHitGraph();
 	$plots[] = new R6\AssistsGraph();
 	$plots[] = new R6\BarricadesGraph();
 	$plots[] = new R6\HeadshotsGraph();
