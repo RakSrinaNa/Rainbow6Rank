@@ -4,7 +4,7 @@
 	{
 		require_once __DIR__ . '/RankedSeasonGraph.php';
 
-		class RankedSeason9Graph extends RankedSeasonGraph
+		class RankedSeason9Graph extends RankedSeasonGraph //Chimera
 		{
 			private $endDate = -1;
 
