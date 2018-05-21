@@ -128,6 +128,10 @@
 						return 'Phones called';
 					case 'operatorpvp_attackerdrone_diminishedrealitymode':
 						return 'Drones fooled';
+					case 'operatorpvp_tagger_tagdevice_spot':
+						return 'Spotted with EE-ONE-D';
+					case 'operatorpvp_rush_adrenalinerush':
+						return 'Adrenaline rush';
 
 				}
 				return parent::getTitle();
