@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FTP_URL="ftp://ftp.cluster003.ovh.net/www/subdomains/rainbow/"
+FTP_URL="ftp://ftp.mrcraftcod.fr/www/subdomains/rainbow/"
 
 gitLastCommit=$(git show --summary --grep="Merge pull request")
 if [[ -z "$gitLastCommit" ]]
