@@ -132,6 +132,7 @@
 						return 'Spotted with EE-ONE-D';
 					case 'operatorpvp_rush_adrenalinerush':
 						return 'Adrenaline rush';
+
 				}
 				return parent::getTitle();
 			}
