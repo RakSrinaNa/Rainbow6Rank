@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FTP_URL="ftp://ftp.cluster003.ovh.net/www/subdomains/rainbow/"
+FTP_URL="ftp://ftp.mrcraftcod.fr/www/subdomains/rainbow/"
 
 gitLastCommit=$(git show --summary --grep="Merge pull request")
 if [[ -z "$gitLastCommit" ]]
@@ -27,7 +27,7 @@ else
 			then
    				printf "\nDeleting file ${f}\n"
 				STATUSCODE=$(curl -v -o - -s -w "%{http_code}" -u "${FTP_USER}:${FTP_PASS}" "${FTP_URL}" -X "DELE ${f}")
-				if test $STATUSCODE -ne 250; then
+				if test ${STATUSCODE} -ne 250; then
 				    printf "Error deleting file ${f}\n"
 				fi
 			else
