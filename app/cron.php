@@ -27,7 +27,7 @@
 		return $content;
 	}
 
-	$rootDirectory = __DIR__ . "/";
+	$rootDirectory = __DIR__ . "cron.php/";
 	$timeFormat = 'Y-m-d\TH:i:s+';
 
 	$players = array('MrCraftCod' => 'uplay', 'LokyDogma' => 'uplay', 'Fuel_Rainbow' => 'uplay', 'Fuel_Velvet' => 'uplay', 'DevilDuckYT' => 'uplay', 'RakSrinaNa' => 'uplay');

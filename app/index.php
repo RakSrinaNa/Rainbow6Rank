@@ -54,7 +54,7 @@
 
 	foreach(glob("graphs/*/*.php") as $filename)
 		/** @noinspection PhpIncludeInspection */
-		require_once __DIR__ . '/' . $filename;
+		require_once __DIR__ . 'index.php/' . $filename;
 
 	$operatorHandler = new R6\OperatorsHandler();
 
