@@ -1,0 +1,10 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  image: dotsunited/git-ftp:latest
+  script:
+  - git ftp push -v --remote-root /www/subdomains/rainbow --syncroot app/ --user ${FTP_USER} --passwd ${FTP_PASSWORD} ${FTP_HOST}
+  only:
+    - master
