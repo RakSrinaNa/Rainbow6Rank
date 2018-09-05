@@ -20,25 +20,25 @@
 		curl_setopt($cURL, CURLOPT_HTTPGET, true);
 		curl_setopt($cURL, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Accept: application/json'));
 		$content = curl_exec($cURL);
-		logg($path . ' => HTTP Response: ' . curl_getinfo($cURL, CURLINFO_HTTP_CODE) . "\n", $fpLog);
+		logg($path . ' => HTTP Response: ' . curl_getinfo($cURL, CURLINFO_HTTP_CODE) . "<br/>\n", $fpLog);
 		if(!$content)
-			logg('Error getting from API (' . curl_errno($cURL) . ')' . curl_error($cURL) . "\n", $fpLog);
+			logg('Error getting from API (' . curl_errno($cURL) . ')' . curl_error($cURL) . "<br/>\n", $fpLog);
 		curl_close($cURL);
 		return $content;
 	}
 
-	$rootDirectory = __DIR__ . "cron.php/";
+	$rootDirectory = __DIR__ . "/";
 	$timeFormat = 'Y-m-d\TH:i:s+';
 
-	$players = array('MrCraftCod' => 'uplay', 'LokyDogma' => 'uplay', 'Fuel_Rainbow' => 'uplay', 'Fuel_Velvet' => 'uplay', 'DevilDuckYT' => 'uplay', 'RakSrinaNa' => 'uplay');
+	$players = array('LokyDogma' => 'uplay', 'Fuel_Rainbow' => 'uplay', 'Fuel_Velvet' => 'uplay', 'DevilDuckYT' => 'uplay', 'RakSrinaNa' => 'uplay');
 
 	$fpLog = fopen('log.log', 'w');
 
-	logg('Working directory: ' . getcwd() . "\n\n", $fpLog);
+	logg('Working directory: ' . getcwd() . "<br/>\n<br/>\n", $fpLog);
 
 	foreach($players as $player => $platform)
 	{
-		logg('Doing player ' . $player . ':' . "\n", $fpLog);
+		logg('Doing player ' . $player . ':' . "<br/>\n", $fpLog);
 		$json = array();
 		$c1 = readAPI($fpLog, $player . '?platform=' . $platform);
 		$c2 = readAPI($fpLog, $player . '/seasons?platform=' . $platform);
@@ -52,12 +52,12 @@
 		$json['operators'] = json_decode($c3, true)['operator_records'];
 
 		$temp = $json['player']['updated_at'];
-		$date = date_create_from_format($timeFormat, $temp);
+		$date = DateTime::createFromFormat("Y-m-d\TH:i:s.uP", $temp);
 		if($date)
 		{
 			$time = $date->getTimestamp() * 1000;
 
-			logg('Time ' . $time . "\n", $fpLog);
+			logg('Time ' . $time . "<br/>\n", $fpLog);
 
 			$folder = $rootDirectory . 'players/' . $player . '/';
 			$file = $folder . $time . '.json';
@@ -67,28 +67,28 @@
 
 			if(!file_exists($file))
 			{
-				logg('Writing file ' . $file . "\n", $fpLog);
+				logg('Writing file ' . $file . "<br/>\n", $fpLog);
 				$fp = fopen($file, 'w');
 				if(!$fp)
 				{
-					logg('Error opening file ' . $file . "\n", $fpLog);
+					logg('Error opening file ' . $file . "<br/>\n", $fpLog);
 				}
 				else
 				{
 					fwrite($fp, json_encode($json));
 					fclose($fp);
-					logg('Writing file done' . "\n", $fpLog);
+					logg('Writing file done' . "<br/>\n", $fpLog);
 				}
 			}
 			else
 			{
-				logg("File " . $file . ' already exists, skipping' . "\n", $fpLog);
+				logg("File " . $file . ' already exists, skipping' . "<br/>\n", $fpLog);
 			}
-			logg("\n", $fpLog);
+			logg("<br/>\n", $fpLog);
 		}
 		else
 		{
-			echo DateTime::getLastErrors();
+			echo json_encode(DateTime::getLastErrors()) . "<br/>\n";
 		}
 	}
 
@@ -98,5 +98,5 @@
 		fclose($fp);
 	}
 
-	logg('Done' . "\n", $fpLog);
+	logg('Done' . "<br/>\n", $fpLog);
 	fclose($fpLog);

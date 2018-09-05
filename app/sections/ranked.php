@@ -1,9 +1,12 @@
-<div class="chartHolder" id="chartHolderRanked10">
-    <div class="chartDiv" id="chartDivRanked10"></div>
+<div class="chartHolder" id="chartHolderRanked11">
+    <div class="chartDiv" id="chartDivRanked11"></div>
 </div>
 <?php
 if ($_GET['section'] === 'all') {
     ?>
+    <div class="chartHolder" id="chartHolderRanked10">
+        <div class="chartDiv" id="chartDivRanked10"></div>
+    </div>
     <div class="chartHolder" id="chartHolderRanked9">
         <div class="chartDiv" id="chartDivRanked9"></div>
     </div>
