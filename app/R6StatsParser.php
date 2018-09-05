@@ -106,15 +106,42 @@
 
 			private function updateOperators()
 			{
-				foreach($this->json as $operator)
+				foreach($this->json['operators'] as $operator)
 				{
 					$this->addOperator($operator);
 					$this->updateOperator($operator);
 				}
 			}
 
-			private function addOperator($operator){ }
+			private function addOperator($operator)
+			{
+				$this->sendRequest("INSERT IGNORE INTO R6_Operator(Name, Role, CTU, ImageFigure, ImageBadge, ImageBust) VALUES(:name, :role, :ctu, :figure, :badge, :bust)", array(":name" => $operator['operator']["name"], ":role" => $operator['operator']["role"], ":ctu" => $operator['operator']["ctu"], ":figure" => $operator['operator']["images"]["figure"], ":badge" => $operator['operator']["images"]["badge"], ":bust" => $operator['operator']["images"]["bust"]));
+				$sql = array();
+				$values = array();
+				foreach($operator['stats']['specials'] as $special => $value)
+				{
+					$sql[] = "(:o$special, :$special)";
+					$values[":o$special"] = $operator['operator']["name"];
+					$values[":$special"] = $special;
+				}
+				$this->sendRequest("INSERT IGNORE INTO R6_Operator_Special(Operator, Name) VALUES " . implode(",", $sql), $values);
+			}
 
-			private function updateOperator($operator){ }
+			private function updateOperator($operator)
+			{
+				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Operator(UID, DataDate, Operator, Played, Wins, Losses, Kills, Deaths, Playtime) VALUES (:uid, FROM_UNIXTIME(:datadate), :operator, :played, :wins, :losses, :kills, :deaths, :playtime)", array(":uid" => $this->uid, ":datadate" => $this->date, ":operator" => $operator['operator']["name"], ":played" => $operator['stats']["played"], ":wins" => $operator['stats']["wins"], ":losses" => $operator['stats']["losses"], ":kills" => $operator['stats']["kills"], ":deaths" => $operator['stats']["deaths"], ":playtime" => $operator['stats']["playtime"],));
+
+				$sql = array();
+				$values = array();
+				foreach($operator['stats']['specials'] as $special => $value)
+				{
+					$sql[] = "(:u$special, FROM_UNIXTIME(:d$special), :o$special, :$special)";
+					$values[":u$special"] = $this->uid;
+					$values[":d$special"] = $this->date;
+					$values[":o$special"] = $special;
+					$values[":$special"] = $value;
+				}
+				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Operator_Special(UID, DataDate, OperatorSpecial, SpecialValue) VALUES " . implode(",", $sql), $values);
+			}
 		}
 	}

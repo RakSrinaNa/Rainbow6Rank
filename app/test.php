@@ -19,10 +19,15 @@
 </head>
 <body>
 <?php
-	$file = __DIR__ . "/players/RakSrinaNa/1536169100000.json";
-	$record = file_get_contents($file);
-	$parser = new \R6\R6StatsParser($record);
-	$parser->putInDB();
+	$rootDir = '/homez.2349/mrcraftcgg/www/subdomains/rainbow';
+	$files = glob($rootDir . '/players/*/*.json', GLOB_BRACE);
+	foreach($files as $file)
+	{
+		$record = file_get_contents($file);
+		$parser = new \R6\R6StatsParser($record);
+		$parser->putInDB();
+		rename($file, $file . ".done");
+	}
 ?>
 </body>
 </html>

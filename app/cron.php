@@ -2,6 +2,8 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors', '1');
 
+	include_once __DIR__ . "/R6StatsParser.php";
+
 	function logg($message, $fpLog = null)
 	{
 		echo $message;
@@ -34,8 +36,6 @@
 
 	$fpLog = fopen('log.log', 'w');
 
-	logg('Working directory: ' . getcwd() . "<br/>\n<br/>\n", $fpLog);
-
 	foreach($players as $player => $platform)
 	{
 		logg('Doing player ' . $player . ':' . "<br/>\n", $fpLog);
@@ -51,45 +51,8 @@
 		$json['seasons'] = json_decode($c2, true)['seasons'];
 		$json['operators'] = json_decode($c3, true)['operator_records'];
 
-		$temp = $json['player']['updated_at'];
-		$date = DateTime::createFromFormat("Y-m-d\TH:i:s.uP", $temp);
-		if($date)
-		{
-			$time = $date->getTimestamp() * 1000;
-
-			logg('Time ' . $time . "<br/>\n", $fpLog);
-
-			$folder = $rootDirectory . 'players/' . $player . '/';
-			$file = $folder . $time . '.json';
-
-			if(!file_exists($folder))
-				mkdir($folder, 0777, true);
-
-			if(!file_exists($file))
-			{
-				logg('Writing file ' . $file . "<br/>\n", $fpLog);
-				$fp = fopen($file, 'w');
-				if(!$fp)
-				{
-					logg('Error opening file ' . $file . "<br/>\n", $fpLog);
-				}
-				else
-				{
-					fwrite($fp, json_encode($json));
-					fclose($fp);
-					logg('Writing file done' . "<br/>\n", $fpLog);
-				}
-			}
-			else
-			{
-				logg("File " . $file . ' already exists, skipping' . "<br/>\n", $fpLog);
-			}
-			logg("<br/>\n", $fpLog);
-		}
-		else
-		{
-			echo json_encode(DateTime::getLastErrors()) . "<br/>\n";
-		}
+		$parser =new \R6\R6StatsParser(json_encode($json));
+		$parser->putInDB();
 	}
 
 	{
