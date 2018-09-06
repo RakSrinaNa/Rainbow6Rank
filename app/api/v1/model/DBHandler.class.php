@@ -101,7 +101,7 @@
 				return $data;
 			}
 
-			public function reankedWL($player)
+			public function rankedWL($player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, WLR FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");

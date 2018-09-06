@@ -2,7 +2,8 @@
     <div class="chartDiv" id="chartDivRanked11"></div>
 </div>
 <?php
-if ($_GET['section'] === 'all') {
+	if(false && $_GET['section'] === 'all')
+	{
     ?>
     <div class="chartHolder" id="chartHolderRanked10">
         <div class="chartDiv" id="chartDivRanked10"></div>
