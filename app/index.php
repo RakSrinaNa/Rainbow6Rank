@@ -137,7 +137,6 @@
     </div>
 </div>
 <?php
-    print_r($plots);
 	foreach($plots as $plotIndex => $plot)
 	{
 		/**
