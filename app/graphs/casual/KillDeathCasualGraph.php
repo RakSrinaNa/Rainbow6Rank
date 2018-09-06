@@ -26,7 +26,7 @@
 			 */
 			function getPlayersURL()
 			{
-				return '/api/casual/kd/players';
+				return '/api/casual/players';
 			}
 
 			/**
@@ -42,7 +42,7 @@
 			 */
 			function getWeeklyDataProvider()
 			{
-				return '/api/casual/kd';
+				return $this->getAllDataProvider();
 			}
 		}
 	}

@@ -30,7 +30,8 @@
 
     <script type="text/javascript" src="js/libs/amcharts4/core.js"></script>
     <script type="text/javascript" src="js/libs/amcharts4/charts.js"></script>
-    <script type="text/javascript" src="js/libs/amcharts4/themes/kelly.js"></script>
+    <script type="text/javascript" src="js/libs/amcharts4/themes/animated.js"></script>
+    <script type="text/javascript" src="js/libs/amcharts4/themes/dark.js"></script>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width = device-width, initial-scale = 1">
@@ -42,7 +43,6 @@
     <script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
-<script src="js/init.js"></script>
 <?php
 	include __DIR__ . "/header.php";
 
@@ -56,6 +56,11 @@
 //		require_once __DIR__ . '/' . $filename;
 
     require_once __DIR__ . "/graphs/casual/KillDeathCasualGraph.php";
+    require_once __DIR__ . "/graphs/casual/WinLossCasualGraph.php";
+    require_once __DIR__ . "/graphs/casual/PlayTimeCasualGraph.php";
+    require_once __DIR__ . "/graphs/ranked/KillDeathRankedGraph.php";
+    require_once __DIR__ . "/graphs/ranked/WinLossRankedGraph.php";
+    require_once __DIR__ . "/graphs/ranked/PlayTimeRankedGraph.php";
 	/**
 	 * @var array
 	 */
@@ -67,12 +72,12 @@
 	//	$plots[] = new R6\BarricadesGraph();
 	//	$plots[] = new R6\HeadshotsGraph();
 		$plots[] = new R6\KillDeathCasualGraph();
-	//	$plots[] = new R6\KillDeathRankedGraph();
+		$plots[] = new R6\KillDeathRankedGraph();
 	//	$plots[] = new R6\LevelGraph();
 	//	$plots[] = new R6\MeleeGraph();
 	//	$plots[] = new R6\PenetrationKillsGraph();
-	//	$plots[] = new R6\PlayTimeCasualGraph();
-	//	$plots[] = new R6\PlayTimeRankedGraph();
+		$plots[] = new R6\PlayTimeCasualGraph();
+		$plots[] = new R6\PlayTimeRankedGraph();
 	//	$plots[] = new R6\RankedSeason5Graph();
 	//	$plots[] = new R6\RankedSeason6Graph();
 	//	$plots[] = new R6\RankedSeason7Graph();
@@ -84,8 +89,8 @@
 	//	$plots[] = new R6\RevivesGraph();
 	//	$plots[] = new R6\StepsGraph();
 	//	$plots[] = new R6\SuicidesGraph();
-	//	$plots[] = new R6\WinLossCasualGraph();
-	//	$plots[] = new R6\WinLossRankedGraph();
+		$plots[] = new R6\WinLossCasualGraph();
+		$plots[] = new R6\WinLossRankedGraph();
 	//	$plots[] = new R6\OperatorsHandler();
 
 	$plots = array_filter($plots, function($plot){
@@ -112,24 +117,25 @@
 				include __DIR__ . "/sections/casual.php";
 			?>
         </div>
-        <div id="menuRanked" class="tab-pane fade">
-			<?php
-				include __DIR__ . "/sections/ranked.php";
-			?>
-        </div>
-        <div id="menuOther" class="tab-pane fade">
-			<?php
-				include __DIR__ . "/sections/other.php";
-			?>
-        </div>
-        <div id="menuOperators" class="tab-pane fade">
-			<?php
-				include __DIR__ . "/sections/operators.php";
-			?>
-        </div>
+<!--        <div id="menuRanked" class="tab-pane fade">-->
+<!--			--><?php
+//				include __DIR__ . "/sections/ranked.php";
+//			?>
+<!--        </div>-->
+<!--        <div id="menuOther" class="tab-pane fade">-->
+<!--			--><?php
+//				include __DIR__ . "/sections/other.php";
+//			?>
+<!--        </div>-->
+<!--        <div id="menuOperators" class="tab-pane fade">-->
+<!--			--><?php
+//				include __DIR__ . "/sections/operators.php";
+//			?>
+<!--        </div>-->
     </div>
 </div>
 <?php
+    print_r($plots);
 	foreach($plots as $plotIndex => $plot)
 	{
 		/**

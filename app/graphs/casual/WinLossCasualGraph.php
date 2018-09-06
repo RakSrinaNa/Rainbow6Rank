@@ -6,15 +6,6 @@
 
 		class WinLossCasualGraph extends GraphSupplier
 		{
-			function getPoint($player)
-			{
-				$point = array('stat' => 0, 'total' => 0);
-				$point['stat'] = $player['player']['stats']['casual']['wins'];
-				$point['total'] = $player['player']['stats']['casual']['losses'];
-				$point['played'] = $player['player']['stats']['casual']['wins'] + $player['player']['stats']['casual']['losses'];
-				return $point;
-			}
-
 			function getTitle()
 			{
 				return 'W/L Ratio Casual';
@@ -28,6 +19,30 @@
 			function getAdditionalBalloon()
 			{
 				return array('played' => 'Played: ', 'stat' => 'Wins: ', 'total' => 'Losses: ');
+			}
+
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
+			{
+				return '/api/casual/players';
+			}
+
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
+			{
+				return '/api/casual/wl';
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return $this->getAllDataProvider();
 			}
 		}
 	}

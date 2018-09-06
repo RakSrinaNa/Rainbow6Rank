@@ -12,8 +12,15 @@
 		sendResponse(404, json_encode(array('No request')));
 
 	$endpoints = array();
-	$endpoints[] = array('regex' => '/casual\/kd\/players/', 'method' => 'casualKDPlayers');
-	$endpoints[] = array('regex' => '/casual\/kd/', 'method' => 'casualKD');
+	$endpoints[] = array('regex' => '/casual\/players/', 'method' => 'casualPlayers');
+	$endpoints[] = array('regex' => '/casual\/kd\/([A-Za-z0-9-]+)/', 'method' => 'casualKD');
+	$endpoints[] = array('regex' => '/casual\/wl\/([A-Za-z0-9-]+)/', 'method' => 'casualWL');
+	$endpoints[] = array('regex' => '/casual\/playtime\/([A-Za-z0-9-]+)/', 'method' => 'casualPlaytime');
+
+	$endpoints[] = array('regex' => '/ranked\/players/', 'method' => 'rankedPlayers');
+	$endpoints[] = array('regex' => '/ranked\/kd\/([A-Za-z0-9-]+)/', 'method' => 'rankedKD');
+	$endpoints[] = array('regex' => '/ranked\/wl\/([A-Za-z0-9-]+)/', 'method' => 'rankedWL');
+	$endpoints[] = array('regex' => '/ranked\/playtime\/([A-Za-z0-9-]+)/', 'method' => 'rankedPlaytime');
 
 	switch($_SERVER['REQUEST_METHOD'])
 	{

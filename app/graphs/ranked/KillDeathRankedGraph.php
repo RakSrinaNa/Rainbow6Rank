@@ -6,14 +6,6 @@
 
 		class KillDeathRankedGraph extends GraphSupplier
 		{
-			function getPoint($player)
-			{
-				$point = array('stat' => 0, 'total' => 0);
-				$point['stat'] = $player['player']['stats']['ranked']['kills'];
-				$point['total'] = $player['player']['stats']['ranked']['deaths'];
-				return $point;
-			}
-
 			function getTitle()
 			{
 				return 'K/D Ratio Ranked';
@@ -27,6 +19,30 @@
 			function getAdditionalBalloon()
 			{
 				return array('stat' => 'Kills: ', 'total' => 'Deaths: ');
+			}
+
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
+			{
+				return '/api/ranked/players';
+			}
+
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
+			{
+				return '/api/ranked/kd';
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return $this->getAllDataProvider();
 			}
 		}
 	}
