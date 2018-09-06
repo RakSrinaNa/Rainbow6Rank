@@ -52,43 +52,42 @@
 		return $_GET['section'] === 'weekly' ? 31536000 : (3 * 2592000);
 	}
 
-	foreach(glob("graphs/*/*.php") as $filename)
-		/** @noinspection PhpIncludeInspection */
-		require_once __DIR__ . '/' . $filename;
+//	foreach(glob("graphs/*/*.php") as $filename)
+//		/** @noinspection PhpIncludeInspection */
+//		require_once __DIR__ . '/' . $filename;
 
-	$operatorHandler = new R6\OperatorsHandler();
-
+    require_once __DIR__ . "/graphs/casual/KillDeathCasualGraph.php";
 	/**
 	 * @var array
 	 */
 	$plots = array();
 
 	//$plots[] = new R6\AccuracyGraph();
-	$plots[] = new R6\BulletsHitGraph();
-	$plots[] = new R6\AssistsGraph();
-	$plots[] = new R6\BarricadesGraph();
-	$plots[] = new R6\HeadshotsGraph();
-	$plots[] = new R6\KillDeathCasualGraph();
-	$plots[] = new R6\KillDeathRankedGraph();
-	$plots[] = new R6\LevelGraph();
-	$plots[] = new R6\MeleeGraph();
-	$plots[] = new R6\PenetrationKillsGraph();
-	$plots[] = new R6\PlayTimeCasualGraph();
-	$plots[] = new R6\PlayTimeRankedGraph();
-	$plots[] = new R6\RankedSeason5Graph();
-	$plots[] = new R6\RankedSeason6Graph();
-	$plots[] = new R6\RankedSeason7Graph();
-	$plots[] = new R6\RankedSeason8Graph();
-	$plots[] = new R6\RankedSeason9Graph();
-	$plots[] = new R6\RankedSeason10Graph();
-	$plots[] = new R6\RankedSeason11Graph();
-	$plots[] = new R6\ReinforcementsGraph();
-	$plots[] = new R6\RevivesGraph();
-	$plots[] = new R6\StepsGraph();
-	$plots[] = new R6\SuicidesGraph();
-	$plots[] = new R6\WinLossCasualGraph();
-	$plots[] = new R6\WinLossRankedGraph();
-	$plots[] = $operatorHandler;
+	//	$plots[] = new R6\BulletsHitGraph();
+	//	$plots[] = new R6\AssistsGraph();
+	//	$plots[] = new R6\BarricadesGraph();
+	//	$plots[] = new R6\HeadshotsGraph();
+		$plots[] = new R6\KillDeathCasualGraph();
+	//	$plots[] = new R6\KillDeathRankedGraph();
+	//	$plots[] = new R6\LevelGraph();
+	//	$plots[] = new R6\MeleeGraph();
+	//	$plots[] = new R6\PenetrationKillsGraph();
+	//	$plots[] = new R6\PlayTimeCasualGraph();
+	//	$plots[] = new R6\PlayTimeRankedGraph();
+	//	$plots[] = new R6\RankedSeason5Graph();
+	//	$plots[] = new R6\RankedSeason6Graph();
+	//	$plots[] = new R6\RankedSeason7Graph();
+	//	$plots[] = new R6\RankedSeason8Graph();
+	//	$plots[] = new R6\RankedSeason9Graph();
+	//	$plots[] = new R6\RankedSeason10Graph();
+	//	$plots[] = new R6\RankedSeason11Graph();
+	//	$plots[] = new R6\ReinforcementsGraph();
+	//	$plots[] = new R6\RevivesGraph();
+	//	$plots[] = new R6\StepsGraph();
+	//	$plots[] = new R6\SuicidesGraph();
+	//	$plots[] = new R6\WinLossCasualGraph();
+	//	$plots[] = new R6\WinLossRankedGraph();
+	//	$plots[] = new R6\OperatorsHandler();
 
 	$plots = array_filter($plots, function($plot){
 		/**
@@ -96,25 +95,6 @@
 		 */
 		return $plot->shouldPlot();
 	});
-
-	$files = glob($rootDir . '/players/*/*.json', GLOB_BRACE);
-	foreach($files as $file)
-	{
-		$timestamp = (explode('.', array_values(array_slice(explode('/', $file), -1))[0])[0] / 1000);
-		if($_GET['section'] !== 'all' && time() - $timestamp > getRange())
-			continue;
-		$record = json_decode(file_get_contents($file), true);
-		if(!isset($record['player']['username']) || $record['player']['username'] === '')
-			continue;
-		foreach($plots as $plotIndex => $plot)
-		{
-			/**
-			 * @var $plot \R6\GraphSupplier
-			 */
-			$record['player']['username'] = \R6\GraphUtils::remapUsername($record['player']['username']);
-			$plot->processPoint($record, $timestamp);
-		}
-	}
 ?>
 <div class="container-fluid" style="margin-top:80px">
     <ul id="mainPills" class="nav nav-<?php echo $_SESSION['menuStyle']; ?>s nav-justified">

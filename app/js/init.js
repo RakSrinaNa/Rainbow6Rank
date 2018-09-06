@@ -1,4 +1,4 @@
-/*AmCharts.lazyLoadMakeChart = AmCharts.makeChart;
+AmCharts.lazyLoadMakeChart = AmCharts.makeChart;
 
 AmCharts.makeChart = function (a, b, c) {
 	$(document).on('scroll load touchmove', handleScroll);
@@ -20,4 +20,4 @@ AmCharts.makeChart = function (a, b, c) {
         addListener: function () {
         }
     };
-};*/
+};

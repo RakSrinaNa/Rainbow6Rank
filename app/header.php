@@ -1,4 +1,6 @@
 <?php
+    include_once __DIR__ . "/api/v1/model/DBConnection.class.php";
+
 	{
 		$rootDir = '/homez.2349/mrcraftcgg/www/subdomains/rainbow';
 
@@ -14,16 +16,15 @@
 			return $date === 0 ? 'UNKNOWN' : date("H:i:s", $date);
 		}
 
-		function getLastUpdateDate($rootDir)
+		function getLastDataDate()
 		{
-			$date = 0;
-			$files = glob($rootDir . '/players/*/*.json', GLOB_BRACE);
-			foreach($files as $file)
+			$query = \R6\DBConnection::getConnection()->query("SELECT MAX(Updated) AS Updated FROM R6_Player");
+			if($result = $query->fetch())
 			{
-				$fDate = filemtime($file);
-				$date = $date > $fDate ? $date : $fDate;
+				$dt = new DateTime($result["Updated"]);
+				return $dt->format("H:i:s");
 			}
-			return $date === 0 ? 'UNKNOWN' : date("H:i:s", $date);
+			return 'UNKNOWN';
 		}
 
 		?>
@@ -39,8 +40,8 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link">Last refresh: <?php echo getLastCheckDate($rootDir) ?></a></li>
-                <li class="nav-item"><a class="nav-link">Last data: <?php echo getLastUpdateDate($rootDir); ?></a></li>
+                <li class="nav-item"><a class="nav-link">Last check: <?php echo getLastCheckDate($rootDir) ?></a></li>
+                <li class="nav-item"><a class="nav-link">Last data: <?php echo getLastDataDate(); ?></a></li>
             </ul>
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item <?php echo $_GET['section'] === 'weekly' ? 'active' : ''; ?>">

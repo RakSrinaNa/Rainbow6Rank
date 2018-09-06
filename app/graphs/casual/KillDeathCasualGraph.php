@@ -6,14 +6,6 @@
 
 		class KillDeathCasualGraph extends GraphSupplier
 		{
-			function getPoint($player)
-			{
-				$point = array('stat' => 0, 'total' => 0);
-				$point['stat'] = $player['player']['stats']['casual']['kills'];
-				$point['total'] = $player['player']['stats']['casual']['deaths'];
-				return $point;
-			}
-
 			function getTitle()
 			{
 				return 'K/D Ratio Casual';
@@ -27,6 +19,30 @@
 			function getAdditionalBalloon()
 			{
 				return array('stat' => 'Kills: ', 'total' => 'Deaths: ');
+			}
+
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
+			{
+				return '/api/casual/kd/players';
+			}
+
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
+			{
+				return '/api/casual/kd';
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return '/api/casual/kd';
 			}
 		}
 	}

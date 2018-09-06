@@ -8,118 +8,71 @@
 		 * Date: 07/05/2017
 		 * Time: 16:34
 		 */
-		require_once __DIR__ . '/GraphUtils.php';
-
 		abstract class GraphSupplier
 		{
-			/**
-			 * @var array
-			 */
-			protected $datas = array();
-
 			function plot()
 			{ ?>
                 <script type='text/javascript'>
-					function roundDate(date) {
-						var coeff = 1000 * 60 * 60;
-						return new Date(Math.floor(date.getTime() / coeff) * coeff)
-					}
-
 					$(function () {
-
 						//Resize chart to fit height
-						var chartdivWatched = document.getElementById('chartDiv' + '<?php echo $this->getID(); ?>');
+						const chartDiv = document.getElementById('chartDiv' + '<?php echo $this->getID(); ?>');
 
 						function loadTheChart() {
-							var chartColors = {
-								theme: 'dark',
-								selectedBackgroundColor: '#3c5077',
-								gridColor: '#999999',
-								color: '#111111',
-								scrollBarBackgroundColor: '#3d5e77',
-								labelColor: '#000000',
-								backgroundColor: '#2b3e50',
-								ratioLineColor: '#196E1F',
-								countLineColor: '#214DD1',
-								handDrawn: false
-							};
+							function getPlayers(playersCallback) {
+								$.ajax({
+									url: '<?php echo $this->getPlayersURL(); ?>',
+									context: document.body,
+									method: 'GET'
+								}).done(function (data) {
+									if (data && data['players']) {
+										playersCallback(data['players']);
+									}
+								});
+							}
 
-							var datas = JSON.parse('<?php echo $this->getDatas(); ?>');
-
-							var graphs = [];
-							var tempDatas = [];
-							for (var player in datas)
-								if (datas.hasOwnProperty(player)) {
-									const username = player;
-									graphs.push({
-										id: username,
-										bullet: 'circle',
-										bulletBorderAlpha: 1,
-										bulletBorderThickness: 1,
-										connect: true,
-										dashLengthField: 'dashLength',
-										legendValueText: '[[value]]',
-										title: username,
-										//fillAlphas: 0.05,
-										valueField: username,
-										valueAxis: 'pointsAxis',
-										type: 'step',
-										//type: 'smoothedLine',
-										lineThickness: 2,
-										bulletSize: 8,
-										balloonFunction: function (graphDataItem) {
-											var parser = <?php echo $this->getParser(); ?>;
-											var date = graphDataItem.category;
-											var balloon = username + '<br>' + ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + '<br/><b><span style="font-size:14px;">' + parser(graphDataItem.values.value) + '</span></b>';
-											<?php
-											foreach($this->getAdditionalBalloon() as $field => $text)
-											{ ?>
-											var key = username + '<?php echo $field; ?>';
-											if (graphDataItem.dataContext.hasOwnProperty(key)) {
-												balloon += '<br/><?php echo $text; ?>' + graphDataItem.dataContext[key];
-											}
-											<?php
-											}?>
-											return balloon;
-										}
-									});
-
-									for (var date in datas[player])
-										if (datas[player].hasOwnProperty(date)) {
-											var roundedDate = roundDate(new Date(date));
-											if (!tempDatas.hasOwnProperty(roundedDate))
-												tempDatas[roundedDate] = {};
-											tempDatas[roundedDate][player] = datas[player][date];
-										}
-								}
-
-							var datas = [];
-							for (var date in tempDatas)
-								if (tempDatas.hasOwnProperty(date)) {
-									var dateData = {};
-									dateData['date'] = date;
-									for (var user in tempDatas[date])
-										if (tempDatas[date].hasOwnProperty(user)) {
-											for (var valueData in tempDatas[date][user]) {
-												if (tempDatas[date][user].hasOwnProperty(valueData)) {
-													if (valueData === 'value')
-														dateData[user] = tempDatas[date][user][valueData];
-													else
-														dateData[valueData] = tempDatas[date][user][valueData];
+							getPlayers(function (players) {
+								const graphs = [];
+								for (const playerName in players) {
+									if (players.hasOwnProperty(playerName)) {
+										graphs.push({
+											id: playerName,
+											bullet: 'circle',
+											bulletBorderAlpha: 1,
+											bulletBorderThickness: 1,
+											connect: true,
+											dashLengthField: 'dashLength',
+											legendValueText: '[[value]]',
+											title: playerName,
+											//fillAlphas: 0.05,
+											valueField: playerName,
+											valueAxis: 'pointsAxis',
+											type: 'step',
+											//type: 'smoothedLine',
+											lineThickness: 2,
+											bulletSize: 8,
+											balloonFunction: function (graphDataItem) {
+												let parser = function () {
+													return "";
+												};
+												parser = <?php echo $this->getParser(); ?>;
+												const date = graphDataItem.category;
+												let balloon = playerName + '<br>' + ("0" + date.getDate()).slice(-2) + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + '<br/><b><span style="font-size:14px;">' + parser(graphDataItem.values.value) + '</span></b>';
+												<?php
+												foreach($this->getAdditionalBalloon() as $field => $text)
+												{ ?>
+												const key = playerName + '<?php echo $field; ?>';
+												if (graphDataItem.dataContext.hasOwnProperty(key)) {
+													balloon += '<br/><?php echo $text; ?>' + graphDataItem.dataContext[key];
 												}
+												<?php
+												}?>
+												return balloon;
 											}
-
-										}
-
-									datas.push(dateData);
+										});
+									}
 								}
 
-							datas = datas.sort(function (a, b) {
-								return Date.parse(a['date']) - Date.parse(b['date']);
-							});
-
-							//Build Chart
-							AmCharts.makeChart(chartdivWatched, {
+								const chartData = {
 									type: 'serial',
 									theme: chartColors['theme'],
 									backgroundAlpha: 1,
@@ -138,7 +91,10 @@
 											return graphDataItem && graphDataItem.graph && graphDataItem.graph.valueField && graphDataItem.values && (graphDataItem.values.value || graphDataItem.values.value === 0) ? Math.round(graphDataItem.values.value * 100) / 100 : '';
 										}
 									},
-									dataProvider: datas,
+									dataLoader: {
+										url: "<?php echo $this->getDataProvider(); ?>",
+										format: "json"
+									},
 									valueAxes: [{
 										id: 'pointsAxis',
 										axisAlpha: 0.5,
@@ -200,12 +156,17 @@
 									gridAlpha: 0.1,
 									gridColor: '#FFFFFF',
 									creditsPosition: 'bottom-left'
-								}, {
+								};
+
+								const chartOptions = {
 									responsive: {
 										enabled: true
 									}
-								}
-							);
+								};
+
+								//Build Chart
+								AmCharts.makeChart(chartDiv, chartData, chartOptions);
+							});
 						}
 
 						if (AmCharts.isReady) {
@@ -213,8 +174,7 @@
 						} else {
 							AmCharts.ready(loadTheChart());
 						}
-
-					});
+					);
                 </script>
 				<?php
 			}
@@ -223,36 +183,6 @@
 			 * @return string
 			 */
 			abstract function getID();
-
-			/**
-			 * @return string
-			 */
-			final function getDatas()
-			{
-				return json_encode(GraphUtils::process($this->datas));
-			}
-
-			/**
-			 * @param array $player
-			 * @param string $timestamp
-			 */
-			function processPoint($player, $timestamp)
-			{
-				$username = $player['player']['username'];
-				if(!isset($this->datas[$username]))
-					$this->datas[$username] = array();
-				$data = $this->getPoint($player);
-				if($data === null)
-					return;
-				$data['timestamp'] = $timestamp;
-				$this->datas[$username][$player['player']['updated_at']] = $data;
-			}
-
-			/**
-			 * @param array $player
-			 * @return array
-			 */
-			abstract function getPoint($player);
 
 			/**
 			 * @return array
@@ -298,5 +228,30 @@
 			{
 				return null;
 			}
+
+			/**
+			 * @return string
+			 */
+			abstract function getPlayersURL();
+
+			/**
+			 * @return string
+			 */
+			private function getDataProvider()
+			{
+				if($_GET['section'] === 'detailed' || $_GET['section'] === 'all')
+					return $this->getAllDataProvider();
+				return $this->getWeeklyDataProvider();
+			}
+
+			/**
+			 * @return string
+			 */
+			abstract function getAllDataProvider();
+
+			/**
+			 * @return string
+			 */
+			abstract function getWeeklyDataProvider();
 		}
 	}
