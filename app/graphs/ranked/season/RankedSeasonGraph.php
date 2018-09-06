@@ -2,7 +2,7 @@
 
 	namespace R6
 	{
-		require_once __DIR__ . '/../../model/GraphSupplier.php';
+		require_once __DIR__ . '/../../../model/GraphSupplier.php';
 
 		abstract class RankedSeasonGraph extends GraphSupplier
 		{
