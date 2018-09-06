@@ -51,16 +51,14 @@
 		return $_GET['section'] === 'weekly' ? 31536000 : (3 * 2592000);
 	}
 
-//	foreach(glob("graphs/*/*.php") as $filename)
-//		/** @noinspection PhpIncludeInspection */
-//		require_once __DIR__ . '/' . $filename;
+	foreach(glob("graphs/casual/*.php") as $filename)
+		/** @noinspection PhpIncludeInspection */
+		require_once __DIR__ . '/' . $filename;
 
-    require_once __DIR__ . "/graphs/casual/KillDeathCasualGraph.php";
-    require_once __DIR__ . "/graphs/casual/WinLossCasualGraph.php";
-    require_once __DIR__ . "/graphs/casual/PlayTimeCasualGraph.php";
-    require_once __DIR__ . "/graphs/ranked/KillDeathRankedGraph.php";
-    require_once __DIR__ . "/graphs/ranked/WinLossRankedGraph.php";
-    require_once __DIR__ . "/graphs/ranked/PlayTimeRankedGraph.php";
+	foreach(glob("graphs/ranked/*.php") as $filename)
+		/** @noinspection PhpIncludeInspection */
+		require_once __DIR__ . '/' . $filename;
+
 	/**
 	 * @var array
 	 */

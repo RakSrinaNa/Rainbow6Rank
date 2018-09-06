@@ -11,19 +11,21 @@
 	if(!isset($_REQUEST['request']))
 		sendResponse(404, json_encode(array('No request')));
 
+	$handler = new R6\DBHandler();
+
 	$endpoints = array();
-	$endpoints[] = array('regex' => '/casual\/players/', 'method' => 'casualPlayers');
-	$endpoints[] = array('regex' => '/casual\/kd\/([A-Za-z0-9-]+)/', 'method' => 'casualKD');
-	$endpoints[] = array('regex' => '/casual\/wl\/([A-Za-z0-9-]+)/', 'method' => 'casualWL');
-	$endpoints[] = array('regex' => '/casual\/playtime\/([A-Za-z0-9-]+)/', 'method' => 'casualPlaytime');
+	$endpoints[] = array('regex' => '/casual\/players/', 'object' => $handler, 'method' => 'casualPlayers');
+	$endpoints[] = array('regex' => '/casual\/kd\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'casualKD');
+	$endpoints[] = array('regex' => '/casual\/wl\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'casualWL');
+	$endpoints[] = array('regex' => '/casual\/playtime\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'casualPlaytime');
 
-	$endpoints[] = array('regex' => '/ranked\/players/', 'method' => 'rankedPlayers');
-	$endpoints[] = array('regex' => '/ranked\/kd\/([A-Za-z0-9-]+)/', 'method' => 'rankedKD');
-	$endpoints[] = array('regex' => '/ranked\/wl\/([A-Za-z0-9-]+)/', 'method' => 'rankedWL');
-	$endpoints[] = array('regex' => '/ranked\/playtime\/([A-Za-z0-9-]+)/', 'method' => 'rankedPlaytime');
+	$endpoints[] = array('regex' => '/ranked\/players/', 'object' => $handler, 'method' => 'rankedPlayers');
+	$endpoints[] = array('regex' => '/ranked\/kd\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'rankedKD');
+	$endpoints[] = array('regex' => '/ranked\/wl\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'rankedWL');
+	$endpoints[] = array('regex' => '/ranked\/playtime\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'rankedPlaytime');
 
-	$endpoints[] = array('regex' => '/season\/([0-9]+)\/players/', 'method' => 'seasonPlayers');
-	$endpoints[] = array('regex' => '/season\/([0-9]+)\/rank\/([A-Za-z0-9-]+)/', 'method' => 'seasonRank');
+	$endpoints[] = array('regex' => '/season\/([0-9]+)\/players/', 'object' => $handler, 'method' => 'seasonPlayers');
+	$endpoints[] = array('regex' => '/season\/([0-9]+)\/rank\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'seasonRank');
 
 	switch($_SERVER['REQUEST_METHOD'])
 	{
@@ -54,9 +56,8 @@
 			if(preg_match($endpoint['regex'], $request, $groups))
 			{
 				$matched = true;
-				$handler = new R6\DBHandler();
 				array_shift($groups);
-				$result = call_user_func_array(array($handler, $endpoint['method']), $groups);
+				$result = call_user_func_array(array($endpoint['object'], $endpoint['method']), $groups);
 				if($result)
 				{
 					$code = 200;
