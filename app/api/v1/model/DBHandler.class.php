@@ -40,12 +40,12 @@
 			public function casualKD($player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, KD FROM R6_Stats_Casual WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, KD, Kills, Deaths FROM R6_Stats_Casual WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
 				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
-					$data[] = array('date' => $row['DataDate'], 'value' => $row['KD']);
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['KD'], 'kills' => $row['Kills'], 'deaths' => $row['Deaths']);
 				}
 				return $data;
 			}
@@ -53,12 +53,12 @@
 			public function casualWL($player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, WLR FROM R6_Stats_Casual WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, WLR, Wins, Losses FROM R6_Stats_Casual WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
 				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
-					$data[] = array('date' => $row['DataDate'], 'value' => $row['WLR']);
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['WLR'], 'wins' => $row['Wins'], 'losses' => $row['Losses']);
 				}
 				return $data;
 			}
@@ -91,12 +91,12 @@
 			public function rankedKD($player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, KD FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, KD, Kills, Deaths FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
 				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
-					$data[] = array('date' => $row['DataDate'], 'value' => $row['KD']);
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['KD'], 'kills' => $row['Kills'], 'deaths' => $row['Deaths']);
 				}
 				return $data;
 			}
@@ -104,12 +104,12 @@
 			public function rankedWL($player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, WLR FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, WLR, Wins, Losses FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
 				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
-					$data[] = array('date' => $row['DataDate'], 'value' => $row['WLR']);
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['WLR'], 'wins' => $row['Wins'], 'losses' => $row['Losses']);
 				}
 				return $data;
 			}

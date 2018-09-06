@@ -29,6 +29,11 @@
 							getPlayers(function (players) {
 								const chartDiv = document.getElementById('chartDiv' + '<?php echo $this->getID(); ?>');
 								let chart = am4core.create(chartDiv, am4charts.XYChart);
+								let title = chart.titles.create();
+								title.text = "<?php $this->getTitle(); ?>";
+								title.fontSize = 15;
+								title.marginBottom = 15;
+
 								let xAxis = chart.xAxes.push(new am4charts.DateAxis());
 								xAxis.title.text = 'Date';
 								xAxis.skipEmptyPeriods = true;
@@ -235,33 +240,9 @@
 			abstract function getID();
 
 			/**
-			 * @return array
-			 */
-			function getAdditionalBalloon()
-			{
-				return array();
-			}
-
-			/**
 			 * @return string
 			 */
 			abstract function getTitle();
-
-			/**
-			 * @return string
-			 */
-			function getParser()
-			{
-				return 'function(data){return data;}';
-			}
-
-			/**
-			 * @return string
-			 */
-			function getGuides()
-			{
-				return json_encode(array());
-			}
 
 			/**
 			 * @return bool
@@ -269,14 +250,6 @@
 			function shouldPlot()
 			{
 				return true;
-			}
-
-			/**
-			 * @return bool | null
-			 */
-			function getMinimum()
-			{
-				return null;
 			}
 
 			/**
