@@ -1,27 +1,27 @@
-<div class="chartHolder" id="chartHolderRanked11">
-    <div class="chartDiv" id="chartDivRanked11"></div>
+<div class="chartHolder" id="chartHolderSeason11">
+    <div class="chartDiv" id="chartDivSeason11"></div>
 </div>
 <?php
 	if(false && $_GET['section'] === 'all')
 	{
     ?>
-    <div class="chartHolder" id="chartHolderRanked10">
-        <div class="chartDiv" id="chartDivRanked10"></div>
+        <div class="chartHolder" id="chartHolderSeason10">
+            <div class="chartDiv" id="chartDivSeason10"></div>
     </div>
-    <div class="chartHolder" id="chartHolderRanked9">
-        <div class="chartDiv" id="chartDivRanked9"></div>
+        <div class="chartHolder" id="chartHolderSeason9">
+            <div class="chartDiv" id="chartDivSeason9"></div>
     </div>
-    <div class="chartHolder" id="chartHolderRanked8">
-        <div class="chartDiv" id="chartDivRanked8"></div>
+        <div class="chartHolder" id="chartHolderSeason8">
+            <div class="chartDiv" id="chartDivSeason8"></div>
     </div>
-    <div class="chartHolder" id="chartHolderRanked7">
-        <div class="chartDiv" id="chartDivRanked7"></div>
+        <div class="chartHolder" id="chartHolderSeason7">
+            <div class="chartDiv" id="chartDivSeason7"></div>
     </div>
-    <div class="chartHolder" id="chartHolderRanked6">
-        <div class="chartDiv" id="chartDivRanked6"></div>
+        <div class="chartHolder" id="chartHolderSeason6">
+            <div class="chartDiv" id="chartDivSeason6"></div>
     </div>
-    <div class="chartHolder" id="chartHolderRanked5">
-        <div class="chartDiv" id="chartDivRanked5"></div>
+        <div class="chartHolder" id="chartHolderSeason5">
+            <div class="chartDiv" id="chartDivSeason5"></div>
     </div>
     <?php
 }

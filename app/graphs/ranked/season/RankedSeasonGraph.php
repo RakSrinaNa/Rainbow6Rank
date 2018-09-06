@@ -17,7 +17,7 @@
 
 			function getID()
 			{
-				return 'Ranked' . $this->getSeasonID();
+				return 'Season' . $this->getSeasonID();
 			}
 
 			function getGuides()
