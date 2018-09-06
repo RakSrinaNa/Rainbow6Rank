@@ -82,7 +82,7 @@
 	//	$plots[] = new R6\RankedSeason8Graph();
 	//	$plots[] = new R6\RankedSeason9Graph();
 	//	$plots[] = new R6\RankedSeason10Graph();
-	//	$plots[] = new R6\RankedSeason11Graph();
+	$plots[] = new R6\RankedSeason11Graph();
 	//	$plots[] = new R6\ReinforcementsGraph();
 	//	$plots[] = new R6\RevivesGraph();
 	//	$plots[] = new R6\StepsGraph();
