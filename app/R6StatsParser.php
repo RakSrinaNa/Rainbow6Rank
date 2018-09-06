@@ -11,7 +11,7 @@
 
 		use DateTime;
 
-		include_once __DIR__ . "/DBConnection.class.php";
+		include_once __DIR__ . "/api/v1/model/DBConnection.class.php";
 
 		class R6StatsParser
 		{
