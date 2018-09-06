@@ -59,6 +59,10 @@
 		/** @noinspection PhpIncludeInspection */
 		require_once __DIR__ . '/' . $filename;
 
+	foreach(glob("graphs/ranked/season/*.php") as $filename)
+		/** @noinspection PhpIncludeInspection */
+		require_once __DIR__ . '/' . $filename;
+
 	/**
 	 * @var array
 	 */
