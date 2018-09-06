@@ -28,10 +28,9 @@
             integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
             crossorigin="anonymous"></script>
 
-    <script type="text/javascript" src="js/libs/amcharts/amcharts.js"></script>
-    <script type="text/javascript" src="js/libs/amcharts/serial.js"></script>
-    <script type="text/javascript" src="js/libs/amcharts/themes/light.js"></script>
-    <script type="text/javascript" src="js/libs/amcharts/plugins/responsive/responsive.min.js"></script>
+    <script type="text/javascript" src="js/libs/amcharts4/core.js"></script>
+    <script type="text/javascript" src="js/libs/amcharts4/charts.js"></script>
+    <script type="text/javascript" src="js/libs/amcharts4/themes/kelly.js"></script>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width = device-width, initial-scale = 1">

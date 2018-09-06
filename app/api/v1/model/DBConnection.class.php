@@ -19,7 +19,7 @@
 			{
 				if(!DBConnection::$conn || !is_resource(DBConnection::$conn))
 				{
-					$infos = include __DIR__ . '/../../configs/database.config.php';
+					$infos = include __DIR__ . '/../../../../../configs/database.config.php';
 					DBConnection::$conn = $pdo = new PDO("mysql:host=" . $infos['host'] . ";dbname=" . $infos['database'] . ";charset=utf8", $infos['username'], $infos['password']);
 				}
 				return DBConnection::$conn;

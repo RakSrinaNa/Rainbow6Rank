@@ -15,7 +15,15 @@
 
 			public function casualKD()
 			{
-				return array(array("date" => "2011-06-01", "RakSrinaNa" => 10));
+//				$data = array();
+//				$stmt = DBConnection::getConnection()->query("SELECT KD FROM R6_Stats_Casual");
+//				$result = $stmt->fetchAll();
+//				foreach($result as $key => $row)
+//				{
+//					$data[] = $row['Username'];
+//				}
+//				return $data;
+				return array(array("date" => "2011-06-01", "value" => 10));
 			}
 
 			public function casualKDPlayers()

@@ -1,5 +1,5 @@
 <?php
-	if(false)
+	if(true)
 	{
 		error_reporting(E_ALL);
 		ini_set('display_errors', '1');
@@ -9,11 +9,11 @@
 	require_once __DIR__ . '/model/DBHandler.class.php';
 
 	if(!isset($_REQUEST['request']))
-		sendResponse(404);
+		sendResponse(404, json_encode(array('No request')));
 
 	$endpoints = array();
-	$endpoints[] = array('regex' => 'casual/kd/players', 'method' => 'casualKDPlayers');
-	$endpoints[] = array('regex' => 'casual/kd', 'method' => 'casualKD');
+	$endpoints[] = array('regex' => '/casual\/kd\/players/', 'method' => 'casualKDPlayers');
+	$endpoints[] = array('regex' => '/casual\/kd/', 'method' => 'casualKD');
 
 	switch($_SERVER['REQUEST_METHOD'])
 	{
@@ -36,26 +36,38 @@
 			$params = array();
 		$params = array_merge($params, $_GET);
 
+		$matched = false;
+
 		foreach($endpoints as $endpointIndex => $endpoint)
 		{
 			$groups = array();
 			if(preg_match($endpoint['regex'], $request, $groups))
 			{
+				$matched = true;
 				$handler = new R6\DBHandler();
 				array_shift($groups);
 				$result = call_user_func_array(array($handler, $endpoint['method']), $groups);
 				if($result)
 				{
-					sendResponse($result['code'], json_encode($result));
+					$code = 200;
+					if(isset($result['code']))
+					{
+						$code = $result['code'];
+					}
+					sendResponse($code, json_encode($result));
 				}
 				else
 				{
 					sendResponse(500, json_encode(array()));
 				}
-				return;
+				break;
 			}
 		}
-		sendResponse(404);
+
+		if(!$matched)
+		{
+			sendResponse(404, json_encode(array("code" => 404, "result" => "No route found")));
+		}
 	}
 
 	/**
