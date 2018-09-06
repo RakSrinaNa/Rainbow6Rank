@@ -117,11 +117,11 @@
 				include __DIR__ . "/sections/casual.php";
 			?>
         </div>
-<!--        <div id="menuRanked" class="tab-pane fade">-->
-<!--			--><?php
-//				include __DIR__ . "/sections/ranked.php";
-//			?>
-<!--        </div>-->
+        <div id="menuRanked" class="tab-pane fade">
+		    <?php
+			    include __DIR__ . "/sections/ranked.php";
+		    ?>
+        </div>
 <!--        <div id="menuOther" class="tab-pane fade">-->
 <!--			--><?php
 //				include __DIR__ . "/sections/other.php";
