@@ -22,6 +22,9 @@
 	$endpoints[] = array('regex' => '/ranked\/wl\/([A-Za-z0-9-]+)/', 'method' => 'rankedWL');
 	$endpoints[] = array('regex' => '/ranked\/playtime\/([A-Za-z0-9-]+)/', 'method' => 'rankedPlaytime');
 
+	$endpoints[] = array('regex' => '/season\/([0-9]+)\/players/', 'method' => 'seasonPlayers');
+	$endpoints[] = array('regex' => '/season\/([0-9]+)\/rank\/([A-Za-z0-9-]+)/', 'method' => 'seasonRank');
+
 	switch($_SERVER['REQUEST_METHOD'])
 	{
 		case 'GET':

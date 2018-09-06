@@ -126,5 +126,31 @@
 				}
 				return $data;
 			}
+
+			public function seasonPlayers($sid)
+			{
+				$players = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DISTINCT Username FROM R6_Stats_Season LEFT JOIN R6_Player ON R6_Stats_Ranked.UID = R6_Player.UID WHERE DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND SeasonNumber=:sid");
+				$prepared->execute(array(":sid" => $sid));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$players[] = $row['Username'];
+				}
+				return $players;
+			}
+
+			public function seasonRank($sid, $player)
+			{
+				$data = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Rating, Mean, StandardDeviation FROM R6_Stats_Season WHERE UID=:uid AND SeasonNumber=:sid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ':sid' => $sid));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['Rating'], 'mean' => $row['Mean'], 'stdev' => $row['StandardDeviation']);
+				}
+				return $data;
+			}
 		}
 	}
