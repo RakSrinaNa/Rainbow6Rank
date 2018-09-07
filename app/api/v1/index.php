@@ -27,7 +27,7 @@
 
 	$playerRegex = '([A-Za-z0-9-]+)';
 	$seasonRegex = '([0-9]+)';
-	$ctuRegex = '([A-Z0-9 ]+)';
+	$ctuRegex = '([A-Za-z0-9 ]+)';
 	$operatorRegex = '([A-Za-zãä]+)';
 	$operatorSpecialRegex = '([a-z_]+)';
 
@@ -65,8 +65,8 @@
 	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/playtime\/$playerRegex/", 'object' => $operatorHandler, 'method' => 'getPlaytime');
 	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/wl\/$playerRegex/", 'object' => $operatorHandler, 'method' => 'getWL');
 
-	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/$operatorSpecialRegex\/players/", 'object' => $specialHandler, 'method' => 'getPlayers');
-	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/$operatorSpecialRegex\/special\/$playerRegex/", 'object' => $specialHandler, 'method' => 'getSpecial');
+	$endpoints[] = array('regex' => "/special\/$ctuRegex\/$operatorRegex\/$operatorSpecialRegex\/players/", 'object' => $specialHandler, 'method' => 'getPlayers');
+	$endpoints[] = array('regex' => "/special\/$ctuRegex\/$operatorRegex\/$operatorSpecialRegex\/special\/$playerRegex/", 'object' => $specialHandler, 'method' => 'getSpecial');
 
 	switch($_SERVER['REQUEST_METHOD'])
 	{

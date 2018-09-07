@@ -8,8 +8,11 @@
 	date_default_timezone_set('Europe/Paris');
 
 	$_SESSION['menuStyle'] = 'pill';
-	$_GET['section'] = isset($_GET['section']) ? $_GET['section'] : 'weekly';
 
+	if(!isset($_GET['section']))
+		$_GET['section'] = 'casual';
+	if(!isset($_GET['range']))
+		$_GET['range'] = 'weekly';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,6 +48,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script type="text/javascript" src="js/main.js"></script>
 </head>
+
 <body>
 <?php
 	include __DIR__ . "/header.php";
@@ -70,79 +74,92 @@
 		/** @noinspection PhpIncludeInspection */
 		require_once __DIR__ . '/' . $filename;
 
+	require_once __DIR__ . '/graphs/operators/OperatorsBuilder.php';
+
 	/**
 	 * @var array
 	 */
 	$plots = array();
-
-	$plots[] = new R6\AccuracyGraph();
-	$plots[] = new R6\AssistsGraph();
-	$plots[] = new R6\BarricadesGraph();
-	$plots[] = new R6\HeadshotsGraph();
-	$plots[] = new R6\KillDeathCasualGraph();
-	$plots[] = new R6\KillDeathRankedGraph();
-	$plots[] = new R6\LevelGraph();
-	$plots[] = new R6\MeleeGraph();
-	$plots[] = new R6\PenetrationKillsGraph();
-	$plots[] = new R6\PlayTimeCasualGraph();
-	$plots[] = new R6\PlayTimeRankedGraph();
-	//	$plots[] = new R6\RankedSeason5Graph();
-	//	$plots[] = new R6\RankedSeason6Graph();
-	//	$plots[] = new R6\RankedSeason7Graph();
-	//	$plots[] = new R6\RankedSeason8Graph();
-	//	$plots[] = new R6\RankedSeason9Graph();
-	//	$plots[] = new R6\RankedSeason10Graph();
-	$plots[] = new R6\RankedSeason11Graph();
-	$plots[] = new R6\ReinforcementsGraph();
-	$plots[] = new R6\RevivesGraph();
-	$plots[] = new R6\StepsGraph();
-	$plots[] = new R6\SuicidesGraph();
-	$plots[] = new R6\WinLossCasualGraph();
-	$plots[] = new R6\WinLossRankedGraph();
-	$plots[] = new R6\OperatorsBuilder();
-
+?>
+<div class="container-fluid" style="margin-top:80px">
+    <ul id="mainPills" class="nav nav-<?php echo $_SESSION['menuStyle']; ?>s nav-justified">
+        <li class="nav-item"><a class="nav-link <?php echo $_GET['section'] === 'casual' ? 'active' : ''; ?>" href="?section=casual&range=<?php echo $_GET['range']; ?>">Casual</a>
+        </li>
+        <li class="nav-item"><a class="nav-link <?php echo $_GET['section'] === 'ranked' ? 'active' : ''; ?>" href="?section=ranked&range=<?php echo $_GET['range']; ?>">Ranked</a>
+        </li>
+        <li class="nav-item"><a class="nav-link <?php echo $_GET['section'] === 'overall' ? 'active' : ''; ?>" href="?section=overall&range=<?php echo $_GET['range']; ?>">Overall</a>
+        </li>
+        <li class="nav-item"><a class="nav-link <?php echo $_GET['section'] === 'operators' ? 'active' : ''; ?>" href="?section=operators&range=<?php echo $_GET['range']; ?>">Operators</a></li>
+    </ul>
+    <hr/>
+		<?php
+			switch($_GET['section'])
+			{
+				case 'casual':
+					?>
+                    <div id="menuCasual"><?php
+					$plots[] = new R6\KillDeathCasualGraph();
+					$plots[] = new R6\PlayTimeCasualGraph();
+					$plots[] = new R6\WinLossCasualGraph();
+					include __DIR__ . "/sections/casual.php";
+					?></div><?php
+					break;
+				case 'ranked':
+					?>
+                    <div id="menuRanked"><?php
+					$plots[] = new R6\KillDeathRankedGraph();
+					$plots[] = new R6\PlayTimeRankedGraph();
+					$plots[] = new R6\WinLossRankedGraph();
+					//	$plots[] = new R6\RankedSeason5Graph();
+					//	$plots[] = new R6\RankedSeason6Graph();
+					//	$plots[] = new R6\RankedSeason7Graph();
+					//	$plots[] = new R6\RankedSeason8Graph();
+					//	$plots[] = new R6\RankedSeason9Graph();
+					//	$plots[] = new R6\RankedSeason10Graph();
+					$plots[] = new R6\RankedSeason11Graph();
+					include __DIR__ . "/sections/ranked.php";
+					?></div><?php
+					break;
+				case 'overall':
+					?>
+                    <div id="menuOverall">
+					<?php
+					$plots[] = new R6\AccuracyGraph();
+					$plots[] = new R6\AssistsGraph();
+					$plots[] = new R6\BarricadesGraph();
+					$plots[] = new R6\HeadshotsGraph();
+					$plots[] = new R6\LevelGraph();
+					$plots[] = new R6\MeleeGraph();
+					$plots[] = new R6\PenetrationKillsGraph();
+					$plots[] = new R6\ReinforcementsGraph();
+					$plots[] = new R6\RevivesGraph();
+					$plots[] = new R6\StepsGraph();
+					$plots[] = new R6\SuicidesGraph();
+					include __DIR__ . "/sections/overall.php";
+					?>
+                    </div><?php
+					break;
+				case 'operators':
+					?>
+                    <div id="menuOperators">
+					<?php
+					$operatorBuilder = new \R6\OperatorsBuilder();
+					$plots[] = $operatorBuilder;
+					include __DIR__ . "/sections/operators.php";
+					?>
+                    </div><?php
+					break;
+			}
+		?>
+</div>
+<?php
 	$plots = array_filter($plots, function($plot){
 		/**
 		 * @var $plot \R6\GraphSupplier
 		 */
 		return $plot->shouldPlot();
 	});
-?>
-<div class="container-fluid" style="margin-top:80px">
-    <ul id="mainPills" class="nav nav-<?php echo $_SESSION['menuStyle']; ?>s nav-justified">
-        <li class="nav-item"><a class="nav-link disabled" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuCasual">Casual</a>
-        </li>
-        <li class="nav-item"><a class="nav-link disabled" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuRanked">Ranked</a>
-        </li>
-        <li class="nav-item"><a class="nav-link disabled" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuOther">Other</a>
-        </li>
-        <li class="nav-item"><a class="nav-link disabled" data-toggle="<?php echo $_SESSION['menuStyle']; ?>" href="#menuOperators">Operators</a></li>
-    </ul>
-    <hr/>
-    <div class="tab-content">
-        <div id="menuCasual" class="tab-pane fade">
-			<?php
-				include __DIR__ . "/sections/casual.php";
-			?>
-        </div>
-        <div id="menuRanked" class="tab-pane fade">
-			<?php
-				include __DIR__ . "/sections/ranked.php";
-			?>
-        </div>
-        <div id="menuOther" class="tab-pane fade">
-			<?php
-				include __DIR__ . "/sections/overall.php";
-			?>
-        </div>
-        <div id="menuOperators" class="tab-pane fade">
-			<?php
-				include __DIR__ . "/sections/operators.php";
-			?>
-        </div>
-    </div>
-</div>
-<?php
+
 	foreach($plots as $plotIndex => $plot)
 	{
 		/**

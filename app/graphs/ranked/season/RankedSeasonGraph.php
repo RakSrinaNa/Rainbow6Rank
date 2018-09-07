@@ -8,8 +8,6 @@
 		{
 			abstract function getSeasonID();
 
-			abstract function getRanks();
-
 			function getTitle()
 			{
 				return 'Ranked points - Season ' . $this->getSeasonID();
@@ -61,7 +59,7 @@
 
 			protected function getBalloonTooltip()
 			{
-				return "Rank: {value}\\nMean: {mean}\\nStDev: {stdev}";
+				return "Points: {value}\\nRank: {rank}\\nMean: {mean}\\nStDev: {stdev}";
 			}
 		}
 	}

@@ -31,9 +31,9 @@
 			{
 				$this->ctu = $ctu;
 				$this->name = $name;
-				$stmt = DBConnection::getConnection()->prepare("SELECT ImageBadge FROM R6_Operator WHERE CTU=:ctu AND Name=:operator");
-				$stmt->execute(array(":ctu" => $ctu, ":operator" => $name));
-				$result = $stmt->fetch();
+				$prepared = DBConnection::getConnection()->prepare("SELECT ImageBadge FROM R6_Operator WHERE CTU=:ctu AND Name=:operator");
+				$prepared->execute(array(":ctu" => $ctu, ":operator" => $name));
+				$result = $prepared->fetch();
 				if($result)
 				{
 					$this->imageURL = $result['ImageBadge'];
@@ -41,7 +41,14 @@
 				$this->graphs[] = new OperatorKillDeathGraph($ctu, $name);
 				$this->graphs[] = new OperatorPlaytimeGraph($ctu, $name);
 				$this->graphs[] = new OperatorWinLossGraph($ctu, $name);
-				$this->graphs[] = new OperatorSpecialGraph($ctu, $name);
+
+				$prepared = DBConnection::getConnection()->prepare("SELECT Name, DisplayName FROM R6_Operator_Special WHERE Operator=:operator");
+				$prepared->execute(array(":operator" => $name));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$this->graphs[] = new OperatorSpecialGraph($ctu, $name, $row['Name'], $row['DisplayName']);
+				}
 			}
 
 			/**

@@ -32,6 +32,8 @@
 								getPlayers(function (players) {
 									let chart = am4core.create(chartDiv, am4charts.XYChart);
 									chart.dateFormat = 'yyyy-MM-dd hh:mm:ss';
+									chart.exporting.menu = new am4core.ExportMenu();
+
 									let title = chart.titles.create();
 									title.text = "<?php echo $this->getTitle(); ?>";
 									title.fontSize = 15;
@@ -66,6 +68,9 @@
 											series.dataFields.dateX = "date";
 											series.tooltipText = "[bold]" + playerName + " - {date.formatDate(\"yyyy-MM-dd hh:mm\")}[/]\n<?php echo $this->getBalloonTooltip(); ?>";
 											series.dataSource.url = "<?php echo $this->getDataProvider(); ?>/" + playerName;
+											series.dataSource.requestOptions.requestHeaders = [{
+												"range": "<?php echo $_GET['range'] ?>"
+											}];
 											series.dataSource.parser.options.dateFields = ['date'];
 											series.dataSource.parser.options.dateFormat = 'yyyy-MM-dd hh:mm:ss';
 											series.name = playerName;

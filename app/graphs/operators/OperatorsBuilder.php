@@ -15,7 +15,7 @@
 				$result = $stmt->fetchAll();
 				foreach($result as $key => $row)
 				{
-					$this->ctuGraphs[] = new CTUBuilder($row['CTU']);
+					$this->ctuGraphs[$row['CTU']] = new CTUBuilder($row['CTU']);
 				}
 			}
 
