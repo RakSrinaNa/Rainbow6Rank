@@ -59,5 +59,9 @@
 				return $this->getAllDataProvider();
 			}
 
+			protected function getBalloonTooltip()
+			{
+				return "Rank: {value}\\nMean: {mean}\\nStDev: {stdev}";
+			}
 		}
 	}

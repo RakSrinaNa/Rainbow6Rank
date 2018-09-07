@@ -39,5 +39,20 @@
 			{
 				return $this->getAllDataProvider();
 			}
+
+			function getBalloonTooltip()
+			{
+				return "Playtime: {value.formatDuration(\\\"dd\'d\' hh\'h\' mm\'m\' ss\'s\'\\\")}";
+			}
+
+			protected function getLegendText()
+			{
+				return "{value.formatDuration(\\\"dd\'d\' hh\'h\' mm\'m\' ss\'s\'\\\")}";
+			}
+
+			protected function isDurationGraph()
+			{
+				return true;
+			}
 		}
 	}

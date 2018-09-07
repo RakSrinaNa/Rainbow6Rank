@@ -4,21 +4,16 @@
 	{
 		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		class KillDeathCasualGraph extends GraphSupplier
+		class AccuracyGraph extends GraphSupplier
 		{
 			function getTitle()
 			{
-				return 'K/D Ratio Casual';
+				return 'Accuracy';
 			}
 
 			function getID()
 			{
-				return 'KDC';
-			}
-
-			function getAdditionalBalloon()
-			{
-				return array('stat' => 'Kills: ', 'total' => 'Deaths: ');
+				return 'ACC';
 			}
 
 			/**
@@ -26,7 +21,7 @@
 			 */
 			function getPlayersURL()
 			{
-				return '/api/casual/players';
+				return "/api/overall/players";
 			}
 
 			/**
@@ -34,7 +29,7 @@
 			 */
 			function getAllDataProvider()
 			{
-				return '/api/casual/kd';
+				return "/api/overall/accuracy";
 			}
 
 			/**
@@ -43,11 +38,6 @@
 			function getWeeklyDataProvider()
 			{
 				return $this->getAllDataProvider();
-			}
-
-			protected function getBalloonTooltip()
-			{
-				return "KD: {value}\\nKills: {kills}\\nDeaths: {deaths}";
 			}
 		}
 	}

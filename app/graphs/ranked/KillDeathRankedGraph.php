@@ -44,5 +44,10 @@
 			{
 				return $this->getAllDataProvider();
 			}
+
+			protected function getBalloonTooltip()
+			{
+				return "KD: {value}\\nKills: {kills}\\nDeaths: {deaths}";
+			}
 		}
 	}
