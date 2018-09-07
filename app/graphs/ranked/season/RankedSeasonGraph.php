@@ -3,6 +3,7 @@
 	namespace R6
 	{
 		require_once __DIR__ . '/../../../model/GraphSupplier.php';
+		require_once __DIR__ . '/../../../api/v1/model/DBConnection.class.php';
 
 		abstract class RankedSeasonGraph extends GraphSupplier
 		{
@@ -20,15 +21,25 @@
 
 			function getGuides()
 			{
-				$i = 0;
-				$guideColors = array('#555555', '#aaaaaa');
-
-				$guides = array();
-				foreach($this->getRanks() as $rankName => $rankDatas)
+				$js = '';
+				$prepared = DBConnection::getConnection()->prepare("SELECT RankValue, RankName FROM `R6_Ranks` LEFT JOIN R6_Season_Ranks ON R6_Season_Ranks.RankID = R6_Ranks.RankID WHERE Season=:season");
+				$prepared->execute(array(':season' => $this->getSeasonID()));
+				$result = $prepared->fetchAll();
+				foreach($result as $index => $row)
 				{
-					$guides[] = array('fillAlpha' => 0.3, 'lineAlpha' => 1, 'lineThickness' => 1, 'value' => $rankDatas['from'], 'toValue' => $rankDatas['to'], 'valueAxis' => 'pointsAxis', 'label' => $rankName, 'inside' => true, 'position' => 'right', 'fillColor' => $guideColors[$i++ % count($guideColors)]);
+					$value = $row['RankValue'];
+					$name = $row['RankName'];
+					$js .= "let range = yAxis.axisRanges.create();";
+					$js .= "range.value = $value;";
+					$js .= "range.grid.stroke = am4core.color('#396478');";
+					$js .= "range.grid.strokeWidth = 4;";
+					$js .= "range.grid.strokeOpacity = 1;";
+					$js .= "range.label.inside = false;";
+					$js .= "range.label.text = '$name';";
+					$js .= "range.label.fill = range.grid.stroke;";
+					$js .= "range.label.verticalCenter = 'bottom';";
 				}
-				return json_encode($guides);
+				return $js;
 			}
 
 			/**

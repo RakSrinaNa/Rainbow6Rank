@@ -41,12 +41,24 @@
 
 									let xAxis = chart.xAxes.push(new am4charts.DateAxis());
 									xAxis.title.text = 'Date';
-									xAxis.skipEmptyPeriods = true;
+									xAxis.skipEmptyPeriods = false;
+									xAxis.dateFormats.setKey("year", "dd MMM yyyy");
+									xAxis.dateFormats.setKey("month", "dd MMM yyyy");
+									xAxis.dateFormats.setKey("week", "dd MMM yyyy");
+									xAxis.dateFormats.setKey("day", "dd MMM yyyy");
+									xAxis.dateFormats.setKey("hour", "dd MMM yyyy");
+									xAxis.dateFormats.setKey("minute", "dd MMM yyyy");
+									xAxis.dateFormats.setKey("second", "dd MMM yyyy");
+									xAxis.dateFormats.setKey("millisecond", "dd MMM yyyy");
+									xAxis.baseInterval = {
+										"timeUnit": "minute",
+										"count": 15
+									};
 									let yAxis = chart.yAxes.push(new am4charts.ValueAxis());
 									<?php if($this->isDurationGraph())
-                                    {
-                                        echo 'chart.durationFormatter.durationFormat = "HH:mm:ss";';
-                                    }?>
+								{
+									echo 'chart.durationFormatter.durationFormat = "HH:mm:ss";';
+								}?>
 
 									chart.legend = new am4charts.Legend();
 									chart.legend.useDefaultMarker = true;
@@ -55,10 +67,12 @@
 									marker.cornerRadius(12, 12, 12, 12);
 									marker.strokeWidth = 2;
 									marker.strokeOpacity = 1;
-									marker.stroke = am4core.color("#ccc");
+									marker.stroke = am4core.color("#cccccc");
 
 									chart.cursor = new am4charts.XYCursor();
 									chart.cursor.xAxis = xAxis;
+
+									<?php echo $this->getGuides(); ?>
 
 									for (const playerIndex in players) {
 										if (players.hasOwnProperty(playerIndex)) {
@@ -149,15 +163,25 @@
 			/**
 			 * @return bool
 			 */
-			protected function isDurationGraph(){
-			    return false;
-            }
+			protected function isDurationGraph()
+			{
+				return false;
+			}
 
 			/**
 			 * @return string
 			 */
-			protected function getLegendText(){
-			    return "{value}";
-            }
+			protected function getLegendText()
+			{
+				return "{value}";
+			}
+
+			/**
+			 * @return string
+			 */
+			protected function getGuides()
+			{
+				return ';';
+			}
 		}
 	}
