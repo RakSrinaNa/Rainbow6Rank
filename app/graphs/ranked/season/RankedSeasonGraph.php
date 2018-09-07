@@ -29,15 +29,15 @@
 				{
 					$value = $row['RankValue'];
 					$name = $row['RankName'];
-					$js .= "let range = yAxis.axisRanges.create();";
-					$js .= "range.value = $value;";
-					$js .= "range.grid.stroke = am4core.color('#396478');";
-					$js .= "range.grid.strokeWidth = 4;";
-					$js .= "range.grid.strokeOpacity = 1;";
-					$js .= "range.label.inside = false;";
-					$js .= "range.label.text = '$name';";
-					$js .= "range.label.fill = range.grid.stroke;";
-					$js .= "range.label.verticalCenter = 'bottom';";
+					$js .= "let range$index = yAxis.axisRanges.create();\n";
+					$js .= "range$index.value = $value;\n";
+					$js .= "range$index.grid.stroke = am4core.color('#396478');\n";
+					$js .= "range$index.grid.strokeWidth = 4;\n";
+					$js .= "range$index.grid.strokeOpacity = 1;\n";
+					$js .= "range$index.label.inside = false;\n";
+					$js .= "range$index.label.text = '$name';\n";
+					$js .= "range$index.label.fill = range$index.grid.stroke;\n";
+					$js .= "range$index.label.verticalCenter = 'bottom';\n\n";
 				}
 				return $js;
 			}
