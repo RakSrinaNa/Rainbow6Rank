@@ -45,7 +45,7 @@
 
 			public function putInDB()
 			{
-				if(!$this->date)
+				if($this->date)
 				{
 					$this->updatePlayer();
 
