@@ -31,7 +31,7 @@
 							if (chartDiv) {
 								getPlayers(function (players) {
 									let chart = am4core.create(chartDiv, am4charts.XYChart);
-									chart.dateFormat = 'yyyy-MM-dd hh:mm:ss';
+									chart.dateFormat = 'yyyy-MM-dd HH:mm:ss';
 									chart.exporting.menu = new am4core.ExportMenu();
 
 									let title = chart.titles.create();
@@ -45,7 +45,7 @@
 									let yAxis = chart.yAxes.push(new am4charts.ValueAxis());
 									<?php if($this->isDurationGraph())
                                     {
-                                        echo 'chart.durationFormatter.durationFormat = "hh:mm:ss";';
+                                        echo 'chart.durationFormatter.durationFormat = "HH:mm:ss";';
                                     }?>
 
 									chart.legend = new am4charts.Legend();
@@ -66,13 +66,13 @@
 											let series = chart.series.push(new am4charts.LineSeries());
 											series.dataFields.valueY = "value";
 											series.dataFields.dateX = "date";
-											series.tooltipText = "[bold]" + playerName + " - {date.formatDate(\"yyyy-MM-dd hh:mm\")}[/]\n<?php echo $this->getBalloonTooltip(); ?>";
+											series.tooltipText = "[bold]" + playerName + " - {date.formatDate(\"yyyy-MM-dd HH:mm\")}[/]\n<?php echo $this->getBalloonTooltip(); ?>";
 											series.dataSource.url = "<?php echo $this->getDataProvider(); ?>/" + playerName;
 											series.dataSource.requestOptions.requestHeaders = [{
 												"range": "<?php echo $_GET['range'] ?>"
 											}];
 											series.dataSource.parser.options.dateFields = ['date'];
-											series.dataSource.parser.options.dateFormat = 'yyyy-MM-dd hh:mm:ss';
+											series.dataSource.parser.options.dateFormat = 'yyyy-MM-dd HH:mm:ss';
 											series.name = playerName;
 											series.strokeWidth = 2;
 											series.legendSettings.valueText = "<?php echo $this->getLegendText(); ?>";
