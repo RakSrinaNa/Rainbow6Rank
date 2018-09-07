@@ -103,20 +103,21 @@
 		if($params === null)
 			$params = array();
 		$params = array_merge($params, $_GET);
-		if(isset($params['range']))
+		$params = array_merge($params, apache_request_headers());
+		if(isset($params['Range']))
 		{
-			if(!is_int_val($params['range']))
+			if(!is_int_val($params['Range']))
 			{
-				switch($params['range'])
+				switch($params['Range'])
 				{
 					default:
-						$params['range'] = 7;
+						$params['Range'] = 7;
 				}
 			}
 		}
 		else
 		{
-			$params['range'] = 7;
+			$params['Range'] = 7;
 		}
 
 		$matched = false;
@@ -127,7 +128,7 @@
 			if(preg_match($endpoint['regex'], $request, $groups))
 			{
 				$matched = true;
-				$groups[0] = $params['range'];
+				$groups[0] = $params['Range'];
 				$result = call_user_func_array(array($endpoint['object'], $endpoint['method']), $groups);
 				if($result)
 				{
