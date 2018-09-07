@@ -82,7 +82,8 @@
 											series.tooltipText = "[bold]" + playerName + " - {date.formatDate(\"yyyy-MM-dd HH:mm\")}[/]\n<?php echo $this->getBalloonTooltip(); ?>";
 											series.dataSource.url = "<?php echo $this->getDataProvider(); ?>/" + playerName;
 											series.dataSource.requestOptions.requestHeaders = [{
-												"range": "<?php echo $_GET['range'] ?>"
+												"key": "range",
+                                                "value": "<?php echo $_GET['range'] ?>"
 											}];
 											series.dataSource.parser.options.dateFields = ['date'];
 											series.dataSource.parser.options.dateFormat = 'yyyy-MM-dd HH:mm:ss';
