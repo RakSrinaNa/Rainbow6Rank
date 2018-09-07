@@ -6,26 +6,35 @@
 	}
 
 	require_once __DIR__ . '/model/DBConnection.class.php';
-	require_once __DIR__ . '/model/DBHandler.class.php';
+	require_once __DIR__ . '/model/CasualHandler.class.php';
+	require_once __DIR__ . '/model/RankedHandler.class.php';
+	require_once __DIR__ . '/model/SeasonHandler.class.php';
+	require_once __DIR__ . '/model/OverallHandler.class.php';
 
 	if(!isset($_REQUEST['request']))
 		sendResponse(404, json_encode(array('No request')));
 
-	$handler = new R6\DBHandler();
+	$casualHandler = new R6\CasualHandler();
+	$rankedHandler = new R6\RankedHandler();
+	$seasonHandler = new R6\SeasonHandler();
+	$overallHandler = new R6\OverallHandler();
 
 	$endpoints = array();
-	$endpoints[] = array('regex' => '/casual\/players/', 'object' => $handler, 'method' => 'casualPlayers');
-	$endpoints[] = array('regex' => '/casual\/kd\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'casualKD');
-	$endpoints[] = array('regex' => '/casual\/wl\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'casualWL');
-	$endpoints[] = array('regex' => '/casual\/playtime\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'casualPlaytime');
+	$endpoints[] = array('regex' => '/casual\/players/', 'object' => $casualHandler, 'method' => 'getPlayers');
+	$endpoints[] = array('regex' => '/casual\/kd\/([A-Za-z0-9-]+)/', 'object' => $casualHandler, 'method' => 'getKD');
+	$endpoints[] = array('regex' => '/casual\/wl\/([A-Za-z0-9-]+)/', 'object' => $casualHandler, 'method' => 'getWL');
+	$endpoints[] = array('regex' => '/casual\/playtime\/([A-Za-z0-9-]+)/', 'object' => $casualHandler, 'method' => 'getPlaytime');
 
-	$endpoints[] = array('regex' => '/ranked\/players/', 'object' => $handler, 'method' => 'rankedPlayers');
-	$endpoints[] = array('regex' => '/ranked\/kd\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'rankedKD');
-	$endpoints[] = array('regex' => '/ranked\/wl\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'rankedWL');
-	$endpoints[] = array('regex' => '/ranked\/playtime\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'rankedPlaytime');
+	$endpoints[] = array('regex' => '/ranked\/players/', 'object' => $rankedHandler, 'method' => 'getPlayers');
+	$endpoints[] = array('regex' => '/ranked\/kd\/([A-Za-z0-9-]+)/', 'object' => $rankedHandler, 'method' => 'getKD');
+	$endpoints[] = array('regex' => '/ranked\/wl\/([A-Za-z0-9-]+)/', 'object' => $rankedHandler, 'method' => 'getWL');
+	$endpoints[] = array('regex' => '/ranked\/playtime\/([A-Za-z0-9-]+)/', 'object' => $rankedHandler, 'method' => 'getPlaytime');
 
-	$endpoints[] = array('regex' => '/season\/([0-9]+)\/players/', 'object' => $handler, 'method' => 'seasonPlayers');
-	$endpoints[] = array('regex' => '/season\/([0-9]+)\/rank\/([A-Za-z0-9-]+)/', 'object' => $handler, 'method' => 'seasonRank');
+	$endpoints[] = array('regex' => '/season\/([0-9]+)\/players/', 'object' => $seasonHandler, 'method' => 'getPlayers');
+	$endpoints[] = array('regex' => '/season\/([0-9]+)\/rank\/([A-Za-z0-9-]+)/', 'object' => $seasonHandler, 'method' => 'getRank');
+
+	$endpoints[] = array('regex' => '/overall\/players/', 'object' => $overallHandler, 'method' => 'getPlayers');
+	$endpoints[] = array('regex' => '/overall\/accuracy\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getAccuracy');
 
 	switch($_SERVER['REQUEST_METHOD'])
 	{
