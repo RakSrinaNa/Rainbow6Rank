@@ -35,21 +35,37 @@
 			{
 				$timeFormat = 'Y-m-d\TH:i:s+';
 				$date = DateTime::createFromFormat($timeFormat, $date_str);
+				if(!$date)
+				{
+					echo 'BAD DATE: ' . $date_str;
+					return null;
+				}
 				return $date->getTimestamp();
 			}
 
 			public function putInDB()
 			{
-				$this->updatePlayer();
+				if(!$this->date)
+				{
+					$this->updatePlayer();
 
-				$this->updateCasual();
-				$this->updateRanked();
-				$this->updateOverall();
-				$this->updateProgression();
+					if($this->json['player']['stats'])
+					{
+						$this->updateCasual();
+						$this->updateRanked();
+						$this->updateOverall();
+						$this->updateProgression();
+					}
 
-				$this->updateRankedSeason();
+					$this->updateRankedSeason();
 
-				$this->updateOperators();
+					$this->updateOperators();
+				}
+				else
+				{
+					echo 'BAD Object!';
+					print_r($this);
+				}
 			}
 
 			private function updatePlayer()
@@ -99,6 +115,8 @@
 			private function updateRankedSeason()
 			{
 				$seasons = $this->json['seasons'];
+				if(!$seasons)
+					return;
 				$regions = end($seasons);
 				$season = end($regions);
 				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Season(UID, DataDate, SeasonNumber, Region, Wins, Losses, Abandons, Rating, NextRating, PreviousRating, Mean, StandardDeviation, Rank) VALUES(:uid, FROM_UNIXTIME(:datadate), :seasonnumber, :region, :wins, :losses, :abandons, :rating, :nextrating, :previousrating, :mean, :stddev, :rank)", array(":uid" => $this->uid, ":datadate" => $this->date, ":seasonnumber" => $season['season'], ":region" => $season['region'], ":wins" => $season['wins'], ":losses" => $season['losses'], ":abandons" => $season['abandons'], ":rating" => $season['ranking']['rating'], ":nextrating" => $season['ranking']['next_rating'], ":previousrating" => $season['ranking']['prev_rating'], ":mean" => $season['ranking']['mean'], ":stddev" => $season['ranking']['stdev'], ":rank" => $season['ranking']['rank']));
@@ -106,10 +124,13 @@
 
 			private function updateOperators()
 			{
-				foreach($this->json['operators'] as $operator)
+				if($this->json['operators'])
 				{
-					$this->addOperator($operator);
-					$this->updateOperator($operator);
+					foreach($this->json['operators'] as $operator)
+					{
+						$this->addOperator($operator);
+						$this->updateOperator($operator);
+					}
 				}
 			}
 
