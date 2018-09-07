@@ -13,10 +13,12 @@
 		class OperatorSpecialGraph extends SimpleOperatorGraph
 		{
 			private $title;
+			private $special;
 
-			public function __construct($operator, $id)
+			public function __construct($ctu, $operator, $id)
 			{
-				parent::__construct($operator, $id);
+				parent::__construct($ctu, $operator, $id);
+				$this->special = $id;
 				$this->title = $this->findTitle($id);
 			}
 
@@ -141,11 +143,28 @@
 				return $this->title;
 			}
 
-			function getPoint($operator)
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
 			{
-				$point = array('stat' => 0);
-				$point['stat'] = isset($operator['specials'][$this->id]) ? $operator['specials'][$this->id] : 0;
-				return $point;
+				return "/api/special/$this->ctu/$this->operator/$this->special/players";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
+			{
+				return "/api/special/$this->ctu/$this->operator/$this->special/special";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return $this->getAllDataProvider();
 			}
 		}
 	}

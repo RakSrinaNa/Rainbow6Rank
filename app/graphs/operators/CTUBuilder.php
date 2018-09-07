@@ -8,44 +8,45 @@
 
 	namespace R6
 	{
-		class CTUHandler
+		require_once __DIR__ . '/../../model/GraphSupplier.php';
+		require_once __DIR__ . '/../../api/v1/model/DBConnection.class.php';
+
+		class CTUBuilder extends GraphSupplier
 		{
 			private $operatorGraphs = array();
-			private $name;
+			private $ctu;
 
 			/**
-			 * CTUHandler constructor.
+			 * CTUBuilder constructor.
 			 *
-			 * @param string $name
+			 * @param string $ctu
 			 */
-			public function __construct($name)
+			public function __construct($ctu)
 			{
-				$this->name = $name;
+				$this->ctu = $ctu;
+				$stmt = DBConnection::getConnection()->prepare("SELECT Name FROM R6_Operator WHERE CTU=:ctu");
+				$stmt->execute(array(":ctu" => $ctu));
+				$result = $stmt->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$this->operatorGraphs[] = new OperatorBuilder($ctu, $row['Name']);
+				}
 			}
 
 			public function __toString()
 			{
-				$res = "CTU: $this->name\n";
+				$res = "CTU: $this->ctu\n";
 				foreach($this->operatorGraphs as $operatorName => $operatorGraph)
-					$res .= "\t" .(string) $operatorGraph . "\n";
+					$res .= "\t" . (string) $operatorGraph . "\n";
 				return $res;
 			}
-
 
 			/**
 			 * @return string
 			 */
-			public function getName() : string
+			public function getCTU() : string
 			{
-				return $this->name;
-			}
-
-			function processPoint($player, $timestamp, $operator)
-			{
-				$name = $operator['operator']['name'];
-				if(!isset($this->operatorGraphs[$name]))
-					$this->operatorGraphs[$name] = new OperatorGraph($name, $operator['operator']['images']['badge']);
-				$this->operatorGraphs[$name]->processPoint($player, $timestamp, $operator['stats']);
+				return $this->ctu;
 			}
 
 			function plot()
@@ -53,7 +54,7 @@
 				foreach($this->operatorGraphs as $operator => $operatorGraph)
 				{
 					/**
-					 * @var $operatorGraph OperatorGraph
+					 * @var $operatorGraph OperatorBuilder
 					 */
 					$name = $operatorGraph->getName();
 					echo "<!-- $name -->";
@@ -68,7 +69,7 @@
 				foreach($this->operatorGraphs as $operator => $operatorGraph)
 				{
 					/**
-					 * @var $operatorGraph OperatorGraph
+					 * @var $operatorGraph OperatorBuilder
 					 */
 					$image = $operatorGraph->getImageURL();
 					echo "<li class='nav-item'><a class='nav-link' data-toggle='$type' href='#menuOperator$operator'>$operator<img src='$image' style='max-height: 20px;margin-left: 5px;'></a></li>";
@@ -79,13 +80,53 @@
 				foreach($this->operatorGraphs as $operator => $operatorGraph)
 				{
 					/**
-					 * @var $operatorGraph OperatorGraph
+					 * @var $operatorGraph OperatorBuilder
 					 */
 					echo "<div id='menuOperator$operator' class='tab-pane fade'>";
 					$operatorGraph->buildDivs();
 					echo "</div>";
 				}
 				echo "</div>";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getID()
+			{
+				return $this->getCTU();
+			}
+
+			/**
+			 * @return string
+			 */
+			function getTitle()
+			{
+				return $this->getAllDataProvider();
+			}
+
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
+			{
+				return null;
+			}
+
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
+			{
+				return null;
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return null;
 			}
 		}
 	}

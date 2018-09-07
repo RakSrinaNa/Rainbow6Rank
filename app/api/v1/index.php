@@ -11,6 +11,8 @@
 	require_once __DIR__ . '/model/SeasonHandler.class.php';
 	require_once __DIR__ . '/model/OverallHandler.class.php';
 	require_once __DIR__ . '/model/ProgressionHandler.class.php';
+	require_once __DIR__ . '/model/OperatorHandler.class.php';
+	require_once __DIR__ . '/model/SpecialHandler.class.php';
 
 	if(!isset($_REQUEST['request']))
 		sendResponse(404, json_encode(array('No request')));
@@ -20,34 +22,51 @@
 	$seasonHandler = new R6\SeasonHandler();
 	$overallHandler = new R6\OverallHandler();
 	$progressionHandler = new R6\ProgressionHandler();
+	$operatorHandler = new R6\OperatorHandler();
+	$specialHandler = new R6\SpecialHandler();
+
+	$playerRegex = '([A-Za-z0-9-]+)';
+	$seasonRegex = '([0-9]+)';
+	$ctuRegex = '([A-Z0-9 ]+)';
+	$operatorRegex = '([A-Za-zãä]+)';
+	$operatorSpecialRegex = '([a-z_]+)';
 
 	$endpoints = array();
-	$endpoints[] = array('regex' => '/casual\/players/', 'object' => $casualHandler, 'method' => 'getPlayers');
-	$endpoints[] = array('regex' => '/casual\/kd\/([A-Za-z0-9-]+)/', 'object' => $casualHandler, 'method' => 'getKD');
-	$endpoints[] = array('regex' => '/casual\/wl\/([A-Za-z0-9-]+)/', 'object' => $casualHandler, 'method' => 'getWL');
-	$endpoints[] = array('regex' => '/casual\/playtime\/([A-Za-z0-9-]+)/', 'object' => $casualHandler, 'method' => 'getPlaytime');
+	$endpoints[] = array('regex' => "/casual\/players/", 'object' => $casualHandler, 'method' => 'getPlayers');
+	$endpoints[] = array('regex' => "/casual\/kd\/$playerRegex/", 'object' => $casualHandler, 'method' => 'getKD');
+	$endpoints[] = array('regex' => "/casual\/wl\/$playerRegex/", 'object' => $casualHandler, 'method' => 'getWL');
+	$endpoints[] = array('regex' => "/casual\/playtime\/$playerRegex/", 'object' => $casualHandler, 'method' => 'getPlaytime');
 
-	$endpoints[] = array('regex' => '/ranked\/players/', 'object' => $rankedHandler, 'method' => 'getPlayers');
-	$endpoints[] = array('regex' => '/ranked\/kd\/([A-Za-z0-9-]+)/', 'object' => $rankedHandler, 'method' => 'getKD');
-	$endpoints[] = array('regex' => '/ranked\/wl\/([A-Za-z0-9-]+)/', 'object' => $rankedHandler, 'method' => 'getWL');
-	$endpoints[] = array('regex' => '/ranked\/playtime\/([A-Za-z0-9-]+)/', 'object' => $rankedHandler, 'method' => 'getPlaytime');
+	$endpoints[] = array('regex' => "/ranked\/players/", 'object' => $rankedHandler, 'method' => 'getPlayers');
+	$endpoints[] = array('regex' => "/ranked\/kd\/$playerRegex/", 'object' => $rankedHandler, 'method' => 'getKD');
+	$endpoints[] = array('regex' => "/ranked\/wl\/$playerRegex/", 'object' => $rankedHandler, 'method' => 'getWL');
+	$endpoints[] = array('regex' => "/ranked\/playtime\/$playerRegex/", 'object' => $rankedHandler, 'method' => 'getPlaytime');
 
-	$endpoints[] = array('regex' => '/season\/([0-9]+)\/players/', 'object' => $seasonHandler, 'method' => 'getPlayers');
-	$endpoints[] = array('regex' => '/season\/([0-9]+)\/rank\/([A-Za-z0-9-]+)/', 'object' => $seasonHandler, 'method' => 'getRank');
+	$endpoints[] = array('regex' => "/season\/$seasonRegex\/players/", 'object' => $seasonHandler, 'method' => 'getPlayers');
+	$endpoints[] = array('regex' => "/season\/$seasonRegex\/rank\/$playerRegex/", 'object' => $seasonHandler, 'method' => 'getRank');
 
-	$endpoints[] = array('regex' => '/overall\/players/', 'object' => $overallHandler, 'method' => 'getPlayers');
-	$endpoints[] = array('regex' => '/overall\/accuracy\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getAccuracy');
-	$endpoints[] = array('regex' => '/overall\/assists\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getAssists');
-	$endpoints[] = array('regex' => '/overall\/barricades\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getBarricades');
-	$endpoints[] = array('regex' => '/overall\/headshots\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getHeadshots');
-	$endpoints[] = array('regex' => '/overall\/melee\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getMelee');
-	$endpoints[] = array('regex' => '/overall\/penetration\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getPenetration');
-	$endpoints[] = array('regex' => '/overall\/reinforcements\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getReinforcements');
-	$endpoints[] = array('regex' => '/overall\/revives\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getRevives');
-	$endpoints[] = array('regex' => '/overall\/steps\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getSteps');
-	$endpoints[] = array('regex' => '/overall\/suicides\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getSuicides');
+	$endpoints[] = array('regex' => "/overall\/players/", 'object' => $overallHandler, 'method' => 'getPlayers');
+	$endpoints[] = array('regex' => "/overall\/accuracy\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getAccuracy');
+	$endpoints[] = array('regex' => "/overall\/assists\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getAssists');
+	$endpoints[] = array('regex' => "/overall\/barricades\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getBarricades');
+	$endpoints[] = array('regex' => "/overall\/headshots\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getHeadshots');
+	$endpoints[] = array('regex' => "/overall\/melee\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getMelee');
+	$endpoints[] = array('regex' => "/overall\/penetration\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getPenetration');
+	$endpoints[] = array('regex' => "/overall\/reinforcements\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getReinforcements');
+	$endpoints[] = array('regex' => "/overall\/revives\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getRevives');
+	$endpoints[] = array('regex' => "/overall\/steps\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getSteps');
+	$endpoints[] = array('regex' => "/overall\/suicides\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getSuicides');
 
-	$endpoints[] = array('regex' => '/progression\/level\/([A-Za-z0-9-]+)/', 'object' => $progressionHandler, 'method' => 'getLevel');
+	$endpoints[] = array('regex' => "/progression\/players/", 'object' => $progressionHandler, 'method' => 'getPlayers');
+	$endpoints[] = array('regex' => "/progression\/level\/$playerRegex/", 'object' => $progressionHandler, 'method' => 'getLevel');
+
+	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/players/", 'object' => $operatorHandler, 'method' => 'getPLayers');
+	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/kd\/$playerRegex/", 'object' => $operatorHandler, 'method' => 'getKD');
+	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/playtime\/$playerRegex/", 'object' => $operatorHandler, 'method' => 'getPlaytime');
+	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/wl\/$playerRegex/", 'object' => $operatorHandler, 'method' => 'getWL');
+
+	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/$operatorSpecialRegex\/players/", 'object' => $specialHandler, 'method' => 'getPlayers');
+	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/$operatorSpecialRegex\/special\/$playerRegex/", 'object' => $specialHandler, 'method' => 'getSpecial');
 
 	switch($_SERVER['REQUEST_METHOD'])
 	{

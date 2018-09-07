@@ -9,15 +9,17 @@
 	namespace R6
 	{
 		require_once __DIR__ . '/../../model/GraphSupplier.php';
+		require_once __DIR__ . '/../../api/v1/model/DBConnection.class.php';
 		require_once __DIR__ . '/OperatorSpecialGraph.php';
 		require_once __DIR__ . '/OperatorWinLossGraph.php';
 		require_once __DIR__ . '/OperatorKillDeathGraph.php';
 		require_once __DIR__ . '/OperatorPlaytimeGraph.php';
 
-		class OperatorGraph extends GraphSupplier
+		class OperatorBuilder extends GraphSupplier
 		{
 			private $graphs = array();
 			private $name;
+			private $ctu;
 			private $imageURL;
 
 			public function __toString()
@@ -25,10 +27,21 @@
 				return "Operator graph [$this->name]";
 			}
 
-			public function __construct($name, $imageURL)
+			public function __construct($ctu, $name)
 			{
+				$this->ctu = $ctu;
 				$this->name = $name;
-				$this->imageURL = $imageURL;
+				$stmt = DBConnection::getConnection()->prepare("SELECT ImageBadge FROM R6_Operator WHERE CTU=:ctu AND Name=:operator");
+				$stmt->execute(array(":ctu" => $ctu, ":operator" => $name));
+				$result = $stmt->fetch();
+				if($result)
+				{
+					$this->imageURL = $result['ImageBadge'];
+				}
+				$this->graphs[] = new OperatorKillDeathGraph($ctu, $name);
+				$this->graphs[] = new OperatorPlaytimeGraph($ctu, $name);
+				$this->graphs[] = new OperatorWinLossGraph($ctu, $name);
+				$this->graphs[] = new OperatorSpecialGraph($ctu, $name);
 			}
 
 			/**
@@ -48,11 +61,6 @@
 			}
 
 			function getID()
-			{
-				return null;
-			}
-
-			function getPoint($player)
 			{
 				return null;
 			}
@@ -83,20 +91,28 @@
 				}
 			}
 
-			function processPoint($player, $timestamp, $operator = array())
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
 			{
-				if(!isset($this->graphs['wl']))
-					$this->graphs['wl'] = new OperatorWinLossGraph($this->name, 'wl');
-				if(!isset($this->graphs['kd']))
-					$this->graphs['kd'] = new OperatorKillDeathGraph($this->name, 'kd');
-				if(!isset($this->graphs['pt']))
-					$this->graphs['pt'] = new OperatorPlaytimeGraph($this->name, 'pt');
-				foreach($operator['specials'] as $specialIndex => $specialValue)
-					if(!isset($this->graphs[$specialIndex]))
-						$this->graphs[$specialIndex] = new OperatorSpecialGraph($this->name, $specialIndex);
+				return null;
+			}
 
-				foreach($this->graphs as $graph)
-					$graph->processPoint($player, $timestamp, $operator);
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
+			{
+				return null;
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return null;
 			}
 		}
 	}

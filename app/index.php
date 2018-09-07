@@ -33,6 +33,7 @@
     <script type="text/javascript" src="js/libs/amcharts4/core.js"></script>
     <script type="text/javascript" src="js/libs/amcharts4/charts.js"></script>
     <script type="text/javascript" src="js/libs/amcharts4/themes/animated.js"></script>
+    <script type="text/javascript" src="js/libs/amcharts4/themes/material.js"></script>
     <script type="text/javascript" src="js/libs/amcharts4/themes/dark.js"></script>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -98,7 +99,7 @@
 	$plots[] = new R6\SuicidesGraph();
 	$plots[] = new R6\WinLossCasualGraph();
 	$plots[] = new R6\WinLossRankedGraph();
-	//	$plots[] = new R6\OperatorsHandler();
+	$plots[] = new R6\OperatorsBuilder();
 
 	$plots = array_filter($plots, function($plot){
 		/**
@@ -129,16 +130,16 @@
 				include __DIR__ . "/sections/ranked.php";
 			?>
         </div>
-        <!--        <div id="menuOther" class="tab-pane fade">-->
-        <!--			--><?php
-			//				include __DIR__ . "/sections/overall.php";
-			//			?>
-        <!--        </div>-->
-        <!--        <div id="menuOperators" class="tab-pane fade">-->
-        <!--			--><?php
-			//				include __DIR__ . "/sections/operators.php";
-			//			?>
-        <!--        </div>-->
+        <div id="menuOther" class="tab-pane fade">
+			<?php
+				include __DIR__ . "/sections/overall.php";
+			?>
+        </div>
+        <div id="menuOperators" class="tab-pane fade">
+			<?php
+				include __DIR__ . "/sections/operators.php";
+			?>
+        </div>
     </div>
 </div>
 <?php

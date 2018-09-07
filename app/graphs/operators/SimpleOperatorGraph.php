@@ -13,16 +13,19 @@
 		abstract class SimpleOperatorGraph extends GraphSupplier
 		{
 			protected $id;
+			protected $ctu;
 			protected $operator;
 
 			/**
 			 * SimpleOperatorGraph constructor.
 			 *
+			 * @param string $ctu
 			 * @param string $operator
 			 * @param string $id
 			 */
-			public function __construct($operator, $id)
+			public function __construct($ctu, $operator, $id)
 			{
+				$this->ctu = $ctu;
 				$this->operator = $operator;
 				$this->id = $id;
 			}
@@ -32,7 +35,7 @@
 			 */
 			function getID()
 			{
-				return $this->operator . $this->id;
+				return $this->ctu . $this->operator . $this->id;
 			}
 
 			/**
@@ -41,23 +44,6 @@
 			function getTitle()
 			{
 				return $this->id . ' ' . $this->operator;
-			}
-
-			/**
-			 * @param array $player
-			 * @param string $timestamp
-			 * @param array $operator
-			 */
-			function processPoint($player, $timestamp, $operator = array())
-			{
-				$username = $player['player']['username'];
-				if(!isset($this->datas[$username]))
-					$this->datas[$username] = array();
-				$data = $this->getPoint($operator);
-				if($data === null)
-					return;
-				$data['timestamp'] = $timestamp;
-				$this->datas[$username][$player['player']['updated_at']] = $data;
 			}
 		}
 	}

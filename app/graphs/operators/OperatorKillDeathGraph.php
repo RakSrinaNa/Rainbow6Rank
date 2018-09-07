@@ -12,22 +12,43 @@
 
 		class OperatorKillDeathGraph extends SimpleOperatorGraph
 		{
+			public function __construct($ctu, $operator)
+			{
+				parent::__construct($ctu, $operator, "KD");
+			}
+
 			function getTitle()
 			{
 				return 'K/D Ratio ' . $this->operator;
 			}
 
-			function getPoint($player)
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
 			{
-				$point = array('stat' => 0, 'total' => 0);
-				$point['stat'] = $player['kills'];
-				$point['total'] = $player['deaths'];
-				return $point;
+				return "/api/operator/$this->ctu/$this->operator/players";
 			}
 
-			function getAdditionalBalloon()
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
 			{
-				return array('stat' => 'Kills: ', 'total' => 'Deaths: ');
+				return "/api/operator/$this->ctu/$this->operator/kd";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return $this->getAllDataProvider();
+			}
+
+			protected function getBalloonTooltip()
+			{
+				return "KD: {value}\\nKills: {kills}\\nDeaths: {deaths}";
 			}
 		}
 	}
