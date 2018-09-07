@@ -44,14 +44,14 @@
                 <li class="nav-item"><a class="nav-link">Last data: <?php echo getLastDataDate(); ?></a></li>
             </ul>
             <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item <?php echo $_GET['range'] === 'weekly' ? 'active' : ''; ?>">
-                    <a class="nav-link" href="?section=<?php echo $_GET['section']; ?>&range=weekly">See weekly data</a>
+<!--                <li class="nav-item --><?php //echo $_GET['range'] === '-2' ? 'active' : ''; ?><!--">-->
+<!--                    <a class="nav-link" href="?section=--><?php //echo $_GET['section']; ?><!--&range=-2">See weekly data</a>-->
+<!--                </li>-->
+                <li class="nav-item <?php echo $_GET['range'] === '7' ? 'active' : ''; ?>">
+                    <a class="nav-link" href="?section=<?php echo $_GET['section']; ?>&range=7">See last 7 days</a>
                 </li>
-                <li class="nav-item <?php echo $_GET['range'] === 'detailed' ? 'active' : ''; ?>">
-                    <a class="nav-link" href="?section=<?php echo $_GET['section']; ?>&range=detailed">See detailed data</a>
-                </li>
-                <li class="nav-item <?php echo $_GET['range'] === 'all' ? 'active' : ''; ?>">
-                    <a class="nav-link" href="?section=<?php echo $_GET['section']; ?>&range=all">See all data</a>
+                <li class="nav-item <?php echo $_GET['range'] === '-1' ? 'active' : ''; ?>">
+                    <a class="nav-link" href="?section=<?php echo $_GET['section']; ?>&range=-1">See all data</a>
                 </li>
             </ul>
         </nav>

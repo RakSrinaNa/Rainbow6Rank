@@ -12,7 +12,7 @@
 	if(!isset($_GET['section']))
 		$_GET['section'] = 'casual';
 	if(!isset($_GET['range']))
-		$_GET['range'] = 'weekly';
+		$_GET['range'] = '7';
 ?>
 <!DOCTYPE html>
 <html lang="en">

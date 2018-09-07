@@ -41,15 +41,14 @@
 
 									let xAxis = chart.xAxes.push(new am4charts.DateAxis());
 									xAxis.title.text = 'Date';
-									xAxis.skipEmptyPeriods = false;
-									xAxis.dateFormats.setKey("year", "dd MMM yyyy");
-									xAxis.dateFormats.setKey("month", "dd MMM yyyy");
+									xAxis.skipEmptyPeriods = true;
+									xAxis.dateFormats.setKey("year", "yyyy");
+									xAxis.dateFormats.setKey("month", "MMM yyyy");
 									xAxis.dateFormats.setKey("week", "dd MMM yyyy");
-									xAxis.dateFormats.setKey("day", "dd MMM yyyy");
-									xAxis.dateFormats.setKey("hour", "dd MMM yyyy");
-									xAxis.dateFormats.setKey("minute", "dd MMM yyyy");
-									xAxis.dateFormats.setKey("second", "dd MMM yyyy");
-									xAxis.dateFormats.setKey("millisecond", "dd MMM yyyy");
+									xAxis.dateFormats.setKey("day", "dd MMM");
+									xAxis.dateFormats.setKey("hour", "HH:00");
+									xAxis.dateFormats.setKey("minute", "HH:mm");
+									xAxis.dateFormats.setKey("second", "HH:mm:ss");
 									xAxis.baseInterval = {
 										"timeUnit": "minute",
 										"count": 15
@@ -90,7 +89,7 @@
 											series.name = playerName;
 											series.strokeWidth = 2;
 											series.legendSettings.valueText = "<?php echo $this->getLegendText(); ?>";
-											series.fillOpacity = 0.3;
+											// series.fillOpacity = 0.3;
 
 											let bullet = series.bullets.push(new am4charts.CircleBullet());
 											bullet.width = 10;
