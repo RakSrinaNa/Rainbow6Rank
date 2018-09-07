@@ -14,6 +14,8 @@
 			{ ?>
                 <script type='text/javascript'>
 					$(function () {
+							const chartDiv = document.getElementById('chartDiv' + '<?php echo $this->getID(); ?>');
+
 							function getPlayers(playersCallback) {
 								$.ajax({
 									url: '<?php echo $this->getPlayersURL(); ?>',
@@ -26,51 +28,52 @@
 								});
 							}
 
-							getPlayers(function (players) {
-								const chartDiv = document.getElementById('chartDiv' + '<?php echo $this->getID(); ?>');
-								let chart = am4core.create(chartDiv, am4charts.XYChart);
-								let title = chart.titles.create();
-								title.text = "<?php echo $this->getTitle(); ?>";
-								title.fontSize = 15;
-								title.marginBottom = 15;
+							if (chartDiv) {
+								getPlayers(function (players) {
+									let chart = am4core.create(chartDiv, am4charts.XYChart);
+									let title = chart.titles.create();
+									title.text = "<?php echo $this->getTitle(); ?>";
+									title.fontSize = 15;
+									title.marginBottom = 15;
 
-								let xAxis = chart.xAxes.push(new am4charts.DateAxis());
-								xAxis.title.text = 'Date';
-								xAxis.skipEmptyPeriods = true;
-								let yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+									let xAxis = chart.xAxes.push(new am4charts.DateAxis());
+									xAxis.title.text = 'Date';
+									xAxis.skipEmptyPeriods = true;
+									let yAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
-								chart.legend = new am4charts.Legend();
-								chart.legend.useDefaultMarker = true;
+									chart.legend = new am4charts.Legend();
+									chart.legend.useDefaultMarker = true;
 
-								let marker = chart.legend.markers.template.children.getIndex(0);
-								marker.cornerRadius(12, 12, 12, 12);
-								marker.strokeWidth = 2;
-								marker.strokeOpacity = 1;
-								marker.stroke = am4core.color("#ccc");
+									let marker = chart.legend.markers.template.children.getIndex(0);
+									marker.cornerRadius(12, 12, 12, 12);
+									marker.strokeWidth = 2;
+									marker.strokeOpacity = 1;
+									marker.stroke = am4core.color("#ccc");
 
-								chart.cursor = new am4charts.XYCursor();
-								chart.cursor.xAxis = xAxis;
+									chart.cursor = new am4charts.XYCursor();
+									chart.cursor.xAxis = xAxis;
 
-								for (const playerIndex in players) {
-									if (players.hasOwnProperty(playerIndex)) {
-										const playerName = players[playerIndex];
-										let series = chart.series.push(new am4charts.LineSeries());
-										series.dataFields.valueY = "value";
-										series.dataFields.dateX = "date";
-										series.tooltipText = "{date}: [bold]{value}";
-										series.dataSource.url = "<?php echo $this->getDataProvider(); ?>/" + playerName;
-										series.dataSource.parser.options.dateFields = ['date'];
-										series.dataSource.parser.options.dateFormat = 'yyyy-MM-dd hh:mm:ss';
-										series.name = playerName;
-										series.strokeWidth = 2;
-										series.legendSettings.valueText = "{valueY}";
+									for (const playerIndex in players) {
+										if (players.hasOwnProperty(playerIndex)) {
+											const playerName = players[playerIndex];
+											let series = chart.series.push(new am4charts.LineSeries());
+											series.dataFields.valueY = "value";
+											series.dataFields.dateX = "date";
+											series.tooltipText = "{date}: [bold]{value}";
+											series.dataSource.url = "<?php echo $this->getDataProvider(); ?>/" + playerName;
+											series.dataSource.parser.options.dateFields = ['date'];
+											series.dataSource.parser.options.dateFormat = 'yyyy-MM-dd hh:mm:ss';
+											series.name = playerName;
+											series.strokeWidth = 2;
+											series.legendSettings.valueText = "{valueY}";
+										}
 									}
-								}
 
-								// Create scrollbars
-								chart.scrollbarX = new am4core.Scrollbar();
-								chart.scrollbarY = new am4core.Scrollbar();
-							});
+									// Create scrollbars
+									chart.scrollbarX = new am4core.Scrollbar();
+									chart.scrollbarY = new am4core.Scrollbar();
+								});
+							}
 						}
 					);
                 </script>

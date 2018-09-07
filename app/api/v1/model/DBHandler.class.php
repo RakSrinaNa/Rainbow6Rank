@@ -130,7 +130,7 @@
 			public function seasonPlayers($sid)
 			{
 				$players = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DISTINCT Username FROM R6_Stats_Season LEFT JOIN R6_Player ON R6_Stats_Ranked.UID = R6_Player.UID WHERE DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND SeasonNumber=:sid");
+				$prepared = DBConnection::getConnection()->prepare("SELECT DISTINCT Username FROM R6_Stats_Season LEFT JOIN R6_Player ON R6_Stats_Season.UID = R6_Player.UID WHERE DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND SeasonNumber=:sid");
 				$prepared->execute(array(":sid" => $sid));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
