@@ -79,6 +79,21 @@
 	}
 
 	/**
+	 * Check if a number is a counting number by checking if it
+	 * is an integer primitive type, or if the string represents
+	 * an integer as a string
+	 */
+	function is_int_val($data)
+	{
+		if(is_int($data) === true)
+			return true;
+		if(is_string($data) === true && is_numeric($data) === true)
+		{
+			return (strpos($data, '.') === false);
+		}
+	}
+
+	/**
 	 * @param array $endpoints
 	 * @param string $request
 	 * @param array $params
@@ -88,6 +103,21 @@
 		if($params === null)
 			$params = array();
 		$params = array_merge($params, $_GET);
+		if(isset($params['range']))
+		{
+			if(!is_int_val($params['range']))
+			{
+				switch($params['range'])
+				{
+					default:
+						$params['range'] = 7;
+				}
+			}
+		}
+		else
+		{
+			$params['range'] = 7;
+		}
 
 		$matched = false;
 
@@ -97,7 +127,7 @@
 			if(preg_match($endpoint['regex'], $request, $groups))
 			{
 				$matched = true;
-				array_shift($groups);
+				$groups[0] = $params['range'];
 				$result = call_user_func_array(array($endpoint['object'], $endpoint['method']), $groups);
 				if($result)
 				{

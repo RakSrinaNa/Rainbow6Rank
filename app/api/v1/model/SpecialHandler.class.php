@@ -25,7 +25,7 @@
 				return "ERROR";
 			}
 
-			public function getPlayers($ctu, $operator, $special)
+			public function getPlayers($range, $ctu, $operator, $special)
 			{
 				$players = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DISTINCT Username FROM R6_Stats_Operator_Special LEFT JOIN R6_Player ON R6_Stats_Operator_Special.UID = R6_Player.UID LEFT JOIN R6_Operator_Special ON R6_Stats_Operator_Special.OperatorSpecial = R6_Operator_Special.Name LEFT JOIN R6_Operator ON R6_Operator_Special.Operator = R6_Operator.Name WHERE DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND CTU=:ctu AND R6_Operator.Name=:operator AND R6_Stats_Operator_Special.OperatorSpecial=:special");
@@ -38,7 +38,7 @@
 				return $players;
 			}
 
-			public function getSpecial($ctu, $operator, $special, $player)
+			public function getSpecial($range, $ctu, $operator, $special, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, SpecialValue FROM R6_Stats_Operator_Special LEFT JOIN R6_Operator_Special ON R6_Stats_Operator_Special.OperatorSpecial = R6_Operator_Special.Name LEFT JOIN R6_Operator ON R6_Operator_Special.Operator = R6_Operator.Name WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND CTU=:ctu AND R6_Operator.Name=:operator AND R6_Stats_Operator_Special.OperatorSpecial=:special");

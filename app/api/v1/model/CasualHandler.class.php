@@ -25,11 +25,12 @@
 				return "ERROR";
 			}
 
-			public function getPlayers()
+			public function getPlayers($range)
 			{
 				$players = array();
-				$stmt = DBConnection::getConnection()->query("SELECT DISTINCT Username FROM R6_Stats_Casual LEFT JOIN R6_Player ON R6_Stats_Casual.UID = R6_Player.UID WHERE DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
-				$result = $stmt->fetchAll();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DISTINCT Username FROM R6_Stats_Casual LEFT JOIN R6_Player ON R6_Stats_Casual.UID = R6_Player.UID WHERE DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY)");
+				$prepared->execute(array(':days' => $range));
+				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
 					$players[] = $row['Username'];
@@ -37,11 +38,11 @@
 				return $players;
 			}
 
-			public function getKD($player)
+			public function getKD($range, $player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, KD, Kills, Deaths FROM R6_Stats_Casual WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
-				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, KD, Kills, Deaths FROM R6_Stats_Casual WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ':days' => $range));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
@@ -50,11 +51,11 @@
 				return $data;
 			}
 
-			public function getWL($player)
+			public function getWL($range, $player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, WLR, Wins, Losses FROM R6_Stats_Casual WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
-				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, WLR, Wins, Losses FROM R6_Stats_Casual WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ':days' => $range));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
@@ -63,11 +64,11 @@
 				return $data;
 			}
 
-			public function getPlaytime($player)
+			public function getPlaytime($range, $player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Playtime FROM R6_Stats_Casual WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
-				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Playtime FROM R6_Stats_Casual WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ':days' => $range));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{

@@ -25,7 +25,7 @@
 				return "ERROR";
 			}
 
-			public function getPlayers()
+			public function getPlayers($range)
 			{
 				$players = array();
 				$stmt = DBConnection::getConnection()->query("SELECT DISTINCT Username FROM R6_Stats_Ranked LEFT JOIN R6_Player ON R6_Stats_Ranked.UID = R6_Player.UID WHERE DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -37,7 +37,7 @@
 				return $players;
 			}
 
-			public function getKD($player)
+			public function getKD($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, KD, Kills, Deaths FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -50,7 +50,7 @@
 				return $data;
 			}
 
-			public function getWL($player)
+			public function getWL($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, WLR, Wins, Losses FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -63,7 +63,7 @@
 				return $data;
 			}
 
-			public function getPlaytime($player)
+			public function getPlaytime($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Playtime FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");

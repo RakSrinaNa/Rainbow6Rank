@@ -25,7 +25,7 @@
 				return "ERROR";
 			}
 
-			public function getPlayers($ctu, $operator)
+			public function getPlayers($range, $ctu, $operator)
 			{
 				$players = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DISTINCT Username FROM R6_Stats_Operator LEFT JOIN R6_Player ON R6_Stats_Operator.UID = R6_Player.UID LEFT JOIN R6_Operator ON R6_Stats_Operator.Operator = R6_Operator.Name WHERE DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND CTU=:ctu AND R6_Operator.Name=:operator");
@@ -38,7 +38,7 @@
 				return $players;
 			}
 
-			public function getKD($ctu, $operator,$player)
+			public function getKD($range, $ctu, $operator,$player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Kills, Deaths FROM R6_Stats_Operator LEFT JOIN R6_Operator ON R6_Stats_Operator.Operator = R6_Operator.Name WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND CTU=:ctu AND R6_Operator.Name=:operator");
@@ -52,7 +52,7 @@
 				return $data;
 			}
 
-			public function getWL($ctu, $operator,$player)
+			public function getWL($range, $ctu, $operator,$player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Wins, Losses FROM R6_Stats_Operator LEFT JOIN R6_Operator ON R6_Stats_Operator.Operator = R6_Operator.Name WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND CTU=:ctu AND R6_Operator.Name=:operator");
@@ -66,7 +66,7 @@
 				return $data;
 			}
 
-			public function getPlaytime($ctu, $operator,$player)
+			public function getPlaytime($range, $ctu, $operator,$player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Playtime FROM R6_Stats_Operator LEFT JOIN R6_Operator ON R6_Stats_Operator.Operator = R6_Operator.Name WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND CTU=:ctu AND R6_Operator.Name=:operator");

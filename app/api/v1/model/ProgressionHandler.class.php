@@ -25,7 +25,7 @@
 				return "ERROR";
 			}
 
-			public function getPlayers()
+			public function getPlayers($range)
 			{
 				$players = array();
 				$stmt = DBConnection::getConnection()->query("SELECT DISTINCT Username FROM R6_Stats_Progression LEFT JOIN R6_Player ON R6_Stats_Progression.UID = R6_Player.UID WHERE DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -37,7 +37,7 @@
 				return $players;
 			}
 
-			public function getLevel($player)
+			public function getLevel($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Level, XP FROM R6_Stats_Progression WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");

@@ -25,7 +25,7 @@
 				return "ERROR";
 			}
 
-			public function getPlayers()
+			public function getPlayers($range)
 			{
 				$players = array();
 				$stmt = DBConnection::getConnection()->query("SELECT DISTINCT Username FROM R6_Stats_Overall LEFT JOIN R6_Player ON R6_Stats_Overall.UID = R6_Player.UID WHERE DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -37,7 +37,7 @@
 				return $players;
 			}
 
-			public function getAccuracy($player)
+			public function getAccuracy($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, BulletsFired, BulletsHit FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -51,7 +51,7 @@
 				return $data;
 			}
 
-			public function getAssists($player)
+			public function getAssists($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Assists FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -64,7 +64,7 @@
 				return $data;
 			}
 
-			public function getBarricades($player)
+			public function getBarricades($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, BarricadesBuilt FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -77,7 +77,7 @@
 				return $data;
 			}
 
-			public function getHeadshots($player)
+			public function getHeadshots($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Headshots FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -90,7 +90,7 @@
 				return $data;
 			}
 
-			public function getMelee($player)
+			public function getMelee($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, MeleeKills FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -103,7 +103,7 @@
 				return $data;
 			}
 
-			public function getPenetration($player)
+			public function getPenetration($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, PenetrationKills FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -115,7 +115,8 @@
 				}
 				return $data;
 			}
-			public function getReinforcements($player)
+
+			public function getReinforcements($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, ReinforcementsDeployed FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -127,7 +128,8 @@
 				}
 				return $data;
 			}
-			public function getRevives($player)
+
+			public function getRevives($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Revives FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -139,7 +141,8 @@
 				}
 				return $data;
 			}
-			public function getSteps($player)
+
+			public function getSteps($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, StepsMoved FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -151,7 +154,8 @@
 				}
 				return $data;
 			}
-			public function getSuicides($player)
+
+			public function getSuicides($range, $player)
 			{
 				$data = array();
 				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Suicides FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
