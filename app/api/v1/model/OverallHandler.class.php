@@ -45,8 +45,34 @@
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
-					$value = $row['BulletsFired'] / ($row['BulletsFired'] == 0 ? 1 : $row['BulletsFired']);
+					$value = $row['BulletsHit'] / ($row['BulletsFired'] == 0 ? 1 : $row['BulletsFired']);
 					$data[] = array('date' => $row['DataDate'], 'value' => $value, 'fired' => $row['BulletsFired'], 'hits' => $row['BulletsHit']);
+				}
+				return $data;
+			}
+
+			public function getAssists($player)
+			{
+				$data = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Assists FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['Assists']);
+				}
+				return $data;
+			}
+
+			public function getBarricades($player)
+			{
+				$data = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, BarricadesBuilt FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['BarricadesBuilt']);
 				}
 				return $data;
 			}

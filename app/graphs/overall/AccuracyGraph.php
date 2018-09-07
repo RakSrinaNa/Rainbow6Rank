@@ -39,5 +39,10 @@
 			{
 				return $this->getAllDataProvider();
 			}
+
+			protected function getBalloonTooltip()
+			{
+				return "Accuracy: {value}\\nHits: {hits}\\nFired: {fired}";
+			}
 		}
 	}

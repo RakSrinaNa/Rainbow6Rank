@@ -35,6 +35,8 @@
 
 	$endpoints[] = array('regex' => '/overall\/players/', 'object' => $overallHandler, 'method' => 'getPlayers');
 	$endpoints[] = array('regex' => '/overall\/accuracy\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getAccuracy');
+	$endpoints[] = array('regex' => '/overall\/assists\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getAssists');
+	$endpoints[] = array('regex' => '/overall\/barricades\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getBarricades');
 
 	switch($_SERVER['REQUEST_METHOD'])
 	{

@@ -6,13 +6,6 @@
 
 		class AssistsGraph extends GraphSupplier
 		{
-			function getPoint($player)
-			{
-				$point = array('stat' => 0);
-				$point['stat'] = $player['player']['stats']['overall']['assists'];
-				return $point;
-			}
-
 			function getTitle()
 			{
 				return 'Assists';
@@ -21,6 +14,35 @@
 			function getID()
 			{
 				return 'ASS';
+			}
+
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
+			{
+				return "/api/overall/players";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
+			{
+				return "/api/overall/assists";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return $this->getAllDataProvider();
+			}
+
+			protected function getBalloonTooltip()
+			{
+				return "Assists: {value}";
 			}
 		}
 	}
