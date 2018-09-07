@@ -31,6 +31,7 @@
 							if (chartDiv) {
 								getPlayers(function (players) {
 									let chart = am4core.create(chartDiv, am4charts.XYChart);
+									chart.dateFormat = 'yyyy-MM-dd hh:mm:ss';
 									let title = chart.titles.create();
 									title.text = "<?php echo $this->getTitle(); ?>";
 									title.fontSize = 15;
@@ -40,6 +41,10 @@
 									xAxis.title.text = 'Date';
 									xAxis.skipEmptyPeriods = true;
 									let yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+									<?php if($this->isDurationGraph())
+                                    {
+                                        echo 'chart.durationFormatter.durationFormat = "hh:mm:ss";';
+                                    }?>
 
 									chart.legend = new am4charts.Legend();
 									chart.legend.useDefaultMarker = true;
@@ -59,13 +64,18 @@
 											let series = chart.series.push(new am4charts.LineSeries());
 											series.dataFields.valueY = "value";
 											series.dataFields.dateX = "date";
-											series.tooltipText = "{date}: [bold]{value}";
+											series.tooltipText = "[bold]" + playerName + " - {date.formatDate(\"yyyy-MM-dd hh:mm\")}[/]\n<?php echo $this->getBalloonTooltip(); ?>";
 											series.dataSource.url = "<?php echo $this->getDataProvider(); ?>/" + playerName;
 											series.dataSource.parser.options.dateFields = ['date'];
 											series.dataSource.parser.options.dateFormat = 'yyyy-MM-dd hh:mm:ss';
 											series.name = playerName;
 											series.strokeWidth = 2;
-											series.legendSettings.valueText = "{valueY}";
+											series.legendSettings.valueText = "<?php echo $this->getLegendText(); ?>";
+											series.fillOpacity = 0.3;
+
+											let bullet = series.bullets.push(new am4charts.CircleBullet());
+											bullet.width = 10;
+											bullet.height = 10;
 										}
 									}
 
@@ -122,5 +132,27 @@
 			 * @return string
 			 */
 			abstract function getWeeklyDataProvider();
+
+			/**
+			 * @return string
+			 */
+			protected function getBalloonTooltip()
+			{
+				return "[bold]{value}";
+			}
+
+			/**
+			 * @return bool
+			 */
+			protected function isDurationGraph(){
+			    return false;
+            }
+
+			/**
+			 * @return string
+			 */
+			protected function getLegendText(){
+			    return "{value}";
+            }
 		}
 	}

@@ -28,6 +28,8 @@
             integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
             crossorigin="anonymous"></script>
 
+    <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+
     <script type="text/javascript" src="js/libs/amcharts4/core.js"></script>
     <script type="text/javascript" src="js/libs/amcharts4/charts.js"></script>
     <script type="text/javascript" src="js/libs/amcharts4/themes/animated.js"></script>
@@ -126,7 +128,7 @@
         </div>
 <!--        <div id="menuOther" class="tab-pane fade">-->
 <!--			--><?php
-//				include __DIR__ . "/sections/other.php";
+//				include __DIR__ . "/sections/overall.php";
 //			?>
 <!--        </div>-->
 <!--        <div id="menuOperators" class="tab-pane fade">-->
