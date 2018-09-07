@@ -65,23 +65,26 @@
 		/** @noinspection PhpIncludeInspection */
 		require_once __DIR__ . '/' . $filename;
 
+	foreach(glob("graphs/overall/*.php") as $filename)
+		/** @noinspection PhpIncludeInspection */
+		require_once __DIR__ . '/' . $filename;
+
 	/**
 	 * @var array
 	 */
 	$plots = array();
 
-	//$plots[] = new R6\AccuracyGraph();
-	//	$plots[] = new R6\BulletsHitGraph();
-	//	$plots[] = new R6\AssistsGraph();
-	//	$plots[] = new R6\BarricadesGraph();
-	//	$plots[] = new R6\HeadshotsGraph();
-		$plots[] = new R6\KillDeathCasualGraph();
-		$plots[] = new R6\KillDeathRankedGraph();
-	//	$plots[] = new R6\LevelGraph();
-	//	$plots[] = new R6\MeleeGraph();
-	//	$plots[] = new R6\PenetrationKillsGraph();
-		$plots[] = new R6\PlayTimeCasualGraph();
-		$plots[] = new R6\PlayTimeRankedGraph();
+	$plots[] = new R6\AccuracyGraph();
+	$plots[] = new R6\AssistsGraph();
+	$plots[] = new R6\BarricadesGraph();
+	$plots[] = new R6\HeadshotsGraph();
+	$plots[] = new R6\KillDeathCasualGraph();
+	$plots[] = new R6\KillDeathRankedGraph();
+	$plots[] = new R6\LevelGraph();
+	$plots[] = new R6\MeleeGraph();
+	$plots[] = new R6\PenetrationKillsGraph();
+	$plots[] = new R6\PlayTimeCasualGraph();
+	$plots[] = new R6\PlayTimeRankedGraph();
 	//	$plots[] = new R6\RankedSeason5Graph();
 	//	$plots[] = new R6\RankedSeason6Graph();
 	//	$plots[] = new R6\RankedSeason7Graph();
@@ -89,12 +92,12 @@
 	//	$plots[] = new R6\RankedSeason9Graph();
 	//	$plots[] = new R6\RankedSeason10Graph();
 	$plots[] = new R6\RankedSeason11Graph();
-	//	$plots[] = new R6\ReinforcementsGraph();
-	//	$plots[] = new R6\RevivesGraph();
-	//	$plots[] = new R6\StepsGraph();
-	//	$plots[] = new R6\SuicidesGraph();
-		$plots[] = new R6\WinLossCasualGraph();
-		$plots[] = new R6\WinLossRankedGraph();
+	$plots[] = new R6\ReinforcementsGraph();
+	$plots[] = new R6\RevivesGraph();
+	$plots[] = new R6\StepsGraph();
+	$plots[] = new R6\SuicidesGraph();
+	$plots[] = new R6\WinLossCasualGraph();
+	$plots[] = new R6\WinLossRankedGraph();
 	//	$plots[] = new R6\OperatorsHandler();
 
 	$plots = array_filter($plots, function($plot){
@@ -122,20 +125,20 @@
 			?>
         </div>
         <div id="menuRanked" class="tab-pane fade">
-		    <?php
-			    include __DIR__ . "/sections/ranked.php";
-		    ?>
+			<?php
+				include __DIR__ . "/sections/ranked.php";
+			?>
         </div>
-<!--        <div id="menuOther" class="tab-pane fade">-->
-<!--			--><?php
-//				include __DIR__ . "/sections/overall.php";
-//			?>
-<!--        </div>-->
-<!--        <div id="menuOperators" class="tab-pane fade">-->
-<!--			--><?php
-//				include __DIR__ . "/sections/operators.php";
-//			?>
-<!--        </div>-->
+        <!--        <div id="menuOther" class="tab-pane fade">-->
+        <!--			--><?php
+			//				include __DIR__ . "/sections/overall.php";
+			//			?>
+        <!--        </div>-->
+        <!--        <div id="menuOperators" class="tab-pane fade">-->
+        <!--			--><?php
+			//				include __DIR__ . "/sections/operators.php";
+			//			?>
+        <!--        </div>-->
     </div>
 </div>
 <?php
