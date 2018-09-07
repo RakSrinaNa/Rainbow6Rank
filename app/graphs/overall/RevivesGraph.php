@@ -6,13 +6,6 @@
 
 		class RevivesGraph extends GraphSupplier
 		{
-			function getPoint($player)
-			{
-				$point = array('stat' => 0);
-				$point['stat'] = $player['player']['stats']['overall']['revives'];
-				return $point;
-			}
-
 			function getTitle()
 			{
 				return 'Revives';
@@ -21,6 +14,34 @@
 			function getID()
 			{
 				return 'RV';
+			}
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
+			{
+				return "/api/overall/players";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
+			{
+				return "/api/overall/revives";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return $this->getAllDataProvider();
+			}
+
+			protected function getBalloonTooltip()
+			{
+				return "Revives: {value}";
 			}
 		}
 	}

@@ -6,13 +6,6 @@
 
 		class SuicidesGraph extends GraphSupplier
 		{
-			function getPoint($player)
-			{
-				$point = array('stat' => 0);
-				$point['stat'] = $player['player']['stats']['overall']['suicides'];
-				return $point;
-			}
-
 			function getTitle()
 			{
 				return 'Suicides';
@@ -21,6 +14,35 @@
 			function getID()
 			{
 				return 'SC';
+			}
+
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
+			{
+				return "/api/overall/players";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
+			{
+				return "/api/overall/suicides";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return $this->getAllDataProvider();
+			}
+
+			protected function getBalloonTooltip()
+			{
+				return "Suicides: {value}";
 			}
 		}
 	}

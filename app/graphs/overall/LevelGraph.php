@@ -6,13 +6,6 @@
 
 		class LevelGraph extends GraphSupplier
 		{
-			function getPoint($player)
-			{
-				$point = array('stat' => 0);
-				$point['stat'] = $player['player']['stats']['progression']['level'];
-				return $point;
-			}
-
 			function getTitle()
 			{
 				return 'Level';
@@ -21,6 +14,34 @@
 			function getID()
 			{
 				return 'LVL';
+			}
+
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
+			{
+				return "/api/progression/players";
+			}
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
+			{
+				return "/api/progression/level";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return $this->getAllDataProvider();
+			}
+
+			protected function getBalloonTooltip()
+			{
+				return "Level: {value}\\nExperience: {xp}";
 			}
 		}
 	}

@@ -6,13 +6,6 @@
 
 		class HeadshotsGraph extends GraphSupplier
 		{
-			function getPoint($player)
-			{
-				$point = array('stat' => 0);
-				$point['stat'] = $player['player']['stats']['overall']['headshots'];
-				return $point;
-			}
-
 			function getTitle()
 			{
 				return 'Headshots';
@@ -21,6 +14,34 @@
 			function getID()
 			{
 				return 'HDS';
+			}
+
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
+			{
+				return "/api/overall/players";
+			}
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
+			{
+				return "/api/overall/headshots";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return $this->getAllDataProvider();
+			}
+
+			protected function getBalloonTooltip()
+			{
+				return "Headshots: {value}";
 			}
 		}
 	}

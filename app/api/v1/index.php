@@ -10,6 +10,7 @@
 	require_once __DIR__ . '/model/RankedHandler.class.php';
 	require_once __DIR__ . '/model/SeasonHandler.class.php';
 	require_once __DIR__ . '/model/OverallHandler.class.php';
+	require_once __DIR__ . '/model/ProgressionHandler.class.php';
 
 	if(!isset($_REQUEST['request']))
 		sendResponse(404, json_encode(array('No request')));
@@ -18,6 +19,7 @@
 	$rankedHandler = new R6\RankedHandler();
 	$seasonHandler = new R6\SeasonHandler();
 	$overallHandler = new R6\OverallHandler();
+	$progressionHandler = new R6\ProgressionHandler();
 
 	$endpoints = array();
 	$endpoints[] = array('regex' => '/casual\/players/', 'object' => $casualHandler, 'method' => 'getPlayers');
@@ -37,6 +39,15 @@
 	$endpoints[] = array('regex' => '/overall\/accuracy\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getAccuracy');
 	$endpoints[] = array('regex' => '/overall\/assists\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getAssists');
 	$endpoints[] = array('regex' => '/overall\/barricades\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getBarricades');
+	$endpoints[] = array('regex' => '/overall\/headshots\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getHeadshots');
+	$endpoints[] = array('regex' => '/overall\/melee\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getMelee');
+	$endpoints[] = array('regex' => '/overall\/penetration\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getPenetration');
+	$endpoints[] = array('regex' => '/overall\/reinforcements\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getReinforcements');
+	$endpoints[] = array('regex' => '/overall\/revives\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getRevives');
+	$endpoints[] = array('regex' => '/overall\/steps\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getSteps');
+	$endpoints[] = array('regex' => '/overall\/suicides\/([A-Za-z0-9-]+)/', 'object' => $overallHandler, 'method' => 'getSuicides');
+
+	$endpoints[] = array('regex' => '/progression\/level\/([A-Za-z0-9-]+)/', 'object' => $progressionHandler, 'method' => 'getLevel');
 
 	switch($_SERVER['REQUEST_METHOD'])
 	{

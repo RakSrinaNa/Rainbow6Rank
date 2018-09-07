@@ -6,13 +6,6 @@
 
 		class ReinforcementsGraph extends GraphSupplier
 		{
-			function getPoint($player)
-			{
-				$point = array('stat' => 0);
-				$point['stat'] = $player['player']['stats']['overall']['reinforcements_deployed'];
-				return $point;
-			}
-
 			function getTitle()
 			{
 				return 'Reinforcements deployed';
@@ -21,6 +14,34 @@
 			function getID()
 			{
 				return 'RD';
+			}
+
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
+			{
+				return "/api/overall/players";
+			}
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
+			{
+				return "/api/overall/reinforcements";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return $this->getAllDataProvider();
+			}
+
+			protected function getBalloonTooltip()
+			{
+				return "Reinforcements: {value}";
 			}
 		}
 	}

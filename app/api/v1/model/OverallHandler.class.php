@@ -76,5 +76,92 @@
 				}
 				return $data;
 			}
+
+			public function getHeadshots($player)
+			{
+				$data = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Headshots FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['Headshots']);
+				}
+				return $data;
+			}
+
+			public function getMelee($player)
+			{
+				$data = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, MeleeKills FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['MeleeKills']);
+				}
+				return $data;
+			}
+
+			public function getPenetration($player)
+			{
+				$data = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, PenetrationKills FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['PenetrationKills']);
+				}
+				return $data;
+			}
+			public function getReinforcements($player)
+			{
+				$data = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, ReinforcementsDeployed FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['ReinforcementsDeployed']);
+				}
+				return $data;
+			}
+			public function getRevives($player)
+			{
+				$data = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Revives FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['Revives']);
+				}
+				return $data;
+			}
+			public function getSteps($player)
+			{
+				$data = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, StepsMoved FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['StepsMoved']);
+				}
+				return $data;
+			}
+			public function getSuicides($player)
+			{
+				$data = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Suicides FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['Suicides']);
+				}
+				return $data;
+			}
 		}
 	}
