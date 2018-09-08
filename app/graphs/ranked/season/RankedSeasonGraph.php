@@ -70,7 +70,7 @@
 
 			protected function getBalloonTooltip()
 			{
-				return "Points: {value}\\nRank: {rank}\\nMean: {mean}\\nStDev: {stdev}";
+				return "Points: {value}\\nRank: {rank}\\nMean: {mean} | StDev: {stdev}\\nWins: {wins} | Losses: {losses} | Abandons: {abandons}";
 			}
 		}
 	}
