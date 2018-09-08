@@ -28,8 +28,9 @@
 			public function getPlayers($range)
 			{
 				$players = array();
-				$stmt = DBConnection::getConnection()->query("SELECT DISTINCT Username FROM R6_Stats_Ranked LEFT JOIN R6_Player ON R6_Stats_Ranked.UID = R6_Player.UID WHERE DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
-				$result = $stmt->fetchAll();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DISTINCT Username FROM R6_Stats_Ranked LEFT JOIN R6_Player ON R6_Stats_Ranked.UID = R6_Player.UID WHERE DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY)");
+				$prepared->execute(array(':days' => $range));
+				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
 					$players[] = $row['Username'];
@@ -40,8 +41,8 @@
 			public function getKD($range, $player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, KD, Kills, Deaths FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
-				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, KD, Kills, Deaths FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ':days' => $range));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
@@ -53,8 +54,8 @@
 			public function getWL($range, $player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, WLR, Wins, Losses FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
-				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, WLR, Wins, Losses FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ':days' => $range));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
@@ -66,8 +67,8 @@
 			public function getPlaytime($range, $player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Playtime FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
-				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Playtime FROM R6_Stats_Ranked WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ':days' => $range));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{

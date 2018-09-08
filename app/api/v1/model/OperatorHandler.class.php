@@ -28,8 +28,8 @@
 			public function getPlayers($range, $ctu, $operator)
 			{
 				$players = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DISTINCT Username FROM R6_Stats_Operator LEFT JOIN R6_Player ON R6_Stats_Operator.UID = R6_Player.UID LEFT JOIN R6_Operator ON R6_Stats_Operator.Operator = R6_Operator.Name WHERE DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND CTU=:ctu AND R6_Operator.Name=:operator");
-				$prepared->execute(array(":ctu" => $ctu, ":operator" => $operator));
+				$prepared = DBConnection::getConnection()->prepare("SELECT DISTINCT Username FROM R6_Stats_Operator LEFT JOIN R6_Player ON R6_Stats_Operator.UID = R6_Player.UID LEFT JOIN R6_Operator ON R6_Stats_Operator.Operator = R6_Operator.Name WHERE DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY) AND CTU=:ctu AND R6_Operator.Name=:operator");
+				$prepared->execute(array(":ctu" => $ctu, ":operator" => $operator, ':days' => $range));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
@@ -38,11 +38,11 @@
 				return $players;
 			}
 
-			public function getKD($range, $ctu, $operator,$player)
+			public function getKD($range, $ctu, $operator, $player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Kills, Deaths FROM R6_Stats_Operator LEFT JOIN R6_Operator ON R6_Stats_Operator.Operator = R6_Operator.Name WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND CTU=:ctu AND R6_Operator.Name=:operator");
-				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ":ctu" => $ctu, ":operator" => $operator));
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Kills, Deaths FROM R6_Stats_Operator LEFT JOIN R6_Operator ON R6_Stats_Operator.Operator = R6_Operator.Name WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY) AND CTU=:ctu AND R6_Operator.Name=:operator");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ":ctu" => $ctu, ":operator" => $operator, ':days' => $range));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
@@ -52,11 +52,11 @@
 				return $data;
 			}
 
-			public function getWL($range, $ctu, $operator,$player)
+			public function getWL($range, $ctu, $operator, $player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Wins, Losses FROM R6_Stats_Operator LEFT JOIN R6_Operator ON R6_Stats_Operator.Operator = R6_Operator.Name WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND CTU=:ctu AND R6_Operator.Name=:operator");
-				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ":ctu" => $ctu, ":operator" => $operator));
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Wins, Losses FROM R6_Stats_Operator LEFT JOIN R6_Operator ON R6_Stats_Operator.Operator = R6_Operator.Name WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY) AND CTU=:ctu AND R6_Operator.Name=:operator");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ":ctu" => $ctu, ":operator" => $operator, ':days' => $range));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
@@ -66,11 +66,11 @@
 				return $data;
 			}
 
-			public function getPlaytime($range, $ctu, $operator,$player)
+			public function getPlaytime($range, $ctu, $operator, $player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Playtime FROM R6_Stats_Operator LEFT JOIN R6_Operator ON R6_Stats_Operator.Operator = R6_Operator.Name WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY) AND CTU=:ctu AND R6_Operator.Name=:operator");
-				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ":ctu" => $ctu, ":operator" => $operator));
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Playtime FROM R6_Stats_Operator LEFT JOIN R6_Operator ON R6_Stats_Operator.Operator = R6_Operator.Name WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY) AND CTU=:ctu AND R6_Operator.Name=:operator");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ":ctu" => $ctu, ":operator" => $operator, ':days' => $range));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{

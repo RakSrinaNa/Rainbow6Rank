@@ -28,8 +28,9 @@
 			public function getPlayers($range)
 			{
 				$players = array();
-				$stmt = DBConnection::getConnection()->query("SELECT DISTINCT Username FROM R6_Stats_Progression LEFT JOIN R6_Player ON R6_Stats_Progression.UID = R6_Player.UID WHERE DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
-				$result = $stmt->fetchAll();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DISTINCT Username FROM R6_Stats_Progression LEFT JOIN R6_Player ON R6_Stats_Progression.UID = R6_Player.UID WHERE DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY)");
+				$prepared->execute(array(':days' => $range));
+				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
 					$players[] = $row['Username'];
@@ -40,8 +41,8 @@
 			public function getLevel($range, $player)
 			{
 				$data = array();
-				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Level, XP FROM R6_Stats_Progression WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL 7 DAY)");
-				$prepared->execute(array(":uid" => $this->getPlayerUID($player)));
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, Level, XP FROM R6_Stats_Progression WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ':days' => $range));
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
