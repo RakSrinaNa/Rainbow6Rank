@@ -50,6 +50,9 @@
                 <li class="nav-item <?php echo $_GET['range'] === '7' ? 'active' : ''; ?>">
                     <a class="nav-link" href="?section=<?php echo $_GET['section']; ?>&range=7">See last 7 days</a>
                 </li>
+                <li class="nav-item <?php echo $_GET['range'] === '30' ? 'active' : ''; ?>">
+                    <a class="nav-link" href="?section=<?php echo $_GET['section']; ?>&range=30">See last 30 days</a>
+                </li>
                 <li class="nav-item <?php echo $_GET['range'] === '10000' ? 'active' : ''; ?>">
                     <a class="nav-link" href="?section=<?php echo $_GET['section']; ?>&range=10000">See all data</a>
                 </li>
