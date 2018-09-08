@@ -51,31 +51,6 @@
 
 <body>
 <?php
-	include __DIR__ . "/header.php";
-
-	function getRange()
-	{
-		return $_GET['section'] === 'weekly' ? 31536000 : (3 * 2592000);
-	}
-
-	foreach(glob("graphs/casual/*.php") as $filename)
-		/** @noinspection PhpIncludeInspection */
-		require_once __DIR__ . '/' . $filename;
-
-	foreach(glob("graphs/ranked/*.php") as $filename)
-		/** @noinspection PhpIncludeInspection */
-		require_once __DIR__ . '/' . $filename;
-
-	foreach(glob("graphs/ranked/season/*.php") as $filename)
-		/** @noinspection PhpIncludeInspection */
-		require_once __DIR__ . '/' . $filename;
-
-	foreach(glob("graphs/overall/*.php") as $filename)
-		/** @noinspection PhpIncludeInspection */
-		require_once __DIR__ . '/' . $filename;
-
-	require_once __DIR__ . '/graphs/operators/OperatorsBuilder.php';
-
 	/**
 	 * @var array
 	 */
@@ -96,6 +71,10 @@
 			case 'casual':
 				?>
                 <div id="menuCasual"><?php
+				foreach(glob("graphs/casual/*.php") as $filename)
+					/** @noinspection PhpIncludeInspection */
+					require_once __DIR__ . '/' . $filename;
+
 				$plots[] = new R6\KillDeathCasualGraph();
 				$plots[] = new R6\PlayTimeCasualGraph();
 				$plots[] = new R6\WinLossCasualGraph();
@@ -105,6 +84,11 @@
 			case 'ranked':
 				?>
                 <div id="menuRanked"><?php
+				foreach(glob("graphs/ranked/*.php") as $filename)
+					/** @noinspection PhpIncludeInspection */
+					require_once __DIR__ . '/' . $filename;
+					require_once __DIR__ . '/graphs/ranked/season/RankedSeason11Graph.php';
+
 				$plots[] = new R6\KillDeathRankedGraph();
 				$plots[] = new R6\PlayTimeRankedGraph();
 				$plots[] = new R6\WinLossRankedGraph();
@@ -114,7 +98,11 @@
 				break;
 			case 'seasons':
 				?>
-                <div id="menuRanked"><?php
+                <div id="menuSeasons"><?php
+				foreach(glob("graphs/ranked/season/*.php") as $filename)
+					/** @noinspection PhpIncludeInspection */
+					require_once __DIR__ . '/' . $filename;
+
 				$plots[] = new R6\RankedSeason11Graph();
 				$plots[] = new R6\RankedSeason10Graph();
 				$plots[] = new R6\RankedSeason9Graph();
@@ -129,6 +117,10 @@
 				?>
                 <div id="menuOverall">
 				<?php
+				foreach(glob("graphs/overall/*.php") as $filename)
+					/** @noinspection PhpIncludeInspection */
+					require_once __DIR__ . '/' . $filename;
+
 				$plots[] = new R6\AccuracyGraph();
 				$plots[] = new R6\AssistsGraph();
 				$plots[] = new R6\BarricadesGraph();
@@ -148,6 +140,8 @@
 				?>
                 <div id="menuOperators">
 				<?php
+				require_once __DIR__ . '/graphs/operators/OperatorsBuilder.php';
+
 				$operatorBuilder = new \R6\OperatorsBuilder();
 				$plots[] = $operatorBuilder;
 				include __DIR__ . "/sections/operators.php";
