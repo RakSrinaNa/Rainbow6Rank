@@ -3,7 +3,7 @@ $('#refreshCron').click(function () {
     if (loader.is('.content-hide')) {
         loader.removeClass('content-hide');
         $.ajax({
-            url: '//rainbow.mrcraftcod.fr/cron.php',
+            url: '/cron.php',
             beforeSend: function (xhr) {
                 xhr.overrideMimeType("text/plain; charset=x-user-defined");
             }

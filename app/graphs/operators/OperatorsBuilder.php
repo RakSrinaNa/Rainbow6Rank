@@ -2,46 +2,39 @@
 
 	namespace R6
 	{
-		require_once __DIR__ . '/../../model/GraphUtils.php';
-		require_once __DIR__ . '/OperatorGraph.php';
+		require_once __DIR__ . '/CTUBuilder.php';
+		require_once __DIR__ . '/../../model/GraphSupplier.php';
+		require_once __DIR__ . '/../../api/v1/model/DBConnection.class.php';
 
-		class OperatorsHandler extends GraphSupplier
+		class OperatorsBuilder extends GraphSupplier
 		{
 			private $ctuGraphs = array();
+
+			function __construct(){
+				$stmt = DBConnection::getConnection()->query("SELECT DISTINCT CTU FROM R6_Operator");
+				$result = $stmt->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$this->ctuGraphs[$row['CTU']] = new CTUBuilder($row['CTU']);
+				}
+			}
 
 			function plot()
 			{
 				foreach($this->ctuGraphs as $ctuIndex => $ctu)
 				{
 					/**
-					 * @var $ctu CTUHandler
+					 * @var $ctu CTUBuilder
 					 */
-					$name = $ctu->getName();
+					$name = $ctu->getCTU();
 					echo "<!-- $name -->";
 					$ctu->plot();
 				}
 			}
 
-			function processPoint($player, $timestamp)
-			{
-				if(isset($player['operators']))
-					foreach($player['operators'] as $operator)
-					{
-						$ctu = $operator['operator']['ctu'];
-						if(!isset($this->ctuGraphs[$ctu]))
-							$this->ctuGraphs[$ctu] = new CTUHandler($ctu);
-						$this->ctuGraphs[$ctu]->processPoint($player, $timestamp, $operator);
-					}
-			}
-
 			function getID()
 			{
-				return "OperatorsHandler";
-			}
-
-			function getPoint($player)
-			{
-				return null;
+				return "OperatorsBuilder";
 			}
 
 			function getTitle()
@@ -64,7 +57,7 @@
 				foreach($this->ctuGraphs as $ctuIndex => $ctu)
 				{
 					/**
-					 * @var $ctu CTUHandler
+					 * @var $ctu CTUBuilder
 					 */
 					$name = str_replace(" ", "_", $ctuIndex);
 					echo "<div id='menuCTU$name' class='tab-pane fade'>";
@@ -72,6 +65,30 @@
 					echo "</div>";
 				}
 				echo "</div>";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
+			{
+				return "/api/operator";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
+			{
+				return "/api/operator";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return $this->getAllDataProvider();
 			}
 		}
 	}

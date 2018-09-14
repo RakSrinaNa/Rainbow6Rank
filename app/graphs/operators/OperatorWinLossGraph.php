@@ -12,23 +12,43 @@
 
 		class OperatorWinLossGraph extends SimpleOperatorGraph
 		{
+			public function __construct($ctu, $operator)
+			{
+				parent::__construct($ctu, $operator, "WL");
+			}
+
 			function getTitle()
 			{
 				return 'W/L Ratio ' . $this->operator;
 			}
 
-			function getPoint($player)
+			/**
+			 * @return string
+			 */
+			function getPlayersURL()
 			{
-				$point = array('stat' => 0, 'total' => 0);
-				$point['stat'] = $player['wins'];
-				$point['total'] = $player['losses'];
-				$point['played'] = $player['played'];
-				return $point;
+				return "/api/operator/$this->ctu/$this->operator/players";
 			}
 
-			function getAdditionalBalloon()
+			/**
+			 * @return string
+			 */
+			function getAllDataProvider()
 			{
-				return array('played' => 'Played: ', 'stat' => 'Wins: ', 'total' => 'Losses: ');
+				return "/api/operator/$this->ctu/$this->operator/wl";
+			}
+
+			/**
+			 * @return string
+			 */
+			function getWeeklyDataProvider()
+			{
+				return $this->getAllDataProvider();
+			}
+
+			protected function getBalloonTooltip()
+			{
+				return "WLR: {value}\\nWins: {wins}\\nLosses: {losses}";
 			}
 		}
 	}

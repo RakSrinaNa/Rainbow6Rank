@@ -4,21 +4,16 @@
 	{
 		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		class KillDeathCasualGraph extends GraphSupplier
+		class SuicidesGraph extends GraphSupplier
 		{
 			function getTitle()
 			{
-				return 'K/D Ratio Casual';
+				return 'Suicides';
 			}
 
 			function getID()
 			{
-				return 'KDC';
-			}
-
-			function getAdditionalBalloon()
-			{
-				return array('stat' => 'Kills: ', 'total' => 'Deaths: ');
+				return 'SC';
 			}
 
 			/**
@@ -26,7 +21,7 @@
 			 */
 			function getPlayersURL()
 			{
-				return '/api/casual/players';
+				return "/api/overall/players";
 			}
 
 			/**
@@ -34,7 +29,7 @@
 			 */
 			function getAllDataProvider()
 			{
-				return '/api/casual/kd';
+				return "/api/overall/suicides";
 			}
 
 			/**
@@ -47,7 +42,7 @@
 
 			protected function getBalloonTooltip()
 			{
-				return "KD: {value}\\nKills: {kills}\\nDeaths: {deaths}";
+				return "Suicides: {value}";
 			}
 		}
 	}

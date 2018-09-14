@@ -37,7 +37,7 @@
 				$date = DateTime::createFromFormat($timeFormat, $date_str);
 				if(!$date)
 				{
-					echo 'BAD DATE: ' . $date_str;
+					echo 'BAD DATE: ' . $date_str . "<br/>\n";
 					return null;
 				}
 				return $date->getTimestamp();
@@ -45,7 +45,7 @@
 
 			public function putInDB()
 			{
-				if(!$this->date)
+				if($this->date)
 				{
 					$this->updatePlayer();
 
@@ -65,6 +65,7 @@
 				{
 					echo 'BAD Object!';
 					print_r($this);
+					echo "<br/>\n";
 				}
 			}
 
@@ -83,7 +84,9 @@
 				$result = $prepared->execute($args);
 				if(!$result)
 				{
+					echo "SQL Error: ";
 					print_r($prepared->errorInfo());
+					echo "<br/>\n";
 				}
 				return $result;
 			}
@@ -116,7 +119,10 @@
 			{
 				$seasons = $this->json['seasons'];
 				if(!$seasons)
+				{
+					echo "No season info, skipping<br/>\n";
 					return;
+				}
 				$regions = end($seasons);
 				$season = end($regions);
 				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Season(UID, DataDate, SeasonNumber, Region, Wins, Losses, Abandons, Rating, NextRating, PreviousRating, Mean, StandardDeviation, Rank) VALUES(:uid, FROM_UNIXTIME(:datadate), :seasonnumber, :region, :wins, :losses, :abandons, :rating, :nextrating, :previousrating, :mean, :stddev, :rank)", array(":uid" => $this->uid, ":datadate" => $this->date, ":seasonnumber" => $season['season'], ":region" => $season['region'], ":wins" => $season['wins'], ":losses" => $season['losses'], ":abandons" => $season['abandons'], ":rating" => $season['ranking']['rating'], ":nextrating" => $season['ranking']['next_rating'], ":previousrating" => $season['ranking']['prev_rating'], ":mean" => $season['ranking']['mean'], ":stddev" => $season['ranking']['stdev'], ":rank" => $season['ranking']['rank']));
@@ -132,6 +138,8 @@
 						$this->updateOperator($operator);
 					}
 				}
+				else
+					echo "No operators info, skipping<br/>\n";
 			}
 
 			private function addOperator($operator)

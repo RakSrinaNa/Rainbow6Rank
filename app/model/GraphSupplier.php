@@ -14,6 +14,8 @@
 			{ ?>
                 <script type='text/javascript'>
 					$(function () {
+							const chartDiv = document.getElementById('chartDiv' + '<?php echo $this->getID(); ?>');
+
 							function getPlayers(playersCallback) {
 								$.ajax({
 									url: '<?php echo $this->getPlayersURL(); ?>',
@@ -26,51 +28,81 @@
 								});
 							}
 
-							getPlayers(function (players) {
-								const chartDiv = document.getElementById('chartDiv' + '<?php echo $this->getID(); ?>');
-								let chart = am4core.create(chartDiv, am4charts.XYChart);
-								let title = chart.titles.create();
-								title.text = "<?php echo $this->getTitle(); ?>";
-								title.fontSize = 15;
-								title.marginBottom = 15;
+							if (chartDiv) {
+								getPlayers(function (players) {
+									let chart = am4core.create(chartDiv, am4charts.XYChart);
+									chart.dateFormat = 'yyyy-MM-dd HH:mm:ss';
+									chart.exporting.menu = new am4core.ExportMenu();
 
-								let xAxis = chart.xAxes.push(new am4charts.DateAxis());
-								xAxis.title.text = 'Date';
-								xAxis.skipEmptyPeriods = true;
-								let yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+									let title = chart.titles.create();
+									title.text = "<?php echo $this->getTitle(); ?>";
+									title.fontSize = 15;
+									title.marginBottom = 15;
 
-								chart.legend = new am4charts.Legend();
-								chart.legend.useDefaultMarker = true;
+									let xAxis = chart.xAxes.push(new am4charts.DateAxis());
+									xAxis.title.text = 'Date';
+									xAxis.skipEmptyPeriods = true;
+									xAxis.dateFormats.setKey("year", "yyyy");
+									xAxis.dateFormats.setKey("month", "MMM yyyy");
+									xAxis.dateFormats.setKey("week", "dd MMM yyyy");
+									xAxis.dateFormats.setKey("day", "dd MMM");
+									xAxis.dateFormats.setKey("hour", "HH:00");
+									xAxis.dateFormats.setKey("minute", "HH:mm");
+									xAxis.dateFormats.setKey("second", "HH:mm:ss");
+									xAxis.baseInterval = {
+										"timeUnit": "minute",
+										"count": 15
+									};
+									let yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+									<?php if($this->isDurationGraph())
+								{
+									echo 'chart.durationFormatter.durationFormat = "HH:mm:ss";';
+								}?>
 
-								let marker = chart.legend.markers.template.children.getIndex(0);
-								marker.cornerRadius(12, 12, 12, 12);
-								marker.strokeWidth = 2;
-								marker.strokeOpacity = 1;
-								marker.stroke = am4core.color("#ccc");
+									chart.legend = new am4charts.Legend();
+									chart.legend.useDefaultMarker = true;
 
-								chart.cursor = new am4charts.XYCursor();
-								chart.cursor.xAxis = xAxis;
+									let marker = chart.legend.markers.template.children.getIndex(0);
+									marker.cornerRadius(12, 12, 12, 12);
+									marker.strokeWidth = 2;
+									marker.strokeOpacity = 1;
+									marker.stroke = am4core.color("#cccccc");
 
-								for (const playerIndex in players) {
-									if (players.hasOwnProperty(playerIndex)) {
-										const playerName = players[playerIndex];
-										let series = chart.series.push(new am4charts.LineSeries());
-										series.dataFields.valueY = "value";
-										series.dataFields.dateX = "date";
-										series.tooltipText = "{date}: [bold]{value}";
-										series.dataSource.url = "<?php echo $this->getDataProvider(); ?>/" + playerName;
-										series.dataSource.parser.options.dateFields = ['date'];
-										series.dataSource.parser.options.dateFormat = 'yyyy-MM-dd hh:mm:ss';
-										series.name = playerName;
-										series.strokeWidth = 2;
-										series.legendSettings.valueText = "{valueY}";
+									chart.cursor = new am4charts.XYCursor();
+									chart.cursor.xAxis = xAxis;
+
+									<?php echo $this->getGuides(); ?>
+
+									for (const playerIndex in players) {
+										if (players.hasOwnProperty(playerIndex)) {
+											const playerName = players[playerIndex];
+											let series = chart.series.push(new am4charts.LineSeries());
+											series.dataFields.valueY = "value";
+											series.dataFields.dateX = "date";
+											series.tooltipText = "[bold]" + playerName + " - {date.formatDate(\"yyyy-MM-dd HH:mm\")}[/]\n<?php echo $this->getBalloonTooltip(); ?>";
+											series.dataSource.url = "<?php echo $this->getDataProvider(); ?>/" + playerName;
+											series.dataSource.requestOptions.requestHeaders = [{
+												"key": "Range",
+                                                "value": "<?php echo $_GET['range'] ?>"
+											}];
+											series.dataSource.parser.options.dateFields = ['date'];
+											series.dataSource.parser.options.dateFormat = 'yyyy-MM-dd HH:mm:ss';
+											series.name = playerName;
+											series.strokeWidth = 2;
+											series.legendSettings.valueText = "<?php echo $this->getLegendText(); ?>";
+											// series.fillOpacity = 0.3;
+
+											let bullet = series.bullets.push(new am4charts.CircleBullet());
+											bullet.width = 10;
+											bullet.height = 10;
+										}
 									}
-								}
 
-								// Create scrollbars
-								chart.scrollbarX = new am4core.Scrollbar();
-								chart.scrollbarY = new am4core.Scrollbar();
-							});
+									// Create scrollbars
+									chart.scrollbarX = new am4core.Scrollbar();
+									chart.scrollbarY = new am4core.Scrollbar();
+								});
+							}
 						}
 					);
                 </script>
@@ -119,5 +151,37 @@
 			 * @return string
 			 */
 			abstract function getWeeklyDataProvider();
+
+			/**
+			 * @return string
+			 */
+			protected function getBalloonTooltip()
+			{
+				return "[bold]{value}";
+			}
+
+			/**
+			 * @return bool
+			 */
+			protected function isDurationGraph()
+			{
+				return false;
+			}
+
+			/**
+			 * @return string
+			 */
+			protected function getLegendText()
+			{
+				return "{value}";
+			}
+
+			/**
+			 * @return string
+			 */
+			protected function getGuides()
+			{
+				return ';';
+			}
 		}
 	}

@@ -13,10 +13,9 @@ $(function () {
 	});
 });
 
-function roundDate(date) {
-	const coeff = 1000 * 60 * 60;
-	return new Date(Math.floor(date.getTime() / coeff) * coeff)
-}
+am4core.useTheme(am4themes_animated);
+am4core.useTheme(am4themes_material);
+am4core.useTheme(am4themes_dark);
 
 const chartColors = {
 	theme: 'dark',

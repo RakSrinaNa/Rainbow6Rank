@@ -4,21 +4,16 @@
 	{
 		require_once __DIR__ . '/../../model/GraphSupplier.php';
 
-		class KillDeathCasualGraph extends GraphSupplier
+		class LevelGraph extends GraphSupplier
 		{
 			function getTitle()
 			{
-				return 'K/D Ratio Casual';
+				return 'Level';
 			}
 
 			function getID()
 			{
-				return 'KDC';
-			}
-
-			function getAdditionalBalloon()
-			{
-				return array('stat' => 'Kills: ', 'total' => 'Deaths: ');
+				return 'LVL';
 			}
 
 			/**
@@ -26,15 +21,14 @@
 			 */
 			function getPlayersURL()
 			{
-				return '/api/casual/players';
+				return "/api/progression/players";
 			}
-
 			/**
 			 * @return string
 			 */
 			function getAllDataProvider()
 			{
-				return '/api/casual/kd';
+				return "/api/progression/level";
 			}
 
 			/**
@@ -47,7 +41,7 @@
 
 			protected function getBalloonTooltip()
 			{
-				return "KD: {value}\\nKills: {kills}\\nDeaths: {deaths}";
+				return "Level: {value}\\nExperience: {xp}";
 			}
 		}
 	}

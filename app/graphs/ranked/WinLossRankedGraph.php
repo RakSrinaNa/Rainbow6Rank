@@ -44,5 +44,10 @@
 			{
 				return $this->getAllDataProvider();
 			}
+
+			protected function getBalloonTooltip()
+			{
+				return "WLR: {value}\\nWins: {wins}\\nLosses: {losses}";
+			}
 		}
 	}
