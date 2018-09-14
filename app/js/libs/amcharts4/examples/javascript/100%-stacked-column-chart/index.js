@@ -32,7 +32,7 @@ chart.data = [{
     "value1": 2,
     "value2": 13,
     "value3": 1
-}]
+}];
 
 chart.colors.step = 2;
 chart.padding(30, 30, 10, 30);

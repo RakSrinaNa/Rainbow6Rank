@@ -21,7 +21,7 @@ chart.data = [
 	{ "name": "Melania", fromDate: "2018-01-01 20:30", toDate: "2018-01-01 24:00", color: colorSet.getIndex(6).brighten(0.4) },
 
 	{ "name": "Donald", fromDate: "2018-01-01 13:00", toDate: "2018-01-01 24:00", color: colorSet.getIndex(8).brighten(0) }
-]
+];
 
 var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
 categoryAxis.dataFields.category = "name";

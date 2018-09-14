@@ -26,7 +26,7 @@ chart.data = [{
 }, {
   "direction": "NW",
   "value": 10
-}]
+}];
 
 chart.padding(10, 10, 10, 10);
 
@@ -40,7 +40,7 @@ var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 var series = chart.series.push(new am4charts.RadarSeries());
 series.dataFields.categoryX = "direction";
 series.dataFields.valueY = "value";
-series.tooltipText = "{valueY.value}"
+series.tooltipText = "{valueY.value}";
 series.fillOpacity = 0.4;
 
 chart.cursor = new am4charts.RadarCursor();

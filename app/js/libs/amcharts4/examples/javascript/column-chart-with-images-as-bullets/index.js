@@ -75,7 +75,7 @@ var outlineCircle = bullet.createChild(am4core.Circle);
 outlineCircle.adapter.add("radius", function (radius, target) {
     var circleBullet = target.parent;
     return circleBullet.circle.pixelRadius + 10;
-})
+});
 
 var image = bullet.createChild(am4core.Image);
 image.width = 60;
@@ -88,13 +88,13 @@ image.adapter.add("href", function (href, target) {
     if (dataItem) {
         return dataItem.categoryX.toLowerCase() + ".jpg";
     }
-})
+});
 
 
 image.adapter.add("mask", function (mask, target) {
     var circleBullet = target.parent;
     return circleBullet.circle;
-})
+});
 
 var previousBullet;
 chart.cursor.events.on("cursorpositionchanged", function (event) {
@@ -116,4 +116,4 @@ chart.cursor.events.on("cursorpositionchanged", function (event) {
             previousBullet = bullet;
         }
     }
-})
+});

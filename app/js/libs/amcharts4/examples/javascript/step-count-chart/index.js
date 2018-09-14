@@ -110,7 +110,7 @@ dateAxis.tooltip.hiddenState.properties.visible = true;
 
 dateAxis.tooltip.adapter.add("x", function (x, target) {
     return am4core.utils.spritePointToSvg({ x: chart.plotContainer.pixelX, y: 0 }, chart.plotContainer).x + chart.plotContainer.pixelWidth / 2;
-})
+});
 
 var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 valueAxis.renderer.inside = true;
@@ -147,7 +147,7 @@ series.tooltip.hiddenState.properties.opacity = 1;
 series.tooltip.hiddenState.properties.visible = true;
 series.tooltip.adapter.add("x", function (x, target) {
     return am4core.utils.spritePointToSvg({ x: chart.plotContainer.pixelX, y: 0 }, chart.plotContainer).x + chart.plotContainer.pixelWidth / 2;
-})
+});
 
 var columnTemplate = series.columns.template;
 columnTemplate.width = 30;
@@ -163,7 +163,7 @@ columnTemplate.adapter.add("fill", function (fill, target) {
     else {
         return am4core.color("#a8b3b7");
     }
-})
+});
 
 var cursor = new am4charts.XYCursor();
 cursor.behavior = "panX";
@@ -182,7 +182,7 @@ middleLine.align = "center";
 middleLine.zIndex = 1;
 middleLine.adapter.add("y2", function (y2, target) {
     return target.parent.pixelHeight;
-})
+});
 
 cursor.events.on("cursorpositionchanged", updateTooltip);
 dateAxis.events.on("datarangechanged", updateTooltip);

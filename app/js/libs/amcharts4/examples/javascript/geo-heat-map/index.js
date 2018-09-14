@@ -39,11 +39,11 @@ heatLegend.valueAxis.renderer.minGridDistance = 40;
 
 polygonSeries.mapPolygons.template.events.on("over", function (event) {
   handleHover(event.target);
-})
+});
 
 polygonSeries.mapPolygons.template.events.on("hit", function (event) {
   handleHover(event.target);
-})
+});
 
 function handleHover(mapPolygon) {
   if (!isNaN(mapPolygon.dataItem.value)) {
@@ -56,7 +56,7 @@ function handleHover(mapPolygon) {
 
 polygonSeries.mapPolygons.template.events.on("out", function (event) {
   heatLegend.valueAxis.hideTooltip();
-})
+});
 
 
 // life expectancy data

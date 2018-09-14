@@ -92,7 +92,7 @@ linkTemplate.events.on("down", function (event) {
     else {
         toNode.dragStart(event.pointer);
     }
-})
+});
 
 
 // add labels
@@ -127,18 +127,18 @@ chart.events.on("inited", function () {
             link.bullets.removeValue(bullet);
         }
     }
-})
+});
 
 function firstHalfAnimation(bullet) {
     var duration = 6000 * Math.random() + 3000;
-    var animation = bullet.animate([{ property: "locationX", from: 0.2, to: 0.5 }, { property: "opacity", from: 0, to: 0.3 }], duration)
+	var animation = bullet.animate([{property: "locationX", from: 0.2, to: 0.5}, {property: "opacity", from: 0, to: 0.3}], duration);
     animation.events.on("animationended", function (event) {
         secondHalfAnimation(event.target.object, duration);
     })
 }
 
 function secondHalfAnimation(bullet, duration) {
-    var animation = bullet.animate([{ property: "locationX", from: 0.5, to: 0.8 }, { property: "opacity", from: 0.3, to: 0 }], duration)
+	var animation = bullet.animate([{property: "locationX", from: 0.5, to: 0.8}, {property: "opacity", from: 0.3, to: 0}], duration);
     animation.events.on("animationended", function (event) {
         setTimeout(function () {
             firstHalfAnimation(event.target.object)

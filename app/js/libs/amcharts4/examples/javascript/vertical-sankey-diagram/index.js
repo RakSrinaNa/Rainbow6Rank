@@ -85,7 +85,7 @@ chart.links.template.events.on("down", function (event) {
   else {
     toNode.dragStart(event.pointer);
   }
-})
+});
 
 chart.nodes.template.draggable = true;
 chart.nodes.template.inert = true;

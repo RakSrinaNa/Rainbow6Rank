@@ -36,7 +36,7 @@ bullet.strokeOpacity = 0;
 
 bullet.adapter.add("tooltipY", function (tooltipY, target) {
 	return -target.circle.radius + 1;
-})
+});
 
 series.heatRules.push({property:"radius", target:bullet.circle, min:2, max:22});
 

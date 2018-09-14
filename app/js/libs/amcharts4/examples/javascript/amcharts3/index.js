@@ -52,7 +52,7 @@ var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 var series = chart.series.push(new am4charts.ColumnSeries());
 series.dataFields.categoryX = "country";
 series.dataFields.valueY = "visits";
-series.tooltipText = "{valueY.value}"
+series.tooltipText = "{valueY.value}";
 series.columns.template.strokeOpacity = 0;
 
 chart.cursor = new am4charts.XYCursor();

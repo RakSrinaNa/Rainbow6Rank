@@ -44,11 +44,11 @@ heatLegend.valueAxis.renderer.minGridDistance = 30;
 // heat legend behavior
 series.columns.template.events.on("over", function (event) {
 	handleHover(event.target);
-})
+});
 
 series.columns.template.events.on("hit", function (event) {
 	handleHover(event.target);
-})
+});
 
 function handleHover(column) {
 	if (!isNaN(column.dataItem.value)) {
@@ -61,7 +61,7 @@ function handleHover(column) {
 
 series.columns.template.events.on("out", function (event) {
 	heatLegend.valueAxis.hideTooltip();
-})
+});
 
 chart.data = [
 	{

@@ -37,7 +37,7 @@ var data = {
 	"Toyota": { "4Runner": 128296, "86/Scion FR-S": 6846, "Avalon": 32583, "Camry": 387081, "C-HR": 25755, "Corolla": 329196, "FJ Cruiser": 4, "Highlander": 215775, "Land Cruiser": 3100, "Mirai": 1838, "Prius": 108662, "RAV4": 407594, "Sequoia": 12156, "Sienna": 111489, "Tacoma": 198124, "Tundra": 116285, "Venza": 14, "Yaris": 44380 },
 	"Volkswagen": { "Atlas": 27119, "Beetle": 15166, "CC": 1355, "Eos": 1, "Golf": 68978, "Jetta": 115807, "Passat": 60722, "Tiguan": 46983, "Touareg": 3545 },
 	"Volvo": { "S60": 16825, "S80": 7, "S90": 11090, "XC60": 22516, "XC90": 30996 }
-}
+};
 
 function processData(data) {
 	var treeData = [];
@@ -45,7 +45,7 @@ function processData(data) {
 	var smallBrands = { name: "Other", children: [] };
 
 	for (var brand in data) {
-		var brandData = { name: brand, children: [] }
+		var brandData = {name: brand, children: []};
 		var brandTotal = 0;
 		for (var model in data[brand]) {
 			brandTotal += data[brand][model];
@@ -102,7 +102,7 @@ hoverState.adapter.add("fill", function (fill, target) {
 		return am4core.color(am4core.colors.brighten(fill.rgb, -0.2));
 	}
 	return fill;
-})
+});
 
 // add logo
 var image = columnTemplate.createChild(am4core.Image);

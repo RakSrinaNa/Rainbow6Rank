@@ -33,7 +33,7 @@ night.stroke = am4core.color("#000000");
 night.strokeOpacity = 0;
 
 // images series
-var imagesSeries = mapChart.series.push(new am4maps.MapImageSeries())
+var imagesSeries = mapChart.series.push(new am4maps.MapImageSeries());
 var tooltip = imagesSeries.tooltip;
 tooltip.label.padding(15, 15, 15, 15);
 tooltip.background.cornerRadius = 25;
@@ -68,7 +68,7 @@ slider.padding(0, 30, 0, 80);
 slider.marginBottom = 15;
 slider.events.on("rangechanged", function () {
     updateDateNight(new Date().getTime() + (slider.start - 0.5) * 1000 * 60 * 60 * 24 * 2 * 2);
-})
+});
 
 
 function updateDateNight(time) {
@@ -131,9 +131,7 @@ function solarPosition(time) {
         longitude = (am4core.time.round(new Date(time), "day").getTime() - time - offset) / 864e5 * 360 - 180;
 
     return am4maps.geo.normalizePoint({ longitude: longitude - equationOfTime(centuries) * am4core.math.DEGREES, latitude: solarDeclination(centuries) * am4core.math.DEGREES });
-};
-
-
+}
 // Equations based on NOAA’s Solar Calculator; all angles in Amam4charts.math.RADIANS.
 // http://www.esrl.noaa.gov/gmd/grad/solcalc/
 

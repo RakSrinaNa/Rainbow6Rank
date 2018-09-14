@@ -4,7 +4,12 @@ am4core.useTheme(am4themes_dark);
 var chart = am4core.create("chartdiv", am4charts.XYChart);
 
 var valueAxisX = chart.xAxes.push(new am4charts.ValueAxis());
+valueAxisX.renderer.ticks.template.disabled = true;
+valueAxisX.renderer.axisFills.template.disabled = true;
+
 var valueAxisY = chart.yAxes.push(new am4charts.ValueAxis());
+valueAxisY.renderer.ticks.template.disabled = true;
+valueAxisY.renderer.axisFills.template.disabled = true;
 
 var series = chart.series.push(new am4charts.LineSeries());
 series.dataFields.valueX = "x";
@@ -31,7 +36,7 @@ series.heatRules.push({ target: bullet.circle, min: 2, max: 60, property: "radiu
 
 bullet.circle.adapter.add("tooltipY", function (tooltipY, target) {
     return -target.radius;
-})
+});
 
 chart.cursor = new am4charts.XYCursor();
 chart.cursor.behavior = "zoomXY";

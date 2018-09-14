@@ -44,7 +44,7 @@ chart.data = [{
 	"value2": 8,
 	"value3": 6,
 	"value4": 4
-}]
+}];
 
 chart.padding(30, 30, 10, 30);
 chart.legend = new am4charts.Legend();

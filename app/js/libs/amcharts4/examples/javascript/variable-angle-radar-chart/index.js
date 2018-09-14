@@ -50,7 +50,7 @@ chart.data = [{
   "value2": 16,
   "value3": 5,
   "value4": 1
-}]
+}];
 
 
 chart.padding(10, 10, 10, 10);
@@ -71,7 +71,7 @@ categoryAxis.interactionsEnabled = false;
 var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 valueAxis.tooltip.disabled = true;
 valueAxis.renderer.minGridDistance = 20;
-valueAxis.renderer.grid.template.strokeOpacity = 0.05
+valueAxis.renderer.grid.template.strokeOpacity = 0.05;
 valueAxis.renderer.labels.template.fontSize = 9;
 valueAxis.renderer.axisFills.template.disabled = true;
 valueAxis.interactionsEnabled = false;
@@ -123,4 +123,4 @@ slider.events.on("rangechanged", function () {
   chart.endAngle = 270 + start * 179 + 1;
 
   valueAxis.renderer.axisAngle = chart.startAngle;
-})
+});

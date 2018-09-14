@@ -157,7 +157,6 @@ axis.renderer.line.strokeOpacity = 0.2;
 axis.renderer.minLabelPosition = 0.05; // hides 0 label
 axis.renderer.inside = true;
 axis.renderer.labels.template.radius = 23;
-axis.renderer.axisFills.template.disabled = true;
 axis.renderer.grid.template.disabled = true;
 axis.renderer.minGridDistance = 20;
 axis.renderer.ticks.template.length = 4;
@@ -216,8 +215,8 @@ var pyongyangTexts = [
 
 // updates all elements
 function setTime() {
-    var time = new Date(startTime + (endTime - startTime) * slider.start).getTime();;
-    var roundedTime = am4core.time.round(new Date(time), "minute").getTime();
+	var time = new Date(startTime + (endTime - startTime) * slider.start).getTime();
+	var roundedTime = am4core.time.round(new Date(time), "minute").getTime();
 
     if (roundedTime != currentTime) {
         currentTime = roundedTime;
@@ -362,6 +361,7 @@ lineSeries.tooltip.autoTextColor = false;
 lineSeries.tooltip.label.fill = am4core.color("#ffffff");
 lineSeries.tooltip.filters.clear();
 lineSeries.tooltip.pointerOrientation = "vertical";
+lineSeries.strokeWidth = 2;
 lineSeries.tensionX = 0.7;
 
 var negativeRange = valueAxis.createSeriesRange(lineSeries);
@@ -379,7 +379,7 @@ chart.cursor.lineX.strokeOpacity = 0;
 
 chart.events.on("inited", function () {
     createSlider();
-})
+});
 
 var slider;
 
@@ -425,7 +425,7 @@ function createSlider() {
         else {
             stop();
         }
-    })
+	});
 
     slider = sliderContainer.createChild(am4core.Slider);
     slider.valign = "middle";
