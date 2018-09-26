@@ -36,7 +36,7 @@ series.heatRules.push({ target: bullet.circle, min: 2, max: 60, property: "radiu
 
 bullet.circle.adapter.add("tooltipY", function (tooltipY, target) {
     return -target.radius;
-});
+})
 
 chart.cursor = new am4charts.XYCursor();
 chart.cursor.behavior = "zoomXY";

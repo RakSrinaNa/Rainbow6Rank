@@ -79,7 +79,7 @@ dateAxis.max = new Date(2019, 0, 0, 0, 0, 0).getTime();
 dateAxis.interactionsEnabled = false;
 dateAxis.tooltip.disabled = true;
 dateAxis.periodChangeDateFormats.setKey("month", dateAxis.language.translate("_date_month"));
-dateAxis.baseInterval = {count: 1, timeUnit: "day"};
+dateAxis.baseInterval = { count: 1, timeUnit: "day" };
 dateAxis.renderer.ticks.template.disabled = true;
 dateAxis.renderer.axisFills.template.disabled = true;
 

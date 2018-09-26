@@ -144,7 +144,7 @@ columnTemplate.events.on("over", function (event) {
     var dataItem = event.target.dataItem;
     var itemBullet = dataItem.bullets.getKey(bullet.uid);
     itemBullet.isHover = true;
-});
+})
 
 // hide bullet when mouse is out
 columnTemplate.events.on("out", function (event) {
@@ -152,7 +152,7 @@ columnTemplate.events.on("out", function (event) {
     var itemBullet = dataItem.bullets.getKey(bullet.uid);
     // hide it later for touch devices to see it longer
     setTimeout(function () { itemBullet.isHover = false }, 1000);
-});
+})
 
 
 // start dragging bullet even if we hit on column not just a bullet, this will make it more friendly for touch devices
@@ -160,7 +160,7 @@ columnTemplate.events.on("down", function (event) {
     var dataItem = event.target.dataItem;
     var itemBullet = dataItem.bullets.getKey(bullet.uid);
     itemBullet.dragStart(event.pointer);
-});
+})
 
 // when columns position changes, adjust minX/maxX of bullets so that we could only drag vertically
 columnTemplate.events.on("positionchanged", function (event) {
@@ -172,7 +172,7 @@ columnTemplate.events.on("positionchanged", function (event) {
     itemBullet.maxX = itemBullet.minX;
     itemBullet.minY = 0;
     itemBullet.maxY = chart.seriesContainer.pixelHeight;
-});
+})
 
 // as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
 columnTemplate.adapter.add("fill", function (fill, target) {
