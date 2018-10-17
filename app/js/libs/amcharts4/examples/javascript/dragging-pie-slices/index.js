@@ -39,9 +39,11 @@ container.events.on("maxsizechanged", function () {
     separatorLine.zIndex = 1;
     dragText.zIndex = 2;
     chart2.zIndex = 3;
-})
+});
 
 var chart1 = container.createChild(am4charts.PieChart);
+chart1.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+
 chart1.data = data;
 chart1.radius = am4core.percent(70);
 chart1.innerRadius = am4core.percent(40);
@@ -70,7 +72,7 @@ sliceTemplate1.events.on("down", function (event) {
     // also put chart to front
     var series = event.target.dataItem.component;
     series.chart.zIndex = zIndex++;
-})
+});
 
 series1.labels.template.propertyFields.disabled = "disabled";
 series1.ticks.template.propertyFields.disabled = "disabled";
@@ -79,7 +81,7 @@ sliceTemplate1.states.getKey("active").properties.shiftRadius = 0;
 
 sliceTemplate1.events.on("dragstop", function (event) {
     handleDragStop(event);
-})
+});
 
 // separator line and text
 var separatorLine = container.createChild(am4core.Line);
@@ -100,6 +102,8 @@ dragText.paddingBottom = 5;
 
 // second chart
 var chart2 = container.createChild(am4charts.PieChart);
+chart2.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+
 chart2.radius = am4core.percent(70);
 chart2.data = data;
 chart2.innerRadius = am4core.percent(40);
@@ -154,7 +158,7 @@ function handleDragStop(event) {
             var animation = slice1.animate([{ property: "x", to: series2CenterConverted.x }, { property: "y", to: series2CenterConverted.y }], 400);
             animation.events.on("animationprogress", function (event) {
                 slice1.hideTooltip();
-            })
+            });
 
             slice2.x = 0;
             slice2.y = 0;
@@ -175,7 +179,7 @@ function handleDragStop(event) {
             var animation = slice2.animate([{ property: "x", to: series1CenterConverted.x }, { property: "y", to: series1CenterConverted.y }], 400);
             animation.events.on("animationprogress", function (event) {
                 slice2.hideTooltip();
-            })
+            });
 
             slice1.x = 0;
             slice1.y = 0;
@@ -221,11 +225,11 @@ series2.events.on("datavalidated", function () {
     for (var i = 1; i < series2.dataItems.length; i++) {
         series2.dataItems.getIndex(i).hide(0);
     }
-})
+});
 
 series1.events.on("datavalidated", function () {
     var dummyDataItem = series1.dataItems.getIndex(0);
     dummyDataItem.hide(0);
     dummyDataItem.slice.draggable = false;
     dummyDataItem.slice.tooltipText = undefined;
-})
+});

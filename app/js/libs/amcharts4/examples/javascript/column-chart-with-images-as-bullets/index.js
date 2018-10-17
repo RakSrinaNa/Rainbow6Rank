@@ -1,6 +1,8 @@
 am4core.useTheme(am4themes_animated);
 
 var chart = am4core.create("chartdiv", am4charts.XYChart);
+chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+
 chart.paddingBottom = 30;
 
 chart.data = [{
@@ -75,7 +77,7 @@ var outlineCircle = bullet.createChild(am4core.Circle);
 outlineCircle.adapter.add("radius", function (radius, target) {
     var circleBullet = target.parent;
     return circleBullet.circle.pixelRadius + 10;
-})
+});
 
 var image = bullet.createChild(am4core.Image);
 image.width = 60;
@@ -88,13 +90,13 @@ image.adapter.add("href", function (href, target) {
     if (dataItem) {
         return dataItem.categoryX.toLowerCase() + ".jpg";
     }
-})
+});
 
 
 image.adapter.add("mask", function (mask, target) {
     var circleBullet = target.parent;
     return circleBullet.circle;
-})
+});
 
 var previousBullet;
 chart.cursor.events.on("cursorpositionchanged", function (event) {
@@ -116,4 +118,4 @@ chart.cursor.events.on("cursorpositionchanged", function (event) {
             previousBullet = bullet;
         }
     }
-})
+});

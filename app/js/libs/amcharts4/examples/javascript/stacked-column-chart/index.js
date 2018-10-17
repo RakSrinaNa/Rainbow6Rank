@@ -1,6 +1,7 @@
 am4core.useTheme(am4themes_animated);
 
 var chart = am4core.create("chartdiv", am4charts.XYChart);
+chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
 
 chart.data = [{
 	"category": "One",
@@ -44,7 +45,7 @@ chart.data = [{
 	"value2": 8,
 	"value3": 6,
 	"value4": 4
-}]
+}];
 
 chart.padding(30, 30, 10, 30);
 chart.legend = new am4charts.Legend();

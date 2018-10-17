@@ -1,6 +1,7 @@
 am4core.useTheme(am4themes_animated);
 
 var chart = am4core.create("chartdiv", am4charts.ChordDiagram);
+chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
 
 var data = [];
 var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
@@ -58,14 +59,14 @@ nodeTemplate.events.on("over", function (event) {
     node.outgoingDataItems.each(function (dataItem) {
         dataItem.link.isHover = true;
     })
-})
+});
 
 nodeTemplate.events.on("out", function (event) {
     var node = event.target;
     node.outgoingDataItems.each(function (dataItem) {
         dataItem.link.isHover = false;
     })
-})
+});
 
 var circleBullet = nodeTemplate.createChild(am4charts.CircleBullet);
 circleBullet.setStateOnChildren = true;

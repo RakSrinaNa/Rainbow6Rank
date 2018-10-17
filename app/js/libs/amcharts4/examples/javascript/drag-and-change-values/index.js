@@ -1,6 +1,7 @@
 am4core.useTheme(am4themes_animated);
 
 var chart = am4core.create("chartdiv", am4charts.XYChart);
+chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
 
 chart.data = [{
     "country": "USA",
@@ -88,6 +89,7 @@ var bullet = series.bullets.push(new am4charts.CircleBullet());
 bullet.stroke = am4core.color("#ffffff");
 bullet.strokeWidth = 3;
 bullet.defaultState.properties.opacity = 0;
+
 // resize cursor when over
 bullet.cursorOverStyle = am4core.MouseCursorStyle.verticalResize;
 bullet.draggable = true;
@@ -144,15 +146,15 @@ columnTemplate.events.on("over", function (event) {
     var dataItem = event.target.dataItem;
     var itemBullet = dataItem.bullets.getKey(bullet.uid);
     itemBullet.isHover = true;
-})
+});
 
 // hide bullet when mouse is out
 columnTemplate.events.on("out", function (event) {
     var dataItem = event.target.dataItem;
     var itemBullet = dataItem.bullets.getKey(bullet.uid);
     // hide it later for touch devices to see it longer
-    setTimeout(function () { itemBullet.isHover = false }, 1000);
-})
+    itemBullet.isHover = false;
+});
 
 
 // start dragging bullet even if we hit on column not just a bullet, this will make it more friendly for touch devices
@@ -160,7 +162,7 @@ columnTemplate.events.on("down", function (event) {
     var dataItem = event.target.dataItem;
     var itemBullet = dataItem.bullets.getKey(bullet.uid);
     itemBullet.dragStart(event.pointer);
-})
+});
 
 // when columns position changes, adjust minX/maxX of bullets so that we could only drag vertically
 columnTemplate.events.on("positionchanged", function (event) {
@@ -172,7 +174,7 @@ columnTemplate.events.on("positionchanged", function (event) {
     itemBullet.maxX = itemBullet.minX;
     itemBullet.minY = 0;
     itemBullet.maxY = chart.seriesContainer.pixelHeight;
-})
+});
 
 // as by default columns of the same series are of the same color, we add adapter which takes colors from chart.colors color set
 columnTemplate.adapter.add("fill", function (fill, target) {

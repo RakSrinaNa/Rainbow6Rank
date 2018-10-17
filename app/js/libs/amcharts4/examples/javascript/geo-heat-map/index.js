@@ -1,6 +1,7 @@
 am4core.useTheme(am4themes_animated);
 
 var chart = am4core.create("chartdiv", am4maps.MapChart);
+chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
 
 try {
     chart.geodata = am4geodata_worldLow;
@@ -39,11 +40,11 @@ heatLegend.valueAxis.renderer.minGridDistance = 40;
 
 polygonSeries.mapPolygons.template.events.on("over", function (event) {
   handleHover(event.target);
-})
+});
 
 polygonSeries.mapPolygons.template.events.on("hit", function (event) {
   handleHover(event.target);
-})
+});
 
 function handleHover(mapPolygon) {
   if (!isNaN(mapPolygon.dataItem.value)) {
@@ -56,7 +57,7 @@ function handleHover(mapPolygon) {
 
 polygonSeries.mapPolygons.template.events.on("out", function (event) {
   heatLegend.valueAxis.hideTooltip();
-})
+});
 
 
 // life expectancy data

@@ -1,7 +1,7 @@
 am4core.useTheme(am4themes_animated);
 
 var chart = am4core.create("chartdiv", am4maps.MapChart);
-
+chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
 
 try {
     chart.geodata = am4geodata_worldLow;
@@ -24,7 +24,7 @@ var morphedPolygon;
 var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
 polygonSeries.useGeodata = true;
 // specify which countries to include
-polygonSeries.include = ["IT", "CH", "FR", "DE", "GB", "ES", "PT", "IE", "NL", "LU", "BE", "AT", "DK"]
+polygonSeries.include = ["IT", "CH", "FR", "DE", "GB", "ES", "PT", "IE", "NL", "LU", "BE", "AT", "DK"];
 
 // country area look and behavior
 var polygonTemplate = polygonSeries.mapPolygons.template;
@@ -41,7 +41,7 @@ polygonTemplate.filters.push(desaturateFilter);
 // take a color from color set
 polygonTemplate.adapter.add("fill", function (fill, target) {
     return colorSet.getIndex(target.dataItem.index + 1);
-})
+});
 
 // set fillOpacity to 1 when hovered
 var hoverState = polygonTemplate.states.create("hover");
@@ -50,7 +50,7 @@ hoverState.properties.fillOpacity = 1;
 // what to do when country is clicked
 polygonTemplate.events.on("hit", function (event) {
     selectPolygon(event.target);
-})
+});
 
 // Pie chart
 var pieChart = chart.seriesContainer.createChild(am4charts.PieChart);
@@ -197,7 +197,7 @@ function morphToCircle(polygon) {
 }
 
 function zoomToCountry(polygon) {
-    var zoomAnimation = chart.zoomToMapObject(polygon, 0.5, true);
+    var zoomAnimation = chart.zoomToMapObject(polygon, 2, true);
     if (zoomAnimation) {
         zoomAnimation.events.on("animationended", function () {
             showPieChart(polygon);

@@ -32,10 +32,11 @@ chart.data = [{
     "value1": 2,
     "value2": 13,
     "value3": 1
-}]
+}];
 
 chart.colors.step = 2;
 chart.padding(30, 30, 10, 30);
+chart.hiddenState.properties.opacity = 0;
 
 chart.legend = new am4charts.Legend();
 chart.legend.itemContainers.template.cursorOverStyle = am4core.MouseCursorStyle.pointer;

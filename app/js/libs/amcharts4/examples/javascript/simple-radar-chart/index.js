@@ -1,6 +1,7 @@
 am4core.useTheme(am4themes_animated);
 
 var chart = am4core.create("chartdiv", am4charts.RadarChart);
+chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
 
 chart.data = [{
   "direction": "N",
@@ -26,7 +27,7 @@ chart.data = [{
 }, {
   "direction": "NW",
   "value": 10
-}]
+}];
 
 chart.padding(10, 10, 10, 10);
 
@@ -40,7 +41,7 @@ var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 var series = chart.series.push(new am4charts.RadarSeries());
 series.dataFields.categoryX = "direction";
 series.dataFields.valueY = "value";
-series.tooltipText = "{valueY.value}"
+series.tooltipText = "{valueY.value}";
 series.fillOpacity = 0.4;
 
 chart.cursor = new am4charts.RadarCursor();

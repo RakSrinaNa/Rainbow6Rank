@@ -4,6 +4,7 @@ am4core.useTheme(am4themes_dark);
 var countryCodes = ["AF", "AO", "AR", "AM", "AU", "AT", "AZ", "BD", "BY", "BE", "BO", "BA", "BW", "BR", "BG", "KH", "CM", "CA", "CF", "TD", "CL", "CN", "CO", "CG", "CD", "CR", "CI", "HR", "CU", "CY", "CZ", "DK", "EC", "EG", "ER", "EE", "ET", "FI", "FR", "GE", "DE", "GR", "GL", "GP", "GT", "GN", "GW", "GY", "HT", "HN", "HU", "IS", "IN", "ID", "IR", "IQ", "IE", "IL", "IT", "JM", "JP", "JO", "KZ", "KE", "KP", "KR", "KG", "LA", "LV", "LB", "LS", "LR", "LY", "LT", "LU", "MK", "MG", "MY", "ML", "MT", "MR", "MX", "MD", "MN", "ME", "MA", "MZ", "MM", "NA", "NP", "NL", "NZ", "NI", "NE", "NG", "NO", "OM", "PK", "PA", "PG", "PY", "PE", "PH", "PL", "PT", "RO", "RU", "SA", "SN", "RS", "SK", "SI", "SO", "ZA", "SS", "ES", "SD", "SE", "CH", "SY", "TW", "TJ", "TZ", "TH", "TN", "TR", "TM", "UA", "AE", "GB", "US", "UY", "UZ", "VE", "VN", "YE", "ZM", "ZW"];
 
 var chart = am4core.create("chartdiv", am4maps.MapChart);
+chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
 
 try {
     chart.geodata = am4geodata_worldHigh;
@@ -56,11 +57,11 @@ setInterval(function () {
 		next = 0;
 	}
 	slider.animate({ property: "start", to: next }, 300);
-}, 2000)
+}, 2000);
 
 slider.events.on("rangechanged", function () {
 	changeCountry();
-})
+});
 
 function changeCountry() {
 	var totalCountries = countryCodes.length - 1;
@@ -87,7 +88,7 @@ function changeCountry() {
 			label.text = morphToPolygon.dataItem.dataContext["name"];
 			label.y = -50;
 			label.animate({ property: "y", to: 200 }, 300, am4core.ease.quadOut);
-		})
+		});
 
 		currentIndex = countryIndex;
 	}

@@ -1,6 +1,7 @@
 am4core.useTheme(am4themes_animated);
 
 var chart = am4core.create("chartdiv", am4charts.XYChart);
+chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
 
 chart.data = [{
   "country": "One",
@@ -51,7 +52,7 @@ var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 var series = chart.series.push(new am4charts.CurvedColumnSeries());
 series.dataFields.categoryX = "country";
 series.dataFields.valueY = "value";
-series.tooltipText = "{valueY.value}"
+series.tooltipText = "{valueY.value}";
 series.columns.template.strokeOpacity = 0;
 
 series.columns.template.fillOpacity = 0.75;
