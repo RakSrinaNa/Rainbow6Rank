@@ -5,6 +5,49 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 Please note, that this project, while following numbering syntax, it DOES NOT
 adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 
+## [4.0.0-beta.62] - 2018-10-19
+
+### Fixed
+- Tooltip issue fixed.
+
+
+## [4.0.0-beta.61] - 2018-10-19
+
+### Changed
+- If element has `url` set, when clicked, it will now parse for data placeholders in curcly brackets, e.g. `"{category}"` allowing have dynamic data-driven URLs. Note, the elements are not url-encoded so you need to specify encoding manually, e.g.: `series.columns.template.url = "https://www.google.com/search?q={category.urlEncode()}";`.
+
+### Fixed
+- `Label.fullWords = false` was not working properly.
+- `AxisLabelCircular` was positioning labels incorrectly, if label.radius was negative (since 59).
+- `"grid"` layout in `Container` was incorrectly layouting elements if their `width` was set in percent.
+- [IE] Multi-line truncated labels were not working properly on IE.
+- [IE] was incorrectly zIndexing elemens (since version 56).
+- [IE] tooltip initial flicker solved.
+- [IE] was incorrectly sorting multiple series tooltips (if `Cursor` was used).
+
+
+## [4.0.0-beta.60] - 2018-10-18
+
+### Changed
+- `"hidden"` data field added to series' `dataFields`. Removed `"visible"` data field from `PercentSeries`. You should use `"hidden"` data field to set which slices/columns/etc. are hidden initally.
+- `AxisLabelCircular`'s `radius` can now be set in `Percent`. `PieChart`'s label radius default value was set to `5%`.
+
+### Fixed
+- Multi-line labels were not being aligned properly in IEs.
+- In some cases, `fillModifier` was not applied if set after `fill`.
+- In some cases, a chart with `seriesContainer` disabled, or when `seriesContainer`'s height/width was 0, could produce a JS error.
+- Some performance tuneups, especially for charts with axes and more data.
+
+
+## [4.0.0-beta.59] - 2018-10-17
+
+### Added
+- [`widthRatio`](https://www.amcharts.com/docs/v4/reference/image/#widthRatio_property) and [`heightRatio`](https://www.amcharts.com/docs/v4/reference/image/#heightRatio_property) properties on `Image`.
+
+### Fixed
+- Some adapters for Axis elements were being applied twice.
+
+
 ## [4.0.0-beta.58] - 2018-10-17
 
 ### Added
