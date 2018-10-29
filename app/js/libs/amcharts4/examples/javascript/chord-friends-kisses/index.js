@@ -14,6 +14,7 @@
 
 am4core.useTheme(am4themes_animated);
 var chart = am4core.create("chartdiv", am4charts.ChordDiagram);
+chart.hiddenState.properties.opacity = 0;
 
 // colors of main characters
 chart.colors.saturation = 0.45;
@@ -25,7 +26,7 @@ var colors = {
     Ross:chart.colors.next(),
     Joey:chart.colors.next(),
     Chandler:chart.colors.next()
-}
+};
 
 // data was provided by: https://www.reddit.com/user/notrudedude
 
@@ -148,7 +149,7 @@ chart.data = [
 {"from":"Carol","to":"Ben","value":1},
 {"from":"Carol","to":"Susan","value":1},
 {"from":"Mr Geller","to":"Mrs Geller","value":3},
-{"from":"Frank","to":"Alice","value":5}]
+{"from":"Frank","to":"Alice","value":5}];
 
 
 
@@ -177,16 +178,16 @@ nodeTemplate.events.on("over", function (event) {
             dataItem.link.isHover = true;
             dataItem.toNode.label.isHover = true;
         }
-    })
+    });
     node.incomingDataItems.each(function (dataItem) {
         if(dataItem.fromNode){
             dataItem.link.isHover = true;
             dataItem.fromNode.label.isHover = true;
         }
-    }) 
+    });
 
     node.label.isHover = true;   
-})
+});
 
 // when rolled out from the node, make all the links rolled-out
 nodeTemplate.events.on("out", function (event) {
@@ -196,16 +197,16 @@ nodeTemplate.events.on("out", function (event) {
             dataItem.link.isHover = false;                
             dataItem.toNode.label.isHover = false;
         }
-    })
+    });
     node.incomingDataItems.each(function (dataItem) {
         if(dataItem.fromNode){
             dataItem.link.isHover = false;
            dataItem.fromNode.label.isHover = false;
         }
-    })
+    });
 
     node.label.isHover = false;
-})
+});
 
 var label = nodeTemplate.label;
 label.relativeRotation = 90;
@@ -231,7 +232,7 @@ nodeTemplate.adapter.add("fill", function (fill, target) {
         else{
             counters[dataItem.fromName] += dataItem.value;
         }
-    })
+    });
     if(mainChar){
         return fill;
     }
@@ -252,7 +253,7 @@ nodeTemplate.adapter.add("fill", function (fill, target) {
     }
   
     return fill;
-})
+});
 
 // link template
 var linkTemplate = chart.links.template;
@@ -275,7 +276,7 @@ creditLabel.verticalCenter = "bottom";
 
 var titleImage = chart.chartContainer.createChild(am4core.Image);
 titleImage.href = "whokissed.png";
-titleImage.x = 30
+titleImage.x = 30;
 titleImage.y = 30;
 titleImage.width = 200;
 titleImage.height = 200;

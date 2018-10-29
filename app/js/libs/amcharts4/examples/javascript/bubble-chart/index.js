@@ -25,7 +25,7 @@ bullet.strokeOpacity = 0;
 bullet.strokeWidth = 2;
 bullet.fillOpacity = 0.7;
 bullet.stroke = am4core.color("#ffffff");
-
+bullet.hiddenState.properties.opacity = 0;
 bullet.circle.tooltipText = "[bold]{title}:[/]\nPopulation: {value.value}\nIncome: {valueX.value}\nLife expectancy:{valueY.value}";
 
 var hoverState = bullet.states.create("hover");
@@ -36,7 +36,7 @@ series.heatRules.push({ target: bullet.circle, min: 2, max: 60, property: "radiu
 
 bullet.circle.adapter.add("tooltipY", function (tooltipY, target) {
     return -target.radius;
-})
+});
 
 chart.cursor = new am4charts.XYCursor();
 chart.cursor.behavior = "zoomXY";

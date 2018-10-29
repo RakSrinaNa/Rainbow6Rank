@@ -5,11 +5,62 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 Please note, that this project, while following numbering syntax, it DOES NOT
 adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 
+
+## [4.0.0-beta.66] - 2018-10-28
+
+### Fixed
+- Axis glitches in `XYChart3D`.
+- `XYCursor` movement issues.
+
+
+## [4.0.0-beta.65] - 2018-10-28
+
+### Changed
+- `tooltip.hiddenState.transtionDuration` and `tooltip.defaultState.transitionDuration` are now set to 1 (on non-animated theme) to avoid some tooltip flickering.
+- Individual legend items (label, value label, and marker) now have their  `interactionsEnabled = false` set by default to avoid double events. If you need to add events to these particular elements (as opposed to the whole legend item), you will need to set `interactionsEnabled = true` on that element.
+
+### Fixed
+- Calling `show()` on a `MapSeries` object was resulting in an error.
+- 3D columns were not visible if their value was zero.
+- Bullets are now hidden if `minBulletDistance` is set.
+
+
+## [4.0.0-beta.64] - 2018-10-27
+
+### Added
+- `shouldClone` flag added to `EventDispatcher`'s `on` and `once` methods. Can be used to restrict cloning of events when object itself is cloned.
+- [`showOnInit`](https://www.amcharts.com/docs/v4/reference/sprite/#showOnInit_property) property added to `Sprite`. If this is set to `true`, the `Sprite`, when inited will be instantly hidden ("hidden" state applied) and then shown (animate properties form "hidden" state to "default" state). Animation will take `defaultState.transitionDuration`. `Series`, `Chart` classes has this set to `true`, so that they would perform initial animations. If you want a sprite (chart, series) not to be shown initially, you can set Sprite's [`hidden`](https://www.amcharts.com/docs/v4/reference/sprite/#hidden_property) to `true`. (`setting sprite.visible = true` won't work as expected anymore).
+
+### Changed
+- If chart rendering takes too long, it now is split into chunks, which makes the browser/page remain responsive even if you have a lot of charts to build.
+- Changed how pre-hiding Series works. If you want series to be initially hidden, use `series.hidden = true` instead of `series.visible = false`.
+- Removed `"hold"` and `"rotate"` interaction events and releated options and functionality, since they weren't used anywhere.
+- Removed `"delayFirstHit"` option from `Sprite.hitOptions`.
+- `chart.defaultState.transitionDuration` is set to `1`. This allows the chart to appear one frame after init and helps to avoid various flickers that happen while chart is building. Animated theme has this value set to `2000`.
+
+### Fixed
+- Performance enhancements.
+- Non-draggable/trackable but otherwise interactive elements of the chart no longer prevent scrolling and other gestures on touch screens.
+- `PieSeries` labels sometimes were positioned incorrectly (using non-default start/end angles).
+- Slices (also columns of `RadarChart`) were not drawn if `radius <= 0` (even if `innerRadius > 0`). This resulted in radar columns not rendered in some cases.
+- `MapChart` was not resizing properly when div size changed.
+- `PictorialStackedSeries`, while `containerdiv` was resized did flicker a lot.
+- If a Tooltip is visible while its Sprite changes size/position, it updates its position as well.
+- Setting `chart.data = []` was not clearing data properly.
+
+
+## [4.0.0-beta.63] - 2018-10-20
+
+### Fixed
+- In some cases a `PieChart` could overlap its legend.
+- `PieChart` flicker after `invalidateData` fixed.
+- An error was occurring when data was updated on chart with series with bullet while hovering it with cursor.
+
+
 ## [4.0.0-beta.62] - 2018-10-19
 
 ### Fixed
 - Tooltip issue fixed.
-
 
 ## [4.0.0-beta.61] - 2018-10-19
 
