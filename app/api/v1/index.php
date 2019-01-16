@@ -123,7 +123,7 @@
 				$matched = true;
 				$groups[0] = $params['range'];
 				$result = call_user_func_array(array($endpoint['object'], $endpoint['method']), $groups);
-				if($result == false)
+				if($result != false)
 				{
 					$code = 200;
 					if(isset($result['code']))
