@@ -1,3 +1,6 @@
+<div class="chartHolder" id="chartHolderSeason12">
+    <div class="chartDiv" id="chartDivSeason12"></div>
+</div>
 <div class="chartHolder" id="chartHolderSeason11">
     <div class="chartDiv" id="chartDivSeason11"></div>
 </div>

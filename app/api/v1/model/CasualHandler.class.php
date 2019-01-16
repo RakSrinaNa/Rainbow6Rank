@@ -22,7 +22,7 @@
 				{
 					return $result['UID'];
 				}
-				return "ERROR";
+				return array("error" => true);
 			}
 
 			public function getPlayers($range)

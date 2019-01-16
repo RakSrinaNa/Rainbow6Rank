@@ -100,16 +100,12 @@
 		{
 			if(!is_int_val($params['range']))
 			{
-				switch($params['range'])
-				{
-					default:
-						$params['range'] = 7;
-				}
+				$params['range'] = 365;
 			}
 		}
 		else
 		{
-			$params['range'] = 7;
+			$params['range'] = 365;
 		}
 
 		$matched = false;
@@ -133,7 +129,7 @@
 				}
 				else
 				{
-					sendResponse(500, json_encode(array()));
+					sendResponse(500, json_encode(array("ep" => $endpoint, "gr" => $groups)));
 				}
 				break;
 			}
