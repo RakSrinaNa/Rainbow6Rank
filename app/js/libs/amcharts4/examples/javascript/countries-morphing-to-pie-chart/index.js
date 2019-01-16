@@ -1,7 +1,7 @@
 am4core.useTheme(am4themes_animated);
 
 var chart = am4core.create("chartdiv", am4maps.MapChart);
-chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+
 
 try {
     chart.geodata = am4geodata_worldLow;
@@ -91,6 +91,7 @@ hiddenState.properties.visible = false;
 
 // series labels
 var labelTemplate = pieSeries.labels.template;
+labelTemplate.nonScaling = true;
 labelTemplate.fill = am4core.color("#FFFFFF");
 labelTemplate.fontSize = 10;
 labelTemplate.background = new am4core.RoundedRectangle();

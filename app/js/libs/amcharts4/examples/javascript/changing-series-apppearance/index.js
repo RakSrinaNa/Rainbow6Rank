@@ -1,7 +1,7 @@
 am4core.useTheme(am4themes_animated);
 
 var chart = am4core.create("chartdiv", am4charts.XYChart);
-chart.hiddenState.properties.opacity = 0;
+
 
 var data = [];
 
@@ -96,10 +96,6 @@ lineSeriesRange.category = "2018";
 lineSeriesRange.endCategory = "2019";
 lineSeriesRange.contents.strokeDasharray = "3,3";
 lineSeriesRange.locations.category = 0.5;
-
-var dropShadow = new am4core.DropShadowFilter();
-dropShadow.opacity = 0.25;
-lineSeries.filters.push(dropShadow);
 
 var bullet = lineSeries.bullets.push(new am4charts.CircleBullet());
 bullet.fill = lineSeries.stroke;

@@ -131,7 +131,7 @@ var colorSet = new am4core.ColorSet();
 
 var chart = am4core.create("chartdiv", am4charts.RadarChart);
 chart.numberFormatter.numberFormat = "+#.0°C|#.0°C|0.0°C";
-chart.hiddenState.properties.opacity = 0;
+
 
 chart.startAngle = 270 - 180;
 chart.endAngle = 270 + 180;
@@ -180,8 +180,6 @@ categoryAxisRenderer.grid.template.radius = -25;
 categoryAxisRenderer.grid.template.strokeOpacity = 0.05;
 categoryAxisRenderer.grid.template.interactionsEnabled = false;
 
-categoryAxisRenderer.ticks.template.disabled = true;
-categoryAxisRenderer.axisFills.template.disabled = true;
 categoryAxisRenderer.line.disabled = true;
 
 categoryAxisRenderer.tooltipLocation = 0.5;
@@ -198,8 +196,6 @@ valueAxis.cursorTooltipEnabled = true;
 valueAxis.zIndex = 10;
 
 var valueAxisRenderer = valueAxis.renderer;
-valueAxisRenderer.axisFills.template.disabled = true;
-valueAxisRenderer.ticks.template.disabled = true;
 valueAxisRenderer.minGridDistance = 30;
 valueAxisRenderer.grid.template.strokeOpacity = 0.05;
 
@@ -280,6 +276,7 @@ function updateRadarData(year) {
 function createRange(name, continentData, index) {
 
     var axisRange = categoryAxis.axisRanges.create();
+	axisRange.axisFill.interactionsEnabled = true;
     axisRange.text = name;
     // first country
     axisRange.category = continentData[0][0];
@@ -289,7 +286,8 @@ function createRange(name, continentData, index) {
     // every 3rd color for a bigger contrast
     axisRange.axisFill.fill = colorSet.getIndex(index * 3);
     axisRange.grid.disabled = true;
-    axisRange.label.interactionsEnabled = false;
+
+	axisRange.label.interactionsEnabled = false;
 
     var axisFill = axisRange.axisFill;
     axisFill.innerRadius = -0.001; // almost the same as 100%, we set it in pixels as later we animate this property to some pixel value

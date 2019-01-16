@@ -1,7 +1,7 @@
 am4core.useTheme(am4themes_animated);
 
 var chart = am4core.create("chartdiv", am4charts.XYChart);
-chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+
 
 var data = [];
 var price = 1000;
@@ -18,12 +18,9 @@ var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
 dateAxis.renderer.grid.template.location = 0;
 dateAxis.renderer.ticks.template.length = 8;
 dateAxis.renderer.ticks.template.strokeOpacity = 0.1;
-dateAxis.renderer.axisFills.template.disabled = true;
 
 var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 valueAxis.tooltip.disabled = true;
-valueAxis.renderer.axisFills.template.disabled = true;
-valueAxis.renderer.ticks.template.disabled = true;
 
 var series = chart.series.push(new am4charts.LineSeries());
 series.dataFields.dateX = "date";
@@ -31,8 +28,6 @@ series.dataFields.valueY = "price";
 series.tooltipText = "{valueY.value}";
 series.name = "Series 1";
 series.sequencedInterpolation = true;
-series.defaultState.transitionDuration = 3000;
-series.hiddenState.transitionDuration = 3000;
 
 var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
 valueAxis2.tooltip.disabled = true;
@@ -46,8 +41,6 @@ series2.yAxis = valueAxis2;
 series2.tooltipText = "{valueY.value}";
 series2.name = "Series 2";
 series2.sequencedInterpolation = true;
-series2.defaultState.transitionDuration = 3000;
-series2.hiddenState.transitionDuration = 3000;
 
 chart.cursor = new am4charts.XYCursor();
 chart.cursor.xAxis = dateAxis;

@@ -3,7 +3,7 @@
 am4core.useTheme(am4themes_animated);
 
 var chart = am4core.create("chartdiv", am4charts.SankeyDiagram);
-chart.hiddenState.properties.opacity = 0;
+
 
 chart.data = [
     // these are just for color, as properties are taken from data object where the name is first mentioned.
@@ -115,7 +115,7 @@ bullet.label.isMeasured = false;
 bullet.isMeasured = false;
 
 // create animations
-chart.events.on("inited", function () {
+chart.events.on("ready", function () {
     for (var i = 0; i < chart.links.length; i++) {
         var link = chart.links.getIndex(i);
         var bullet = link.bullets.getIndex(1);

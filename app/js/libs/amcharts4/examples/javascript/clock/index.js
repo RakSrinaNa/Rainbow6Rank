@@ -2,7 +2,7 @@ am4core.useTheme(am4themes_animated);
 
 // create chart
 var chart = am4core.create("chartdiv", am4charts.GaugeChart);
-chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+
 
 chart.exporting.menu = new am4core.ExportMenu();
 
@@ -19,7 +19,6 @@ axis.renderer.line.strokeOpacity = 1;
 axis.renderer.minLabelPosition = 0.05; // hides 0 label
 axis.renderer.inside = true;
 axis.renderer.labels.template.radius = 30;
-axis.renderer.axisFills.template.disabled = true;
 axis.renderer.grid.template.disabled = true;
 axis.renderer.ticks.template.length = 12;
 axis.renderer.ticks.template.strokeOpacity = 1;

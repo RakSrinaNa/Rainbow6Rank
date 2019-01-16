@@ -147,27 +147,25 @@ categoryAxis.interactionsEnabled = false;
 var categoryAxisRenderer = categoryAxis.renderer;
 categoryAxisRenderer.cellStartLocation = 0;
 categoryAxisRenderer.tooltipLocation = 0.5;
-categoryAxisRenderer.grid.template.disabled = true;
-categoryAxisRenderer.ticks.template.disabled = true;
 
-categoryAxisRenderer.axisFills.template.fill = am4core.color("#e8e8e8");
+categoryAxisRenderer.axisFills.template.fill = am4core.color("#ffffff");
 categoryAxisRenderer.axisFills.template.fillOpacity = 0.2;
 categoryAxisRenderer.axisFills.template.location = -0.5;
+categoryAxisRenderer.axisFills.template.disabled = false;
 categoryAxisRenderer.line.disabled = true;
 categoryAxisRenderer.tooltip.disabled = true;
+categoryAxisRenderer.grid.template.disabled = true;
 categoryAxis.renderer.labels.template.disabled = true;
 
 categoryAxis.adapter.add("maxZoomFactor", function (maxZoomFactor, target) {
   return target.dataItems.length / 5;
-})
+});
 
 var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
 var valueAxisRenderer = valueAxis.renderer;
-
-valueAxisRenderer.line.disabled = true;
 valueAxisRenderer.grid.template.disabled = true;
-valueAxisRenderer.ticks.template.disabled = true;
+valueAxisRenderer.line.disabled = true;
 valueAxis.min = 0;
 valueAxis.renderer.tooltip.disabled = true;
 
@@ -182,8 +180,6 @@ series1.strokeOpacity = 0;
 series1.dataItems.template.locations.categoryX = 0.5;
 series1.sequencedInterpolation = true;
 series1.sequencedInterpolationDelay = 50;
-series1.defaultState.transitionDuration = 1500;
-series1.hiddenState.transitionDuration = 3000;
 
 var series2 = chart.series.push(new am4charts.RadarSeries());
 series2.name = "TOTAL CASH PILE";
@@ -197,20 +193,18 @@ series2.strokeOpacity = 0;
 series2.dataItems.template.locations.categoryX = 0.5;
 series2.sequencedInterpolation = true;
 series2.sequencedInterpolationDelay = 50;
-series2.defaultState.transitionDuration = 1500;
 series2.tooltipText = "[bold]{categoryX}[/]\nTotal: ${valueY.total} \nOverseas: ${value1}";
 series2.tooltip.pointerOrientation = "vertical";
 series2.tooltip.label.fill = am4core.color("#ffffff");
 series2.tooltip.label.fontSize = "0.8em";
 series2.tooltip.autoTextColor = false;
-series2.hiddenState.transitionDuration = 3000;
 
 chart.seriesContainer.zIndex = -1;
 chart.scrollbarX = new am4core.Scrollbar();
 chart.scrollbarX.parent = chart.bottomAxesContainer;
 chart.scrollbarY = new am4core.Scrollbar();
 
-chart.padding(0, 0, 0, 0)
+chart.padding(0, 0, 0, 0);
 
 chart.scrollbarY.padding(20, 0, 20, 0);
 chart.scrollbarX.padding(0, 20, 0, 80);
@@ -275,7 +269,7 @@ var itemHoverState = chart.legend.itemContainers.template.states.create("hover")
 itemHoverState.properties.dx = 5;
 
 var title = chart.radarContainer.createChild(am4core.Label);
-title.text = "COMPANIES WITH\nTHE MOST CASH\nHELD OVERSEAS"
+title.text = "COMPANIES WITH\nTHE MOST CASH\nHELD OVERSEAS";
 title.fontSize = "1.2em";
 title.verticalCenter = "bottom";
 title.textAlign = "middle";
@@ -293,23 +287,23 @@ hoverState.properties.scale = 5;
 bullet.events.on("positionchanged", function (event) {
   event.target.children.getIndex(0).invalidate();
   event.target.children.getIndex(1).invalidatePosition();
-})
+});
 
 
 bullet.adapter.add("dx", function (dx, target) {
   var angle = categoryAxis.getAngle(target.dataItem, "categoryX", 0.5);
   return 20 * am4core.math.cos(angle);
-})
+});
 
 bullet.adapter.add("dy", function (dy, target) {
   var angle = categoryAxis.getAngle(target.dataItem, "categoryX", 0.5);
   return 20 * am4core.math.sin(angle);
-})
+});
 
 bullet.adapter.add("rotation", function (dy, target) {
   var angle = Math.min(chart.endAngle, Math.max(chart.startAngle, categoryAxis.getAngle(target.dataItem, "categoryX", 0.5)));
   return angle;
-})
+});
 
 
 line.adapter.add("x2", function (x2, target) {
@@ -319,7 +313,7 @@ line.adapter.add("x2", function (x2, target) {
     return -(position * valueAxis.axisFullLength + 35);
   }
   return 0;
-})
+});
 
 
 bulletValueLabel.adapter.add("dx", function (dx, target) {
@@ -330,7 +324,7 @@ bulletValueLabel.adapter.add("dx", function (dx, target) {
     return -(position * valueAxis.axisFullLength + 40);
   }
   return 0;
-})
+});
 
 
 chart.seriesContainer.zIndex = 10;
@@ -357,7 +351,7 @@ series2.events.on("tooltipshownat", function (event) {
     sprite.isHover = true;
     previousBullets.push(sprite);
   }
-})
+});
 
 series2.tooltip.events.on("visibilitychanged", function () {
   if (!series2.tooltip.visible) {
@@ -365,7 +359,7 @@ series2.tooltip.events.on("visibilitychanged", function () {
       previousBullets[i].isHover = false;
     }
   }
-})
+});
 
 chart.events.on("maxsizechanged", function () {
   if (chart.pixelInnerRadius < 200) {
@@ -378,4 +372,4 @@ chart.events.on("maxsizechanged", function () {
     chart.legend.verticalCenter = "top";
     chart.legend.dy = 20;
   }
-})
+});
