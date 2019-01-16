@@ -13,8 +13,8 @@
 
 	function readAPI($fpLog, $path)
 	{
-		$ENDPOINT = 'https://api.r6stats.com/api/v1/players/';
-		$url = $ENDPOINT . $path;
+		$ENDPOINT = 'http://mrcraftcod.ddns.net/r6/';
+		$url = $ENDPOINT . $path . "&appcode=mcc";
 
 		$cURL = curl_init();
 		curl_setopt($cURL, CURLOPT_URL, $url);
@@ -32,26 +32,24 @@
 	$rootDirectory = __DIR__ . "/";
 	$timeFormat = 'Y-m-d\TH:i:s+';
 
-	$players = array('LokyDogma' => 'uplay', //'Fuel_Rainbow' => 'uplay',
-		//'Fuel_Velvet' => 'uplay',
-		'DevilDuckYT' => 'uplay', 'RakSrinaNa' => 'uplay');
+	$players = array('LokyDogma' => 'b59ac5a1-c97a-4ccc-8a1e-263734ace5a8', //'Fuel_Rainbow' => 'bfcc9958-0bcf-419f-a077-1eadde6fffa9',
+		//'Fuel_Velvet' => 'ed779667-8b99-411f-a87d-becb00df4135',
+		'DevilDuckYT' => '7ee006a8-9187-4abc-ae11-4cd29a3580ee', 'RakSrinaNa' => '3c5d59d2-8367-4af4-b9af-56cd8589100f');
 
 	$fpLog = fopen('log.log', 'w');
 
-	foreach($players as $player => $platform)
+	foreach($players as $player => $uid)
 	{
 		logg('Doing player ' . $player . ':' . "<br/>\n", $fpLog);
 		$json = array();
-		$c1 = readAPI($fpLog, $player . '?platform=' . $platform);
-		$c2 = readAPI($fpLog, $player . '/seasons?platform=' . $platform);
-		$c3 = readAPI($fpLog, $player . '/operators?platform=' . $platform);
-		if(!$c1 || !$c2 || !$c3)
+		$responseUser = readAPI($fpLog, "getUser.php?id=$uid");
+		$responseStats = readAPI($fpLog, "getStats.php?id=$uid");
+		if(!$responseUser || !$responseStats)
 		{
 			continue;
 		}
-		$json['player'] = json_decode($c1, true)['player'];
-		$json['seasons'] = json_decode($c2, true)['seasons'];
-		$json['operators'] = json_decode($c3, true)['operator_records'];
+		$json['player'] = json_decode($responseUser, true)['players'][$uid];
+		$json['stats'] = json_decode($responseStats, true)['players'][$uid];
 
 		$parser =new \R6\R6StatsParser(json_encode($json));
 		$parser->putInDB();

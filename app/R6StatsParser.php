@@ -27,8 +27,8 @@
 			function __construct($json)
 			{
 				$this->json = json_decode($json, true);
-				$this->uid = $this->json['player']['ubisoft_id'];
-				$this->date = $this->getTimestamp($this->json['player']['updated_at']);
+				$this->uid = $this->json['player']['profile_id'];
+				$this->date = $this->getTimestamp($this->json['player']['update_time']);
 			}
 
 			private function getTimestamp($date_str)
@@ -48,18 +48,11 @@
 				if($this->date)
 				{
 					$this->updatePlayer();
-
-					if($this->json['player']['stats'])
-					{
-						$this->updateCasual();
-						$this->updateRanked();
-						$this->updateOverall();
-						$this->updateProgression();
-					}
-
+					$this->updateRanked();
+					$this->updateProgression();
+					$this->updateCasual();
+					$this->updateOverall();
 					$this->updateRankedSeason();
-
-					$this->updateOperators();
 				}
 				else
 				{
@@ -73,7 +66,7 @@
 			{
 				$player = $this->json['player'];
 
-				$this->sendRequest("INSERT INTO R6_Player(UID, Username, Platform, Indexed) VALUES(:uid, :username, :platform, FROM_UNIXTIME(:timeindexed)) ON DUPLICATE KEY UPDATE Updated=FROM_UNIXTIME(:timeupdated)", array(':uid' => $this->uid, ':username' => $player['username'], ':platform' => $player['platform'], ':timeindexed' => $this->getTimestamp($player['indexed_at']), ':timeupdated' => $this->date));
+				$this->sendRequest("INSERT INTO R6_Player(UID, Username, Platform, Updated) VALUES(:uid, :username, :platform, FROM_UNIXTIME(:timeupdated)) ON DUPLICATE KEY UPDATE Updated=FROM_UNIXTIME(:timeupdated)", array(':uid' => $this->uid, ':username' => $player['nickname'], ':platform' => $player['platform'], ':timeupdated' => $this->date));
 			}
 
 			private function sendRequest($statement, $args = array())
@@ -93,84 +86,32 @@
 
 			private function updateCasual()
 			{
-				$stats = $this->json['player']['stats']['casual'];
-				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Casual(UID, DataDate, Played, Wins, Losses, WLR, Kills, Deaths, KD, Playtime) VALUES(:uid, FROM_UNIXTIME(:datadate), :played, :wins, :losses, :wlr, :kills, :deaths, :kd, :playtime)", array(":uid" => $this->uid, ":datadate" => $this->date, ":played" => $stats['has_played'], ":wins" => $stats['wins'], ":losses" => $stats['losses'], ":wlr" => $stats['wlr'], ":kills" => $stats['kills'], ":deaths" => $stats['deaths'], ":kd" => $stats['kd'], ":playtime" => $stats['playtime']));
+				$stats = $this->json['stats'];
+				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Casual(UID, DataDate, Wins, Losses, WLR, Kills, Deaths, KD, Playtime) VALUES(:uid, FROM_UNIXTIME(:datadate), :wins, :losses, :wlr, :kills, :deaths, :kd, :playtime)", array(":uid" => $this->uid, ":datadate" => $this->date, ":wins" => $stats['casualpvp_matchwon'], ":losses" => $stats['casualpvp_matchlost'], ":wlr" => $stats['casualpvp_matchwlratio'], ":kills" => $stats['casualpvp_kills'], ":deaths" => $stats['casualpvp_death'], ":kd" => $stats['casualpvp_kdratio'], ":playtime" => $stats['casualpvp_timeplayed'])); //TODO: WL - KD
 			}
 
 			private function updateRanked()
 			{
-				$stats = $this->json['player']['stats']['ranked'];
-				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Ranked(UID, DataDate, Played, Wins, Losses, WLR, Kills, Deaths, KD, Playtime) VALUES(:uid, FROM_UNIXTIME(:datadate), :played, :wins, :losses, :wlr, :kills, :deaths, :kd, :playtime)", array(":uid" => $this->uid, ":datadate" => $this->date, ":played" => $stats['has_played'], ":wins" => $stats['wins'], ":losses" => $stats['losses'], ":wlr" => $stats['wlr'], ":kills" => $stats['kills'], ":deaths" => $stats['deaths'], ":kd" => $stats['kd'], ":playtime" => $stats['playtime']));
+				$stats = $this->json['stats'];
+				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Ranked(UID, DataDate, Wins, Losses, WLR, Kills, Deaths, KD, Playtime) VALUES(:uid, FROM_UNIXTIME(:datadate), :wins, :losses, :wlr, :kills, :deaths, :kd, :playtime)", array(":uid" => $this->uid, ":datadate" => $this->date, ":wins" => $stats['rankedpvp_matchwon'], ":losses" => $stats['rankedpvp_matchlost'], ":wlr" => $stats['rankedpvp_matchwlratio'], ":kills" => $stats['rankedpvp_kills'], ":deaths" => $stats['rankedpvp_death'], ":kd" => $stats['rankedpvp_kdratio'], ":playtime" => $stats['rankedpvp_timeplayed'])); //TODO: WL - KD
 			}
 
 			private function updateOverall()
 			{
-				$stats = $this->json['player']['stats']['overall'];
-				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Overall(UID, DataDate, Revives, Suicides, ReinforcementsDeployed, BarricadesBuilt, StepsMoved, BulletsFired, BulletsHit, Headshots, MeleeKills, PenetrationKills, Assists) VALUES(:uid, FROM_UNIXTIME(:datadate), :revives, :suicides, :reinforcements, :barricades, :steps, :fired, :hit, :headshots, :melee, :penetration, :assists)", array(":uid" => $this->uid, ":datadate" => $this->date, ":revives" => $stats['revives'], ":suicides" => $stats['suicides'], ":reinforcements" => $stats['reinforcements_deployed'], ":barricades" => $stats['barricades_built'], ":steps" => $stats['steps_moved'], ":fired" => $stats['bullets_fired'], ":hit" => $stats['bullets_hit'], ":headshots" => $stats['headshots'], ":melee" => $stats['melee_kills'], ":penetration" => $stats['penetration_kills'], ":assists" => $stats['assists']));
+				$stats = $this->json['stats'];
+				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Overall(UID, DataDate, Revives, Suicides, ReinforcementsDeployed, BarricadesBuilt, StepsMoved, BulletsFired, BulletsHit, Headshots, MeleeKills, PenetrationKills, Assists, DBNO, DBNOAssists, GadgetsDestroyed) VALUES(:uid, FROM_UNIXTIME(:datadate), :revives, :suicides, :reinforcements, :barricades, :steps, :fired, :hit, :headshots, :melee, :penetration, :assists, :dbno, :dbnoassists, :gagetsdestroyed)", array(":uid" => $this->uid, ":datadate" => $this->date, ":revives" => $stats['generalpvp_revive'], ":suicides" => $stats['generalpvp_suicide'], ":reinforcements" => $stats['generalpvp_reinforcementdeploy'], ":barricades" => $stats['generalpvp_barricadedeployed'], ":steps" => $stats['generalpvp_distancetravelled'], ":fired" => $stats['generalpvp_bulletfired'], ":hit" => $stats['generalpvp_bullethit'], ":headshots" => $stats['generalpvp_headshot'], ":melee" => $stats['generalpvp_meleekills'], ":penetration" => $stats['generalpvp_penetrationkills'], ":assists" => $stats['generalpvp_killassists'], ":dbno" => $stats["generalpvp_dbno"], ":dbnoassists" => $stats["generalpvp_dbnoassists"], ":gadgetsdestroyed" => $stats["generalpvp_gadgetdestroy"]));
 			}
 
 			private function updateProgression()
 			{
-				$stats = $this->json['player']['stats']['progression'];
+				$stats = $this->json['player'];
 				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Progression(UID, DataDate, Level, XP) VALUES(:uid, FROM_UNIXTIME(:datadate), :level, :xp)", array(":uid" => $this->uid, ":datadate" => $this->date, ":level" => $stats['level'], ":xp" => $stats['xp']));
 			}
 
 			private function updateRankedSeason()
 			{
-				$seasons = $this->json['seasons'];
-				if(!$seasons)
-				{
-					echo "No season info, skipping<br/>\n";
-					return;
-				}
-				$regions = end($seasons);
-				$season = end($regions);
-				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Season(UID, DataDate, SeasonNumber, Region, Wins, Losses, Abandons, Rating, NextRating, PreviousRating, Mean, StandardDeviation, Rank) VALUES(:uid, FROM_UNIXTIME(:datadate), :seasonnumber, :region, :wins, :losses, :abandons, :rating, :nextrating, :previousrating, :mean, :stddev, :rank)", array(":uid" => $this->uid, ":datadate" => $this->date, ":seasonnumber" => $season['season'], ":region" => $season['region'], ":wins" => $season['wins'], ":losses" => $season['losses'], ":abandons" => $season['abandons'], ":rating" => $season['ranking']['rating'], ":nextrating" => $season['ranking']['next_rating'], ":previousrating" => $season['ranking']['prev_rating'], ":mean" => $season['ranking']['mean'], ":stddev" => $season['ranking']['stdev'], ":rank" => $season['ranking']['rank']));
-			}
-
-			private function updateOperators()
-			{
-				if($this->json['operators'])
-				{
-					foreach($this->json['operators'] as $operator)
-					{
-						$this->addOperator($operator);
-						$this->updateOperator($operator);
-					}
-				}
-				else
-					echo "No operators info, skipping<br/>\n";
-			}
-
-			private function addOperator($operator)
-			{
-				$this->sendRequest("INSERT IGNORE INTO R6_Operator(Name, Role, CTU, ImageFigure, ImageBadge, ImageBust) VALUES(:name, :role, :ctu, :figure, :badge, :bust)", array(":name" => $operator['operator']["name"], ":role" => $operator['operator']["role"], ":ctu" => $operator['operator']["ctu"], ":figure" => $operator['operator']["images"]["figure"], ":badge" => $operator['operator']["images"]["badge"], ":bust" => $operator['operator']["images"]["bust"]));
-				$sql = array();
-				$values = array();
-				foreach($operator['stats']['specials'] as $special => $value)
-				{
-					$sql[] = "(:o$special, :$special)";
-					$values[":o$special"] = $operator['operator']["name"];
-					$values[":$special"] = $special;
-				}
-				$this->sendRequest("INSERT IGNORE INTO R6_Operator_Special(Operator, Name) VALUES " . implode(",", $sql), $values);
-			}
-
-			private function updateOperator($operator)
-			{
-				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Operator(UID, DataDate, Operator, Played, Wins, Losses, Kills, Deaths, Playtime) VALUES (:uid, FROM_UNIXTIME(:datadate), :operator, :played, :wins, :losses, :kills, :deaths, :playtime)", array(":uid" => $this->uid, ":datadate" => $this->date, ":operator" => $operator['operator']["name"], ":played" => $operator['stats']["played"], ":wins" => $operator['stats']["wins"], ":losses" => $operator['stats']["losses"], ":kills" => $operator['stats']["kills"], ":deaths" => $operator['stats']["deaths"], ":playtime" => $operator['stats']["playtime"],));
-
-				$sql = array();
-				$values = array();
-				foreach($operator['stats']['specials'] as $special => $value)
-				{
-					$sql[] = "(:u$special, FROM_UNIXTIME(:d$special), :o$special, :$special)";
-					$values[":u$special"] = $this->uid;
-					$values[":d$special"] = $this->date;
-					$values[":o$special"] = $special;
-					$values[":$special"] = $value;
-				}
-				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Operator_Special(UID, DataDate, OperatorSpecial, SpecialValue) VALUES " . implode(",", $sql), $values);
+				$season = $this->json['player'];
+				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Season(UID, DataDate, SeasonNumber, Region, Wins, Losses, Abandons, Rating, NextRating, PreviousRating, Mean, StandardDeviation, `Rank`) VALUES(:uid, FROM_UNIXTIME(:datadate), :seasonnumber, :region, :wins, :losses, :abandons, :rating, :nextrating, :previousrating, :mean, :stddev, :rank)", array(":uid" => $this->uid, ":datadate" => $this->date, ":seasonnumber" => $season['season'], ":region" => $season['region'], ":wins" => $season['wins'], ":losses" => $season['losses'], ":abandons" => $season['abandons'], ":rating" => $season['mmr'], ":nextrating" => $season['next_rank_mmr'], ":previousrating" => $season['previous_rank_mmr'], ":mean" => $season['skill_mean'], ":stddev" => $season['skill_stdev'], ":rank" => $season['rank']));
 			}
 		}
 	}

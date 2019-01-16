@@ -11,8 +11,6 @@
 	require_once __DIR__ . '/model/SeasonHandler.class.php';
 	require_once __DIR__ . '/model/OverallHandler.class.php';
 	require_once __DIR__ . '/model/ProgressionHandler.class.php';
-	require_once __DIR__ . '/model/OperatorHandler.class.php';
-	require_once __DIR__ . '/model/SpecialHandler.class.php';
 
 	if(!isset($_REQUEST['request']))
 		sendResponse(404, json_encode(array('No request')));
@@ -22,14 +20,9 @@
 	$seasonHandler = new R6\SeasonHandler();
 	$overallHandler = new R6\OverallHandler();
 	$progressionHandler = new R6\ProgressionHandler();
-	$operatorHandler = new R6\OperatorHandler();
-	$specialHandler = new R6\SpecialHandler();
 
 	$playerRegex = '([A-Za-z0-9-]+)';
 	$seasonRegex = '([0-9]+)';
-	$ctuRegex = '([A-Za-z0-9 ]+)';
-	$operatorRegex = '([A-Za-zãä]+)';
-	$operatorSpecialRegex = '([a-z_]+)';
 
 	$endpoints = array();
 	$endpoints[] = array('regex' => "/casual\/players/", 'object' => $casualHandler, 'method' => 'getPlayers');
@@ -60,14 +53,6 @@
 	$endpoints[] = array('regex' => "/progression\/players/", 'object' => $progressionHandler, 'method' => 'getPlayers');
 	$endpoints[] = array('regex' => "/progression\/level\/$playerRegex/", 'object' => $progressionHandler, 'method' => 'getLevel');
 
-	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/players/", 'object' => $operatorHandler, 'method' => 'getPLayers');
-	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/kd\/$playerRegex/", 'object' => $operatorHandler, 'method' => 'getKD');
-	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/playtime\/$playerRegex/", 'object' => $operatorHandler, 'method' => 'getPlaytime');
-	$endpoints[] = array('regex' => "/operator\/$ctuRegex\/$operatorRegex\/wl\/$playerRegex/", 'object' => $operatorHandler, 'method' => 'getWL');
-
-	$endpoints[] = array('regex' => "/special\/$ctuRegex\/$operatorRegex\/$operatorSpecialRegex\/players/", 'object' => $specialHandler, 'method' => 'getPlayers');
-	$endpoints[] = array('regex' => "/special\/$ctuRegex\/$operatorRegex\/$operatorSpecialRegex\/special\/$playerRegex/", 'object' => $specialHandler, 'method' => 'getSpecial');
-
 	switch($_SERVER['REQUEST_METHOD'])
 	{
 		case 'GET':
@@ -82,6 +67,9 @@
 	 * Check if a number is a counting number by checking if it
 	 * is an integer primitive type, or if the string represents
 	 * an integer as a string
+	 *
+	 * @param mixed $data The var to check.
+	 * @return bool true if an int, false otherwise.
 	 */
 	function is_int_val($data)
 	{
@@ -91,6 +79,7 @@
 		{
 			return (strpos($data, '.') === false);
 		}
+		return false;
 	}
 
 	/**
