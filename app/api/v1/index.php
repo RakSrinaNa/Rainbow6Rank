@@ -21,7 +21,7 @@
 	$overallHandler = new R6\OverallHandler();
 	$progressionHandler = new R6\ProgressionHandler();
 
-	$playerRegex = '([A-Za-z0-9-]+)';
+	$playerRegex = '([A-Za-z0-9-_]+)';
 	$seasonRegex = '([0-9]+)';
 
 	$endpoints = array();
