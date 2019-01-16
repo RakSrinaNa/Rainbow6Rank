@@ -103,6 +103,10 @@
 			{
 				$params['range'] = $defaultRange;
 			}
+			else if($params["range"] == "-1" || $params["range"] == -1)
+			{
+				$params['range'] = 3650;
+			}
 		}
 		else
 		{
@@ -119,7 +123,7 @@
 				$matched = true;
 				$groups[0] = $params['range'];
 				$result = call_user_func_array(array($endpoint['object'], $endpoint['method']), $groups);
-				if($result)
+				if($result == false)
 				{
 					$code = 200;
 					if(isset($result['code']))
