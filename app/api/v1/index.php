@@ -49,6 +49,9 @@
 	$endpoints[] = array('regex' => "/overall\/revives\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getRevives');
 	$endpoints[] = array('regex' => "/overall\/steps\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getSteps');
 	$endpoints[] = array('regex' => "/overall\/suicides\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getSuicides');
+	$endpoints[] = array('regex' => "/overall\/dbno\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getDBNO');
+	$endpoints[] = array('regex' => "/overall\/dbnoassists\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getDBNOAssists');
+	$endpoints[] = array('regex' => "/overall\/gadgetsdestroyed\/$playerRegex/", 'object' => $overallHandler, 'method' => 'getGadgetsDestroyed');
 
 	$endpoints[] = array('regex' => "/progression\/players/", 'object' => $progressionHandler, 'method' => 'getPlayers');
 	$endpoints[] = array('regex' => "/progression\/level\/$playerRegex/", 'object' => $progressionHandler, 'method' => 'getLevel');
@@ -93,20 +96,20 @@
 			$params = array();
 		$params = array_merge($params, $_GET);
 		$params = array_merge($params, apache_request_headers());
-		if(isset($params['Range']))
+		if(isset($params['range']))
 		{
-			if(!is_int_val($params['Range']))
+			if(!is_int_val($params['range']))
 			{
-				switch($params['Range'])
+				switch($params['range'])
 				{
 					default:
-						$params['Range'] = 7;
+						$params['range'] = 7;
 				}
 			}
 		}
 		else
 		{
-			$params['Range'] = 7;
+			$params['range'] = 7;
 		}
 
 		$matched = false;
@@ -117,7 +120,7 @@
 			if(preg_match($endpoint['regex'], $request, $groups))
 			{
 				$matched = true;
-				$groups[0] = $params['Range'];
+				$groups[0] = $params['range'];
 				$result = call_user_func_array(array($endpoint['object'], $endpoint['method']), $groups);
 				if($result)
 				{

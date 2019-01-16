@@ -168,5 +168,44 @@
 				}
 				return $data;
 			}
+
+			public function getDBNO($range, $player)
+			{
+				$data = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, DBNO FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ':days' => $range));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['DBNO']);
+				}
+				return $data;
+			}
+
+			public function getDBNOAssists($range, $player)
+			{
+				$data = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, DBNOAssists FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ':days' => $range));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['DBNOAssists']);
+				}
+				return $data;
+			}
+
+			public function getGadgetsDestroyed($range, $player)
+			{
+				$data = array();
+				$prepared = DBConnection::getConnection()->prepare("SELECT DataDate, GadgetsDestroyed FROM R6_Stats_Overall WHERE UID=:uid AND DataDate >= DATE_SUB(NOW(), INTERVAL :days DAY)");
+				$prepared->execute(array(":uid" => $this->getPlayerUID($player), ':days' => $range));
+				$result = $prepared->fetchAll();
+				foreach($result as $key => $row)
+				{
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['GadgetsDestroyed']);
+				}
+				return $data;
+			}
 		}
 	}
