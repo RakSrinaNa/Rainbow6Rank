@@ -1,5 +1,5 @@
 <?php
-	if(true)
+	if(false)
 	{
 		error_reporting(E_ALL);
 		ini_set('display_errors', '1');
@@ -92,6 +92,7 @@
 	 */
 	function processGet($endpoints, $request, $params)
 	{
+		$defaultRange = 7;
 		if($params === null)
 			$params = array();
 		$params = array_merge($params, $_GET);
@@ -100,12 +101,12 @@
 		{
 			if(!is_int_val($params['range']))
 			{
-				$params['range'] = 365;
+				$params['range'] = $defaultRange;
 			}
 		}
 		else
 		{
-			$params['range'] = 365;
+			$params['range'] = $defaultRange;
 		}
 
 		$matched = false;
