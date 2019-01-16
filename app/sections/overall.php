@@ -7,6 +7,12 @@
 <div class="chartHolder" id="chartHolderASS">
     <div class="chartDiv" id="chartDivASS"></div>
 </div>
+<div class="chartHolder" id="chartHolderDBNOASS">
+    <div class="chartDiv" id="chartDivDBNOASS"></div>
+</div>
+<div class="chartHolder" id="chartHolderDBNO">
+    <div class="chartDiv" id="chartDivDBNO"></div>
+</div>
 <div class="chartHolder" id="chartHolderHDS">
     <div class="chartDiv" id="chartDivHDS"></div>
 </div>
@@ -30,4 +36,7 @@
 </div>
 <div class="chartHolder" id="chartHolderPK">
     <div class="chartDiv" id="chartDivPK"></div>
+</div>
+<div class="chartHolder" id="chartHolderGD">
+    <div class="chartDiv" id="chartDivGD"></div>
 </div>
