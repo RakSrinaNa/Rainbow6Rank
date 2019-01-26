@@ -172,7 +172,7 @@ mapChart.geodata = am4geodata_usaAlbersLow;
 mapChart.zoomControl = new am4maps.ZoomControl();
 mapChart.zIndex = -1;
 
-var polygonSeries = mapChart.series.push(new am4maps.MapPolygonSeries());
+var polygonSeries = mapChart.series.push(new am4maps.MapPolygonSeries())
 polygonSeries.useGeodata = true;
 
 var selectedStateId = "US";
@@ -192,7 +192,7 @@ polygonTemplate.events.on("hit", function(event) {
   var id = event.target.dataItem.dataContext.id;
   var stateId = id.split("-")[1];
   showState(stateId, event.target.dataItem.dataContext.name, event.target);
-});
+})
 
 
 mapChart.seriesContainer.background.events.on("over", function(event) {
@@ -5184,4 +5184,4 @@ var stateData = {
       "female": 5797
     }
   ]
-};
+}

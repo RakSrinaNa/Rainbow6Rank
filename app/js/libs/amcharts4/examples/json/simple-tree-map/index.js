@@ -96,10 +96,10 @@ var chart = am4core.createFromConfig({
     "children": "children"
   },
 
-	// Disable tooltip animation
-	"tooltip": {
-		"animationDuration": 0
-	},
+  // Disable tooltip animation
+  "tooltip": {
+    "animationDuration": 0
+  },
 
   // Set up series templates by level
   "seriesTemplates": {

@@ -7,9 +7,7 @@ try {
     chart.geodata = am4geodata_worldLow;
 }
 catch (e) {
-    chart.raiseCriticalError({
-        "message": "Map geodata could not be loaded. Please download the latest <a href=\"https://www.amcharts.com/download/download-v4/\">amcharts geodata</a> and extract its contents into the same directory as your amCharts files."
-    });
+    chart.raiseCriticalError(new Error("Map geodata could not be loaded. Please download the latest <a href=\"https://www.amcharts.com/download/download-v4/\">amcharts geodata</a> and extract its contents into the same directory as your amCharts files."));
 }
 
 chart.projection = new am4maps.projections.Mercator();
@@ -24,7 +22,7 @@ var morphedPolygon;
 var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
 polygonSeries.useGeodata = true;
 // specify which countries to include
-polygonSeries.include = ["IT", "CH", "FR", "DE", "GB", "ES", "PT", "IE", "NL", "LU", "BE", "AT", "DK"];
+polygonSeries.include = ["IT", "CH", "FR", "DE", "GB", "ES", "PT", "IE", "NL", "LU", "BE", "AT", "DK"]
 
 // country area look and behavior
 var polygonTemplate = polygonSeries.mapPolygons.template;
@@ -41,7 +39,7 @@ polygonTemplate.filters.push(desaturateFilter);
 // take a color from color set
 polygonTemplate.adapter.add("fill", function (fill, target) {
     return colorSet.getIndex(target.dataItem.index + 1);
-});
+})
 
 // set fillOpacity to 1 when hovered
 var hoverState = polygonTemplate.states.create("hover");
@@ -50,7 +48,7 @@ hoverState.properties.fillOpacity = 1;
 // what to do when country is clicked
 polygonTemplate.events.on("hit", function (event) {
     selectPolygon(event.target);
-});
+})
 
 // Pie chart
 var pieChart = chart.seriesContainer.createChild(am4charts.PieChart);
@@ -215,7 +213,7 @@ function showPieChart(polygon) {
     var radius = polygon.polygon.measuredWidth / 2 * polygon.globalScale / chart.seriesContainer.scale;
     pieChart.width = radius * 2;
     pieChart.height = radius * 2;
-    pieChart.radius = radius;    
+    pieChart.radius = radius;
 
     var centerPoint = am4core.utils.spritePointToSvg(polygon.polygon.centerPoint, polygon.polygon);
     centerPoint = am4core.utils.svgPointToSprite(centerPoint, chart.seriesContainer);

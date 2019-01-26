@@ -9,9 +9,7 @@ try {
     chart.geodata = am4geodata_worldHigh;
 }
 catch (e) {
-    chart.raiseCriticalError({
-        "message": "Map geodata could not be loaded. Please download the latest <a href=\"https://www.amcharts.com/download/download-v4/\">amcharts geodata</a> and extract its contents into the same directory as your amCharts files."
-    });
+    chart.raiseCriticalError(new Error("Map geodata could not be loaded. Please download the latest <a href=\"https://www.amcharts.com/download/download-v4/\">amcharts geodata</a> and extract its contents into the same directory as your amCharts files."));
 }
 
 chart.projection = new am4maps.projections.Mercator();
@@ -56,11 +54,11 @@ setInterval(function () {
 		next = 0;
 	}
 	slider.animate({ property: "start", to: next }, 300);
-}, 2000);
+}, 2000)
 
 slider.events.on("rangechanged", function () {
 	changeCountry();
-});
+})
 
 function changeCountry() {
 	var totalCountries = countryCodes.length - 1;
@@ -87,7 +85,7 @@ function changeCountry() {
 			label.text = morphToPolygon.dataItem.dataContext["name"];
 			label.y = -50;
 			label.animate({ property: "y", to: 200 }, 300, am4core.ease.quadOut);
-		});
+		})
 
 		currentIndex = countryIndex;
 	}

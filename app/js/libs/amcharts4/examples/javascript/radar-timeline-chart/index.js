@@ -122,7 +122,7 @@ var temperatures = {
         ["New Zealand", 12.39, 0.27, 0.47, 0.43, -0.27, -0.31, 0.44, -0.16, -0.18, 0.08, -0.28, -0.36, 0.32, 0.29, 0.27, 0.35, 0.41, 0.63, 0.57, -0.2, -0.59, -0.37, -0.71, 0.26, 0.28, -0.06, 0.96, 0.91, 0.52, 0.65, 0.69, 0.47, 0.04, 0.84, 0.01, 0.26, 0.34, -0.26, 0.53, 0.21, 0.62, 1.62, 0.79, 0.37, 0.64],
         ["Tuvalu", 26.37, 0, 0, 0, 0, 0, 0, -0.92, -1.87, -0.87, 1.73, 1.49, 1.63, 1.85, 2.03, 1.65, 1.62, 1.57, 1.94, 2.03, 1.86, 1.77, 2.3, 1.86, 1.52, 1.52, 1.54, 1.73, 2.09, 2.23, 2.33, 2.38, 2.21, 2.32, 2.35, 2.23, 1.86, 2.23, 2.03, 2.12, 1.77, 2.38, 2.34, 2.36, 2.64],
     ]
-};
+}
 
 var startYear = 1973;
 var endYear = 2016;
@@ -234,7 +234,7 @@ yearSliderContainer.width = am4core.percent(100);
 var yearSlider = yearSliderContainer.createChild(am4core.Slider);
 yearSlider.events.on("rangechanged", function () {
     updateRadarData(startYear + Math.round(yearSlider.start * (endYear - startYear)));
-});
+})
 yearSlider.orientation = "horizontal";
 yearSlider.start = 0.5;
 
@@ -247,7 +247,7 @@ function generateRadarData() {
         var continentData = temperatures[continent];
 
         continentData.forEach(function (country) {
-            var rawDataItem = { "country": country[0] };
+            var rawDataItem = { "country": country[0] }
 
             for (var y = 2; y < country.length; y++) {
                 rawDataItem["value" + (startYear + y - 2)] = country[y];
@@ -276,7 +276,7 @@ function updateRadarData(year) {
 function createRange(name, continentData, index) {
 
     var axisRange = categoryAxis.axisRanges.create();
-	axisRange.axisFill.interactionsEnabled = true;
+    axisRange.axisFill.interactionsEnabled = true;
     axisRange.text = name;
     // first country
     axisRange.category = continentData[0][0];
@@ -287,7 +287,7 @@ function createRange(name, continentData, index) {
     axisRange.axisFill.fill = colorSet.getIndex(index * 3);
     axisRange.grid.disabled = true;
 
-	axisRange.label.interactionsEnabled = false;
+    axisRange.label.interactionsEnabled = false;
 
     var axisFill = axisRange.axisFill;
     axisFill.innerRadius = -0.001; // almost the same as 100%, we set it in pixels as later we animate this property to some pixel value
@@ -308,7 +308,7 @@ function createRange(name, continentData, index) {
         else {
             categoryAxis.zoomToCategories(dataItem.category, dataItem.endCategory);
         }
-    });
+    })
 
     // hover state
     var hoverState = axisFill.states.create("hover");
@@ -331,4 +331,4 @@ slider.events.on("rangechanged", function () {
     chart.endAngle = 270 + start * 179 + 1;
 
     valueAxis.renderer.axisAngle = chart.startAngle;
-});
+})

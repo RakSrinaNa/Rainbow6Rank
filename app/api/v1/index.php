@@ -103,7 +103,7 @@
 			{
 				$params['range'] = $defaultRange;
 			}
-			else if($params["range"] == "-1" || $params["range"] == -1)
+			elseif($params["range"] == "-1" || $params["range"] == -1)
 			{
 				$params['range'] = 3650;
 			}

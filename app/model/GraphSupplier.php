@@ -32,8 +32,10 @@
 								getPlayers(function (players) {
 									let chart = am4core.create(chartDiv, am4charts.XYChart);
 									chart.dateFormat = 'yyyy-MM-dd HH:mm:ss';
-									chart.exporting.menu = new am4core.ExportMenu();
+									chart.numberFormatter.numberFormat = "#.###";
+									chart.durationFormatter.durationFormat = "HH:mm:ss";
 
+									chart.exporting.menu = new am4core.ExportMenu();
 									let title = chart.titles.create();
 									title.text = "<?php echo $this->getTitle(); ?>";
 									title.fontSize = 15;
@@ -53,11 +55,16 @@
 										"timeUnit": "minute",
 										"count": 15
 									};
-									let yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-									<?php if($this->isDurationGraph())
-								{
-									echo 'chart.durationFormatter.durationFormat = "HH:mm:ss";';
-								}?>
+									let yAxis = null;
+									if(<?php echo $this->isDurationGraph() ? "true" : "false"; ?>)
+                                    {
+										yAxis = chart.yAxes.push(new am4charts.DurationAxis());
+										yAxis.baseUnit = "second";
+                                    }
+									else
+                                    {
+										yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+									}
 
 									chart.legend = new am4charts.Legend();
 									chart.legend.useDefaultMarker = true;

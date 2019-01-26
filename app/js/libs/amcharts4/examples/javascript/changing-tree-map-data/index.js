@@ -127,7 +127,7 @@ var level1ColumnTemplate = level1SeriesTemplate.columns.template;
 level1SeriesTemplate.tooltip.animationDuration = 0;
 level1SeriesTemplate.strokeOpacity = 1;
 
-level1ColumnTemplate.column.cornerRadius(10, 10, 10, 10);
+level1ColumnTemplate.column.cornerRadius(10, 10, 10, 10)
 level1ColumnTemplate.fillOpacity = 1;
 level1ColumnTemplate.strokeWidth = 4;
 level1ColumnTemplate.stroke = am4core.color("#ffffff");
@@ -149,4 +149,4 @@ setInterval(function () {
 			child.value = child.value + Math.round(child.value * Math.random() * 0.4 - 0.2);
 		}
 	}
-}, 2000);
+}, 2000)

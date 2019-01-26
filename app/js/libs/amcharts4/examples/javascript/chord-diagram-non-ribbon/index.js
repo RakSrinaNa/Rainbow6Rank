@@ -59,14 +59,14 @@ nodeTemplate.events.on("over", function (event) {
     node.outgoingDataItems.each(function (dataItem) {
         dataItem.link.isHover = true;
     })
-});
+})
 
 nodeTemplate.events.on("out", function (event) {
     var node = event.target;
     node.outgoingDataItems.each(function (dataItem) {
         dataItem.link.isHover = false;
     })
-});
+})
 
 var circleBullet = nodeTemplate.createChild(am4charts.CircleBullet);
 circleBullet.setStateOnChildren = true;
