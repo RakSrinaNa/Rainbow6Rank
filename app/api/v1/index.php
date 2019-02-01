@@ -58,8 +58,8 @@
 
 	switch($_SERVER['REQUEST_METHOD'])
 	{
-		case 'GET':
-			processGet($endpoints, $_REQUEST['request'], json_decode(file_get_contents('php://input'), true));
+		case 'POST':
+			processPost($endpoints, $_REQUEST['request'], json_decode(file_get_contents('php://input'), true));
 			break;
 		default:
 			sendResponse(501);
@@ -90,12 +90,12 @@
 	 * @param string $request
 	 * @param array $params
 	 */
-	function processGet($endpoints, $request, $params)
+	function processPost($endpoints, $request, $params)
 	{
 		$defaultRange = 7;
 		if($params === null)
 			$params = array();
-		$params = array_merge($params, $_GET);
+		$params = array_merge($params, $_POST);
 		$params = array_merge($params, apache_request_headers());
 		if(isset($params['range']))
 		{

@@ -20,7 +20,7 @@
 								$.ajax({
 									url: '<?php echo $this->getPlayersURL(); ?>',
 									context: document.body,
-									method: 'GET'
+									method: 'POST'
 								}).done(function (data) {
 									if (data && data instanceof Array) {
 										playersCallback(data);
