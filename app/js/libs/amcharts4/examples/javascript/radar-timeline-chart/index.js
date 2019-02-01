@@ -276,7 +276,7 @@ function updateRadarData(year) {
 function createRange(name, continentData, index) {
 
     var axisRange = categoryAxis.axisRanges.create();
-	axisRange.axisFill.interactionsEnabled = true;
+    axisRange.axisFill.interactionsEnabled = true;
     axisRange.text = name;
     // first country
     axisRange.category = continentData[0][0];
@@ -287,7 +287,7 @@ function createRange(name, continentData, index) {
     axisRange.axisFill.fill = colorSet.getIndex(index * 3);
     axisRange.grid.disabled = true;
 
-	axisRange.label.interactionsEnabled = false;
+    axisRange.label.interactionsEnabled = false;
 
     var axisFill = axisRange.axisFill;
     axisFill.innerRadius = -0.001; // almost the same as 100%, we set it in pixels as later we animate this property to some pixel value
