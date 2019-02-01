@@ -19,6 +19,10 @@
 							function getPlayers(playersCallback) {
 								$.ajax({
 									url: '<?php echo $this->getPlayersURL(); ?>',
+									headers: {
+										'range': <?php echo $this->getDataRange() ?>
+									},
+									data: JSON.stringify({"range": <?php echo $this->getDataRange() ?>}),
 									context: document.body,
 									method: 'POST'
 								}).done(function (data) {
@@ -56,13 +60,10 @@
 										"count": 15
 									};
 									let yAxis = null;
-									if(<?php echo $this->isDurationGraph() ? "true" : "false"; ?>)
-                                    {
+									if (<?php echo $this->isDurationGraph() ? "true" : "false"; ?>) {
 										yAxis = chart.yAxes.push(new am4charts.DurationAxis());
 										yAxis.baseUnit = "second";
-                                    }
-									else
-                                    {
+									} else {
 										yAxis = chart.yAxes.push(new am4charts.ValueAxis());
 									}
 
@@ -90,7 +91,7 @@
 											series.dataSource.url = "<?php echo $this->getDataProvider(); ?>/" + playerName;
 											series.dataSource.requestOptions.requestHeaders = [{
 												"key": "range",
-                                                "value": "<?php echo $this->getDataRange() ?>"
+												"value": "<?php echo $this->getDataRange() ?>"
 											}];
 											series.dataSource.parser.options.dateFields = ['date'];
 											series.dataSource.parser.options.dateFormat = 'yyyy-MM-dd HH:mm:ss';
@@ -195,8 +196,8 @@
 			 * @return mixed
 			 */
 			protected function getDataRange()
-            {
-                return $_GET['range'];
-            }
+			{
+				return $_GET['range'];
+			}
 		}
 	}

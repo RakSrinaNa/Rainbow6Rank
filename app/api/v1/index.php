@@ -58,8 +58,9 @@
 
 	switch($_SERVER['REQUEST_METHOD'])
 	{
+		case 'GET':
 		case 'POST':
-			processPost($endpoints, $_REQUEST['request'], json_decode(file_get_contents('php://input'), true));
+			processGetPost($endpoints, $_REQUEST['request'], json_decode(file_get_contents('php://input'), true));
 			break;
 		default:
 			sendResponse(501);
@@ -90,11 +91,12 @@
 	 * @param string $request
 	 * @param array $params
 	 */
-	function processPost($endpoints, $request, $params)
+	function processGetPost($endpoints, $request, $params)
 	{
 		$defaultRange = 7;
 		if($params === null)
 			$params = array();
+		$params = array_merge($params, $_GET);
 		$params = array_merge($params, $_POST);
 		$params = array_merge($params, apache_request_headers());
 		if(isset($params['range']))
@@ -123,7 +125,7 @@
 				$matched = true;
 				$groups[0] = $params['range'];
 				$result = call_user_func_array(array($endpoint['object'], $endpoint['method']), $groups);
-				if($result != false)
+				if($result !== false)
 				{
 					$code = 200;
 					if(isset($result['code']))
