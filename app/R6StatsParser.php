@@ -66,7 +66,7 @@
 			{
 				$player = $this->json['player'];
 
-				$this->sendRequest("INSERT INTO R6_Player(UID, Username, Platform, Updated) VALUES(:uid, :username, :platform, FROM_UNIXTIME(:timeupdated)) ON DUPLICATE KEY UPDATE Updated=FROM_UNIXTIME(:timeupdated)", array(':uid' => $this->uid, ':username' => $player['nickname'], ':platform' => $player['platform'], ':timeupdated' => $this->date));
+				$this->sendRequest("INSERT INTO R6_Player(UID, Username, Platform) VALUES(:uid, :username, :platform) ON DUPLICATE KEY UPDATE Updated=FROM_UNIXTIME(:timeupdated)", array(':uid' => $this->uid, ':username' => $player['nickname'], ':platform' => $player['platform'], ':timeupdated' => $this->date));
 			}
 
 			private function sendRequest($statement, $args = array())
@@ -77,6 +77,7 @@
 				$result = $prepared->execute($args);
 				if(!$result)
 				{
+					echo "<br/>\n";
 					echo "SQL Error: ";
 					print_r($prepared->errorInfo());
 					echo "<br/>\n";
@@ -87,19 +88,39 @@
 			private function updateCasual()
 			{
 				$stats = $this->json['stats'];
-				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Casual(UID, DataDate, Wins, Losses, WLR, Kills, Deaths, KD, Playtime) VALUES(:uid, FROM_UNIXTIME(:datadate), :wins, :losses, :wlr, :kills, :deaths, :kd, :playtime)", array(":uid" => $this->uid, ":datadate" => $this->date, ":wins" => $stats['casualpvp_matchwon'], ":losses" => $stats['casualpvp_matchlost'], ":wlr" => $stats['casualpvp_matchwlratio'], ":kills" => $stats['casualpvp_kills'], ":deaths" => $stats['casualpvp_death'], ":kd" => $stats['casualpvp_kdratio'], ":playtime" => $stats['casualpvp_timeplayed'])); //TODO: WL - KD
+				$kd = $stats['casualpvp_death'] == 0 ? 0 : ($stats['casualpvp_kills'] / $stats['casualpvp_death']);
+				$wl = $stats['casualpvp_matchlost'] == 0 ? 0 : ($stats['casualpvp_matchwon'] / $stats['casualpvp_matchlost']);
+				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Casual(UID, DataDate, Wins, Losses, WLR, Kills, Deaths, KD, Playtime) VALUES(:uid, FROM_UNIXTIME(:datadate), :wins, :losses, :wlr, :kills, :deaths, :kd, :playtime)", array(":uid" => $this->uid, ":datadate" => $this->date, ":wins" => $stats['casualpvp_matchwon'], ":losses" => $stats['casualpvp_matchlost'], ":wlr" => $wl, ":kills" => $stats['casualpvp_kills'], ":deaths" => $stats['casualpvp_death'], ":kd" => $kd, ":playtime" => $stats['casualpvp_timeplayed']));
 			}
 
 			private function updateRanked()
 			{
 				$stats = $this->json['stats'];
-				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Ranked(UID, DataDate, Wins, Losses, WLR, Kills, Deaths, KD, Playtime) VALUES(:uid, FROM_UNIXTIME(:datadate), :wins, :losses, :wlr, :kills, :deaths, :kd, :playtime)", array(":uid" => $this->uid, ":datadate" => $this->date, ":wins" => $stats['rankedpvp_matchwon'], ":losses" => $stats['rankedpvp_matchlost'], ":wlr" => $stats['rankedpvp_matchwlratio'], ":kills" => $stats['rankedpvp_kills'], ":deaths" => $stats['rankedpvp_death'], ":kd" => $stats['rankedpvp_kdratio'], ":playtime" => $stats['rankedpvp_timeplayed'])); //TODO: WL - KD
+				$kd = $stats['rankedpvp_death'] == 0 ? 0 : ($stats['rankedpvp_kills'] / $stats['rankedpvp_death']);
+				$wl = $stats['rankedpvp_matchlost'] == 0 ? 0 : ($stats['rankedpvp_matchwon'] / $stats['rankedpvp_matchlost']);
+				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Ranked(UID, DataDate, Wins, Losses, WLR, Kills, Deaths, KD, Playtime) VALUES(:uid, FROM_UNIXTIME(:datadate), :wins, :losses, :wlr, :kills, :deaths, :kd, :playtime)", array(":uid" => $this->uid, ":datadate" => $this->date, ":wins" => $stats['rankedpvp_matchwon'], ":losses" => $stats['rankedpvp_matchlost'], ":wlr" => $wl, ":kills" => $stats['rankedpvp_kills'], ":deaths" => $stats['rankedpvp_death'], ":kd" => $kd, ":playtime" => $stats['rankedpvp_timeplayed']));
 			}
 
 			private function updateOverall()
 			{
 				$stats = $this->json['stats'];
-				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Overall(UID, DataDate, Revives, Suicides, ReinforcementsDeployed, BarricadesBuilt, StepsMoved, BulletsFired, BulletsHit, Headshots, MeleeKills, PenetrationKills, Assists, DBNO, DBNOAssists, GadgetsDestroyed) VALUES(:uid, FROM_UNIXTIME(:datadate), :revives, :suicides, :reinforcements, :barricades, :steps, :fired, :hit, :headshots, :melee, :penetration, :assists, :dbno, :dbnoassists, :gagetsdestroyed)", array(":uid" => $this->uid, ":datadate" => $this->date, ":revives" => $stats['generalpvp_revive'], ":suicides" => $stats['generalpvp_suicide'], ":reinforcements" => $stats['generalpvp_reinforcementdeploy'], ":barricades" => $stats['generalpvp_barricadedeployed'], ":steps" => $stats['generalpvp_distancetravelled'], ":fired" => $stats['generalpvp_bulletfired'], ":hit" => $stats['generalpvp_bullethit'], ":headshots" => $stats['generalpvp_headshot'], ":melee" => $stats['generalpvp_meleekills'], ":penetration" => $stats['generalpvp_penetrationkills'], ":assists" => $stats['generalpvp_killassists'], ":dbno" => $stats["generalpvp_dbno"], ":dbnoassists" => $stats["generalpvp_dbnoassists"], ":gadgetsdestroyed" => $stats["generalpvp_gadgetdestroy"]));
+				$this->sendRequest("INSERT IGNORE INTO R6_Stats_Overall(UID, DataDate, Revives, Suicides, ReinforcementsDeployed, BarricadesBuilt, StepsMoved, BulletsFired, BulletsHit, Headshots, MeleeKills, PenetrationKills, Assists, DBNO, DBNOAssists, GadgetsDestroyed) VALUES(:uid, FROM_UNIXTIME(:datadate), :revives, :suicides, :reinforcements, :barricades, :steps, :fired, :hit, :headshots, :melee, :penetration, :assists, :dbno, :dbnoassists, :gadgetsdestroyed)", array(
+					":uid" => $this->uid,
+					":datadate" => $this->date,
+					":revives" => $stats['generalpvp_revive'],
+					":suicides" => $stats['generalpvp_suicide'],
+					":reinforcements" => $stats['generalpvp_reinforcementdeploy'],
+					":barricades" => $stats['generalpvp_barricadedeployed'],
+					":steps" => $stats['generalpvp_distancetravelled'],
+					":fired" => $stats['generalpvp_bulletfired'],
+					":hit" => $stats['generalpvp_bullethit'],
+					":headshots" => $stats['generalpvp_headshot'],
+					":melee" => $stats['generalpvp_meleekills'],
+					":penetration" => $stats['generalpvp_penetrationkills'],
+					":assists" => $stats['generalpvp_killassists'],
+					":dbno" => $stats["generalpvp_dbno"],
+					":dbnoassists" => $stats["generalpvp_dbnoassists"],
+					":gadgetsdestroyed" => $stats["generalpvp_gadgetdestroy"]));
 			}
 
 			private function updateProgression()

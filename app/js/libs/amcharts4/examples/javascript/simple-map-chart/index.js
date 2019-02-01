@@ -47,7 +47,7 @@ polygonTemplate.events.on("hit", function (event) {
 
 	chart.zoomToMapObject(event.target);
 	currentActive = event.target;
-});
+})
 
 // Configure states
 // @see {@link https://www.amcharts.com/docs/v4/concepts/states/}

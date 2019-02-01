@@ -72,7 +72,7 @@
 				$result = $prepared->fetchAll();
 				foreach($result as $key => $row)
 				{
-					$data[] = array('date' => $row['DataDate'], 'value' => $row['Playtime']);
+					$data[] = array('date' => $row['DataDate'], 'value' => $row['Playtime'], 'duration' => $row['Playtime']);
 				}
 				return $data;
 			}

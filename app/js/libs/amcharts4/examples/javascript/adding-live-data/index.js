@@ -89,14 +89,14 @@ series.fill = gradient;
 dateAxis.renderer.labels.template.adapter.add("fillOpacity", function (fillOpacity, target) {
     var dataItem = target.dataItem;
     return dataItem.position;
-});
+})
 
 // need to set this, otherwise fillOpacity is not changed and not set
 dateAxis.events.on("validated", function () {
     am4core.iter.each(dateAxis.renderer.labels.iterator(), function (label) {
         label.fillOpacity = label.fillOpacity;
     })
-});
+})
 
 // this makes date axis labels which are at equal minutes to be rotated
 dateAxis.renderer.labels.template.adapter.add("rotation", function (rotation, target) {
@@ -111,7 +111,7 @@ dateAxis.renderer.labels.template.adapter.add("rotation", function (rotation, ta
         target.verticalCenter = "bottom";
         return 0;
     }
-});
+})
 
 // bullet at the front of the line
 var bullet = series.createChild(am4charts.CircleBullet);

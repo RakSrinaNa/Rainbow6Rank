@@ -70,7 +70,7 @@ errorBulletY.adapter.add("pixelHeight", function (pixelHeight, target) {
     return Math.abs(errorTopY - errorBottomY);
   }
   return pixelHeight;
-});
+})
 
 
 var errorBulletX = series.bullets.create(am4charts.ErrorBullet);
@@ -98,7 +98,7 @@ errorBulletX.adapter.add("pixelHeight", function (pixelHeight, target) {
     return Math.abs(errorTopX - errorBottomX);
   }
   return pixelHeight;
-});
+})
 
 chart.cursor = new am4charts.XYCursor();
 chart.cursor.behavior = "zoomXY";

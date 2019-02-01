@@ -70,7 +70,12 @@
 
 			protected function getBalloonTooltip()
 			{
-				return "Points: {value}\\nRank: {rank}\\nMean: {mean} | StDev: {stdev}\\nWins: {wins} | Losses: {losses} | Abandons: {abandons}";
+				return "MMR: {value.formatNumber('#.###')}\\nRank: {rank}\\nStDev: {stdev}\\nWins: {wins} | Losses: {losses} | Abandons: {abandons}";
+			}
+
+			protected function getDataRange()
+			{
+				return "-1";
 			}
 		}
 	}

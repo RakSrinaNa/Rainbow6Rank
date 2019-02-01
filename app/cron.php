@@ -34,7 +34,8 @@
 
 	$players = array('LokyDogma' => 'b59ac5a1-c97a-4ccc-8a1e-263734ace5a8', //'Fuel_Rainbow' => 'bfcc9958-0bcf-419f-a077-1eadde6fffa9',
 		//'Fuel_Velvet' => 'ed779667-8b99-411f-a87d-becb00df4135',
-		'DevilDuckYT' => '7ee006a8-9187-4abc-ae11-4cd29a3580ee', 'RakSrinaNa' => '3c5d59d2-8367-4af4-b9af-56cd8589100f');
+		//'DevilDuckYT' => '7ee006a8-9187-4abc-ae11-4cd29a3580ee',
+		'RakSrinaNa' => '3c5d59d2-8367-4af4-b9af-56cd8589100f');
 
 	$fpLog = fopen('log.log', 'w');
 
@@ -51,7 +52,7 @@
 		$json['player'] = json_decode($responseUser, true)['players'][$uid];
 		$json['stats'] = json_decode($responseStats, true)['players'][$uid];
 
-		$parser =new \R6\R6StatsParser(json_encode($json));
+		$parser = new \R6\R6StatsParser(json_encode($json));
 		$parser->putInDB();
 	}
 

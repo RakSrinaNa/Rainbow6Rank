@@ -209,8 +209,8 @@ var pyongyangTexts = [
 
 // updates all elements
 function setTime() {
-	var time = new Date(startTime + (endTime - startTime) * slider.start).getTime();
-	var roundedTime = am4core.time.round(new Date(time), "minute").getTime();
+    var time = new Date(startTime + (endTime - startTime) * slider.start).getTime();;
+    var roundedTime = am4core.time.round(new Date(time), "minute").getTime();
 
     if (roundedTime != currentTime) {
         currentTime = roundedTime;
@@ -373,7 +373,7 @@ chart.cursor.lineX.strokeOpacity = 0;
 
 chart.events.on("ready", function () {
     createSlider();
-});
+})
 
 var slider;
 
@@ -419,7 +419,7 @@ function createSlider() {
         else {
             stop();
         }
-    });
+    })
 
     slider = sliderContainer.createChild(am4core.Slider);
     slider.valign = "middle";

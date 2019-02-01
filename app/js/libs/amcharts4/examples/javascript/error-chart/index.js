@@ -44,7 +44,7 @@ var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 var series = chart.series.push(new am4charts.LineSeries());
 series.dataFields.categoryX = "country";
 series.dataFields.valueY = "visits";
-series.tooltipText = "{valueY.value} error:{error}";
+series.tooltipText = "{valueY.value} error:{error}"
 
 var errorBullet = series.bullets.create(am4charts.ErrorBullet);
 errorBullet.isDynamic = true;
@@ -69,6 +69,6 @@ errorBullet.adapter.add("pixelHeight", function (pixelHeight, target) {
     return Math.abs(errorTopY - errorBottomY);
    }
    return pixelHeight;
-});
+})
 
 chart.cursor = new am4charts.XYCursor();

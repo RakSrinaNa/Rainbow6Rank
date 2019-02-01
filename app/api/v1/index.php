@@ -1,5 +1,5 @@
 <?php
-	if(true)
+	if(false)
 	{
 		error_reporting(E_ALL);
 		ini_set('display_errors', '1');
@@ -21,7 +21,7 @@
 	$overallHandler = new R6\OverallHandler();
 	$progressionHandler = new R6\ProgressionHandler();
 
-	$playerRegex = '([A-Za-z0-9-]+)';
+	$playerRegex = '([A-Za-z0-9-_]+)';
 	$seasonRegex = '([0-9]+)';
 
 	$endpoints = array();
@@ -92,6 +92,7 @@
 	 */
 	function processGet($endpoints, $request, $params)
 	{
+		$defaultRange = 7;
 		if($params === null)
 			$params = array();
 		$params = array_merge($params, $_GET);
@@ -100,12 +101,16 @@
 		{
 			if(!is_int_val($params['range']))
 			{
-				$params['range'] = 365;
+				$params['range'] = $defaultRange;
+			}
+			elseif($params["range"] == "-1" || $params["range"] == -1)
+			{
+				$params['range'] = 3650;
 			}
 		}
 		else
 		{
-			$params['range'] = 365;
+			$params['range'] = $defaultRange;
 		}
 
 		$matched = false;
@@ -118,7 +123,7 @@
 				$matched = true;
 				$groups[0] = $params['range'];
 				$result = call_user_func_array(array($endpoint['object'], $endpoint['method']), $groups);
-				if($result)
+				if($result != false)
 				{
 					$code = 200;
 					if(isset($result['code']))

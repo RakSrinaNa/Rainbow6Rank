@@ -83,12 +83,12 @@
 				foreach(glob("graphs/ranked/*.php") as $filename)
 					/** @noinspection PhpIncludeInspection */
 					require_once __DIR__ . '/' . $filename;
-				require_once __DIR__ . '/graphs/ranked/season/RankedSeason11Graph.php';
+				require_once __DIR__ . '/graphs/ranked/season/RankedSeason12Graph.php';
 
 				$plots[] = new R6\KillDeathRankedGraph();
 				$plots[] = new R6\PlayTimeRankedGraph();
 				$plots[] = new R6\WinLossRankedGraph();
-				$plots[] = new R6\RankedSeason11Graph();
+				$plots[] = new R6\RankedSeason12Graph();
 				include __DIR__ . "/sections/ranked.php";
 				?></div><?php
 				break;
@@ -99,6 +99,7 @@
 					/** @noinspection PhpIncludeInspection */
 					require_once __DIR__ . '/' . $filename;
 
+				$plots[] = new R6\RankedSeason12Graph();
 				$plots[] = new R6\RankedSeason11Graph();
 				$plots[] = new R6\RankedSeason10Graph();
 				$plots[] = new R6\RankedSeason9Graph();
@@ -128,6 +129,9 @@
 				$plots[] = new R6\RevivesGraph();
 				$plots[] = new R6\StepsGraph();
 				$plots[] = new R6\SuicidesGraph();
+				$plots[] = new R6\DBNOGraph();
+				$plots[] = new R6\DBNOAssistsGraph();
+				$plots[] = new R6\GadgetsDestroyedGraph();
 				include __DIR__ . "/sections/overall.php";
 				?>
                 </div><?php
