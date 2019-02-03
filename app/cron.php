@@ -49,8 +49,22 @@
 		{
 			continue;
 		}
-		$json['player'] = json_decode($responseUser, true)['players'][$uid];
-		$json['stats'] = json_decode($responseStats, true)['players'][$uid];
+		$decode1 =  json_decode($responseUser, true);
+		$decode2 = json_decode($responseStats, true);
+
+		if(!isset($decode1['players']) || !isset($decode1['players'][$uid]))
+		{
+			echo "Missing field in json for user $uid : $responseUser<br/>\n";
+			continue;
+		}
+		if(!isset($decode2['players']) || !isset($decode2['players'][$uid]))
+		{
+			echo "Missing field in json for user $uid : $responseStats<br/>\n";
+			continue;
+		}
+
+		$json['player'] = $decode1['players'][$uid];
+		$json['stats'] = $decode2['players'][$uid];
 
 		$parser = new \R6\R6StatsParser(json_encode($json));
 		$parser->putInDB();
