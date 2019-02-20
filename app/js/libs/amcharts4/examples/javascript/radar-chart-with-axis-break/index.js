@@ -1,7 +1,9 @@
+// Themes begin
 am4core.useTheme(am4themes_animated);
+// Themes end
 
 var chart = am4core.create("chartdiv", am4charts.RadarChart);
- // this creates initial fade-in
+chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 chart.innerRadius = am4core.percent(50);
 chart.startAngle = -80;
 chart.endAngle = 260;
@@ -64,6 +66,9 @@ categoryAxis.renderer.labels.template.location = 0.5;
 categoryAxis.renderer.grid.template.strokeOpacity = 0.08;
 categoryAxis.renderer.tooltipLocation = 0.5;
 categoryAxis.tooltip.disabled = true;
+categoryAxis.renderer.labels.template.bent = true;
+categoryAxis.renderer.labels.template.padding(0,0,0,0);
+categoryAxis.renderer.labels.template.radius = 7;
 
 var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 valueAxis.min = 0;
@@ -77,7 +82,7 @@ valueAxis.tooltip.disabled = true;
 var axisBreak = valueAxis.axisBreaks.create();
 axisBreak.startValue = 2100;
 axisBreak.endValue = 22900;
-axisBreak.breakSize = 0.01;
+axisBreak.breakSize = 0.02;
 
 // make break expand on hover
 var hoverState = axisBreak.states.create("hover");

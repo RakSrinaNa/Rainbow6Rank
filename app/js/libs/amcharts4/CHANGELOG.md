@@ -5,6 +5,114 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 Please note, that this project, while following numbering syntax, it DOES NOT
 adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 
+## [4.1.9] - 2019-02-20
+
+### Added
+- New `Sprite` property: `baseSprite`. On objects, even deep in hierarchy it will contain a reference to the main chart object.
+
+### Changed
+- Axis `min`/`max` calculation algorightm updated.
+
+### Fixed
+- On a chart with `DateAxis` and multiple series with same-date data items, bullets could sometimes disappear while scrolling the chart.
+- On `DateAxis` with yearly granularity could sometimes show wrong year.
+- Updating chart `data` with less data points was sometimes resulting in JavaScript error.
+- `DateAxis` labels/ticks/grid was not placed in the correct position if `baseInterval.count > 1` and `location > 0`.
+- Dynamically changing `ZoomControl` value of `layout` was not working correctly.
+
+
+## [4.1.8] - 2019-02-15
+
+### Added
+- JSON: You can now specify both list of items and template settings for `ListTemplate`, e.g.: `titles: { template: { ... }, values: [{ ... }] }`. Specifying it the old way will still work.
+
+### Changed
+- `DateAxis` will now pay attention to `dateFormatter.firstDayOfWeek` when grid is in "weekly" mode.
+
+### Fixed
+- Using `proprtyFields` on a `LineSeries` sometimes could result in an error. (fix by @AndiLi99)
+- French locale (fr_FR) updated for correct decimal/thousands separators.
+- Export: `scale` in image export options was being ignored.
+- JSON: `cursor.snapToSeries` was not working in JSON configs.
+- Selection was acting funky when zooming `DateAxis` and cursor moved out of plot area.
+- An infinite error message loop fixed which was happening if series was added and there was no X or Y axes defined.
+- Tooltip on the last available data item was left visible even if cursor moved to the date where the series had no data points.
+- When `snapToSeries` was enabled in `XYCursor`, vertical line was not shown.
+- [Issue 933.](https://github.com/amcharts/amcharts4/issues/933)
+
+
+## [4.1.7] - 2019-02-14
+
+### Fixed
+- `DateAxis` sometimes could show date/time in UTC even if not explicitly enabled.
+
+
+## [4.1.6] - 2019-02-12
+
+### Added
+- New plugin chart type: [`Sunburst`](https://www.amcharts.com/docs/v4/chart-types/sunburst/)!
+- New `Sprite` adapter: `criticalError`. Takes `Error` object as an argument. Modify it's `message` property.
+
+### Fixed
+- Export was somewhat broken in Angular apps or pages with `<base>` since 4.1.5.
+- `DateAxis` was not positioning elements properly when spanning switch to/from daylight savings time.
+- `valign` property of the horizontal axis labels now work properly.
+
+
+## [4.1.5] - 2019-02-11
+
+### Added
+- New property `contextMenuDisabled` (default `false`) added to `Sprite`. If set to `true` it will prevent context menu (such as one displayed on right click) from displayed.
+
+### Changed
+- Setting `data` on `ColorSet` will now automatically reset iterator.
+
+### Fixed
+- `"rightclick"` event was essentially not working.
+- Angular with router enabled were breaking charts in Safari and older Firefox.
+
+
+## [4.1.4] - 2019-02-08
+
+### Added
+- `DateAxis.gridInterval` accessor added. Returns current grid interval.
+
+### Fixed
+- Calling `useTheme()` with the same theme multiple times used to cause that theme applied multiple times as well.
+- Sometimes `ValueAxis` would not zoom-out to show new selected range when data was updated.
+- Sometimes axis fills were not visible after zoom-in / zoom-out.
+- `totalPercent` was not properly calculated with negative values.
+
+
+## [4.1.3] - 2019-02-06
+
+### Fixed
+- `ExportMenu` items will be revalidated if data of the chart is updated. This helps avoid missing "Data" export items in menu if data is loaded later than the chart itself.
+- In stacked axes setup axis tooltips were shown in wrong positions.
+- Preloader was not always shown when needed.
+- JavaScript error when hovering cursor over missing data items fixed.
+- `TreeMap` data change performance improved.
+- Horizontal `ZoomControl` (`layout = "horizontal"`) button text vertical align fix.
+- Accellerated panning of zoomed-in axis problem fixed.
+
+
+## [4.1.2] - 2019-02-05
+
+### Added
+- New `Sprite` property `strokeDashoffset` added. Can be used in conjunction with `strokeDasharray`.
+- `Label` has two new properties: `path` and `locationOnPath`. If set, will layout the SVG text along a curvature of the SVG path. HTML and multi-line text is not supported.
+- `AxisLabelCircular` new property `bent` added. If set to `true`, the label will be bent to follow the curvature of the circle. Distance from the circle can be adjusted using `radius` and `label.paddingBottom`. For `PieSeries` the alignLabels need to to be set to `false` for this feature to work.
+
+### Fixed
+- JSON: Having property values with both percent and minus signs in them, was resulting in error.
+- "Z" code in `DateFormatter` was not taking UTC setting into account.
+- Exporting SVG with Unicode characters in Edge/IE was resulting in invalid SVG.
+- Fixed JavaScript error which used happen when disposing chart/changing data in some cases.
+- Gantt chart sometimes was not displaying first/last data item.
+- Newly added `MapLine` elements were not respecting `nonScalingStroke = true` until zoom level changed.
+- Series' tooltip was not always visible with `DateAxis`.
+
+
 ## [4.1.1] - 2019-01-31
 
 ### Added

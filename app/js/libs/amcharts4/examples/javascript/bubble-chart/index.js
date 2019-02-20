@@ -57,7 +57,7 @@ bullet.events.on("over", function(event) {
     outline.x = target.pixelX;
     outline.y = target.pixelY;
     outline.show();
-});
+})
 
 bullet.events.on("out", function(event) {
     chart.cursor.triggerMove(event.pointer.point, "none");
@@ -66,7 +66,7 @@ bullet.events.on("out", function(event) {
     valueAxisX.tooltip.disabled = true;
     valueAxisY.tooltip.disabled = true;
     outline.hide();
-});
+})
 
 var hoverState = bullet.states.create("hover");
 hoverState.properties.fillOpacity = 1;
@@ -76,7 +76,7 @@ series.heatRules.push({ target: bullet.circle, min: 2, max: 60, property: "radiu
 
 bullet.circle.adapter.add("tooltipY", function (tooltipY, target) {
     return -target.radius;
-});
+})
 
 chart.cursor = new am4charts.XYCursor();
 chart.cursor.behavior = "zoomXY";
