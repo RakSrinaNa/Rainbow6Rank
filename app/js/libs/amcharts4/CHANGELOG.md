@@ -5,6 +5,39 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 Please note, that this project, while following numbering syntax, it DOES NOT
 adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 
+## [4.1.12] - 2019-02-25
+
+### Changed
+- On `MapPolygon` default value of `nonScalingStroke` is now set to `true` (as `false`).
+- When calculating font size for a word on a `WordCloud` chart it now uses smaller side of the series area instead of height.
+- `Tooltip`'s label `paddingBottom` default value changed from `6` to `4` pixels for better centering of text.
+
+### Fixed
+- Sometimes `baseInterval = "year"` on a `DateAxis` could cause stack overflow.
+
+
+## [4.1.11] - 2019-02-25
+
+### Changed
+- Default value of `minFontSize` in `WordCloudSeries` to `2%`.
+- Default value of `maxFontSize` in `WordCloudSeries` to `20%`.
+- Label sizing algorithm updated in `WordCloudSeries`.
+
+
+## [4.1.10] - 2019-02-24
+
+### Added
+- New chart type: [WordCloud](https://www.amcharts.com/docs/v4/chart-types/wordcloud/).
+
+### Changed
+- Rotated axis labels (`rotation != 0`) of the vertical and horizontal axes no longer have their `verticalCenter` and `horizontalCenter` overridden by renderer. This gives more freedom for positioning rotated labels.
+
+### Fixed
+- `exportable = false` was not working when set on various Series item templates.
+- On Gantt chart date axis tooltip was snapping randomly when moving mouse.
+- Export: For very large data sets (2MB and up) data export was failing silently in Chrome.
+
+
 ## [4.1.9] - 2019-02-20
 
 ### Added
