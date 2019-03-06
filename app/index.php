@@ -99,6 +99,7 @@
 					/** @noinspection PhpIncludeInspection */
 					require_once __DIR__ . '/' . $filename;
 
+				$plots[] = new R6\RankedSeason13Graph();
 				$plots[] = new R6\RankedSeason12Graph();
 				$plots[] = new R6\RankedSeason11Graph();
 				$plots[] = new R6\RankedSeason10Graph();

@@ -8,7 +8,6 @@
 
 	namespace R6
 	{
-
 		use DateTime;
 
 		include_once __DIR__ . "/api/v1/model/DBConnection.class.php";
