@@ -20,13 +20,10 @@
     <meta charset="UTF-8">
 
     <script type="text/javascript" src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="//momentjs.com/downloads/moment-with-locales.js"></script>
-
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
-          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
     <script type="text/javascript" src="js/libs/amcharts4/core.js"></script>
     <script type="text/javascript" src="js/libs/amcharts4/charts.js"></script>
@@ -83,12 +80,12 @@
 				foreach(glob("graphs/ranked/*.php") as $filename)
 					/** @noinspection PhpIncludeInspection */
 					require_once __DIR__ . '/' . $filename;
-				require_once __DIR__ . '/graphs/ranked/season/RankedSeason12Graph.php';
+				require_once __DIR__ . '/graphs/ranked/season/RankedSeason13Graph.php';
 
 				$plots[] = new R6\KillDeathRankedGraph();
 				$plots[] = new R6\PlayTimeRankedGraph();
 				$plots[] = new R6\WinLossRankedGraph();
-				$plots[] = new R6\RankedSeason12Graph();
+				$plots[] = new R6\RankedSeason13Graph();
 				include __DIR__ . "/sections/ranked.php";
 				?></div><?php
 				break;
