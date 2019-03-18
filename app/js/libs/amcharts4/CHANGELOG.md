@@ -5,6 +5,62 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 Please note, that this project, while following numbering syntax, it DOES NOT
 adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 
+## [4.2.3] - 2019-03-14
+
+### Fixed
+- Exporting via API from a chart that did not have `ExportMenu` set, was resulting in error.
+- Fixed tooltip flickering that were set directly on series objects (columns/bullets).
+- Because of daylight saving, sometimes `DateAxis` could mistake yearly data for monthly data if `baseInterval` was not set explicitly.
+- Sometimes Sankey nodes did not perfectly fit into chart area.
+- Tick `location` on Y axis was being ignored.
+- Ticks were positioned incorrectly when multiple axes were on the same side of the `XYChart`.
+- Issue with `strictMinMax` and single data item fixed.
+- `valueY` (or any other value) wasn't working in `legendSettings.itemLabelText`.
+
+
+## [4.2.2] - 2019-03-13
+
+### Added
+- `cursorHoverEnabled` added to `XYSeries`. Controls whether to trigger hover state on columns/bullets of the all series under hovered category/date.
+- A new `plugins` property on all `Sprite`. [More info](https://www.amcharts.com/docs/v4/concepts/plugins/).
+- New plugin: Regression. [More info](https://www.amcharts.com/docs/v4/tutorials/regression-trend-lines/).
+- New `ExportMenu` setting: `closeOnClick` (default `true`). Will force export menu to close when export is initiated.
+
+### Changed
+- `DateFormat` will now parse even partial dates, e.g. format `"yyyy-MM-dd"` will parse `"2018"` correctly, and will assume Jan 1st.
+
+### Fixed
+- Export: `getImage()`/`getSVG()` will now correctly omit `exportable = false` elements.
+- Export: Data export was not taking in additional columns after data updates.
+- Some chart cloning issues fixed.
+- Inccorrect behavior of Series' tooltip with `minBulletDistance` set fixed.
+- Sometimes, when series had only one data item, chart used to zoom-in right after the init.
+- In-line date formatting will now use `DateFormatter`'s parsing functions for string-based dates.
+- `DateAxis` issues with certain timezones fixed.
+
+
+## [4.2.1] - 2019-03-08
+
+### Fixed
+- Various graphical issues when using `<base>` tag (mostly affects Angular).
+- `NumberFormatter` did not have a public accessor to set `negativeBase`.
+
+
+## [4.2.0] - 2019-03-06
+
+### Added
+- Added read-only property of `CategoryAxis`: `frequency`. Indicates every X label is shown.
+- Added JSON example of Candle stick chart (json/candlestick-series).
+- New `Export` property: `extraSprites`. May contain a list of references to other `Sprites` (e.g. external legend or even other chart) to attach to exported image. [More info](https://www.amcharts.com/docs/v4/concepts/exporting/#Including_external_elements).
+- Experimental responsive features and default rules are now active. [More info](https://www.amcharts.com/docs/v4/concepts/responsive/).
+
+### Changed
+- Accessibility: Default role of the Legend's item containers was changed to "switch".
+
+### Fixed
+- Accessibility: Legend's containers when toggling items were setting value of `aria-checked` incorrectly.
+
+
 ## [4.1.14] - 2019-03-01
 
 ### Changed
