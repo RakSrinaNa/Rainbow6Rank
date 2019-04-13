@@ -5,6 +5,193 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 Please note, that this project, while following numbering syntax, it DOES NOT
 adhere to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) rules.
 
+## [4.3.13] - 2019-04-10
+
+### Fixed
+- Using `propertyFields.url` was forcing pointer cursor on all objects from the same template, even if they did not have url set.
+- Memory leak with dynamic changes of data on `TreeMap`.
+- `getPoint()` method of `XYSeries` is now public.
+- Setting `startAngle`/`endAngle` before adding `PieSeries` was causing it to not be drawn.
+- Performance tweaks to 3D columns.
+
+
+## [4.3.12] - 2019-04-09
+
+### Changed
+- Series' `bullets` now accepts objects that are simple `Sprite` elements, not just `Bullet` types. This means you can add `Circle` as bullet (or any other element), to dramatically improve performance on bullet-heavy charts.
+- Default value of `hideOversized` for `LabelBullet` changed to `false`.
+
+### Fixed
+- Dramatically improved performace of `CategoryAxis`.
+- `SliceGrouper` plugin will now not add "Other" slice if there are no slices below threshold or no data at all.
+- `SliceGrouper` now supports dynamic data updates.
+- `ColorSet.reuse = true` was working incorrectly for `PercentSeries`.
+- `timezoneOffset` property of the Date Formatter was causing all minutes to be formatted as zeroes.
+
+
+## [4.3.11] -2019-04-08
+
+### Added
+- New plugin: `SliceGrouper` (allows automatically grouping small slices on any `PercentSeries`, e.g. Pie, Funnel, Pyramid, or Pictorial Stacked). [More info](https://www.amcharts.com/docs/v4/tutorials/plugin-slice-grouper/).
+
+### Changed
+- Changed `centerStrength` default was changed to `0.8` in `ForceDirectedSeries`.
+
+### Fixed
+- Zero-value 3D columns were not visible on `DateAxis`.
+- `FunnelSeries`'' labels were out of bounds sometimes.
+- `Regression` plugin was not working when data was set directly on Series.
+
+
+## [4.3.10] - 2019-04-08
+
+### Changed
+- Corner radius is not supported anymore on 3D slices. A sacrifice towards performance.
+
+### Fixed
+- Performance of `PieChart3D` improved dramatically.
+
+
+## [4.3.9] - 2019-04-06
+
+### Added
+- `ForedDirectedSeries` properties `minRadius` and `maxRadius` can now be set in `Percent`.
+
+### Changed
+- Default value of `ForceDirectedLink.strength` changed to `1` to avoid initial shaking.
+- Default value of `ForceDirectedSeries.manyBodyStrength` changed to `-15`.
+- Default values of `ForceDirectedSeries` properties `minRadius` and `maxRadius` changed to `1%` and `8%` respectively.
+
+### Fixed
+- In `ForedDirectedSeries` the same color was being reused for top-level node and first child node.
+- It was impossible to set colors of `ForedDirectedSeries` data items via data.
+- `ColorSet` setting `reuse = true` was acting incorrectly.
+
+## [4.3.8] - 2019-04-05
+
+### Added
+- New chart type plugin: `ForceDirectedTree`. [More info](https://www.amcharts.com/docs/v4/chart-types/force-directed/). Also check bundled examples: `force-directed-tree`, `force-directed-tree-expandable`, and `force-directed-network`.
+- New `CategoryAxis` property: `positionToCategory(position)`.
+
+
+## [4.3.7] - 2019-04-04
+
+### Fixed
+- `TreeMap` was erroring out since `4.3.6` unless "animated" theme was enabled.
+- On `TreeMap`'s legend with default markers `valueLabels` was not working on first load.
+
+
+## [4.3.6] - 2019-04-04
+
+### Added
+- New `DateFormatter` property: `timezoneOffset`. Set it to a number of minutes (to UTC) to recalculate all date/time to a specific time zone.
+
+### Changed
+- `DateFormatter` will now use locale information for its default date format set in `dateFormat`. Format in default "International English" locale did not change, and remains at `"yyyy-MM-dd"`. Other locales might or might not produce different date formats.
+- Improved `ValueAxis` scale calculation algorithm when `min`/`max` is set.
+- `"hit"` event is now added on `FlowDiagramNode` template instead of the class itself. This allows disabling default toggle/drag behavior and replacing with own events.
+
+### Fixed
+- Themes were not properly being applied to bullets.
+- `Popup.draggable` was being ignored.
+- `Series.legendSettings.itemValueText` was being ignored when `cursorTooltipEnabled = false`. #1141
+- Mouse events over `LineSeries` segments where happening at wrong position.
+- `legend.valueLabels` on `TreeMap` did not work.
+- Changing Map projection with `panBehavior = "rotateLongLat"` could cause a JS error.
+- Changing `TreeMap` data after chart size changed could cause zoom-out button to appear.
+- Solved flickering of stacked columns when raw data was invalidated.
+- Updating data of a `TreeMap` when animation was playing could result in a JS error.
+
+
+## [4.3.5] - 2019-03-29
+
+### Added
+- New properties `strokeLinejoin` ("miter" | "round" | "bevel") and `strokeLinecap` ("butt" | "square" | "round") added to `Sprite`. [More info](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Fills_and_Strokes#Stroke).
+
+### Fixed
+- In some rare cases EDGE/IE could generate an "Unspecied error".
+- `MapChart` method `zoomToMapObject()` was not functioning properly since `4.3.4`.
+- `LineSeries` with bullet and `hidden = false` in init was causing the whole chart to break.
+
+
+## [4.3.4] - 2019-03-28
+
+### Fixed
+- Issue with JSON setups for `MapChart` fixed.
+
+
+## [4.3.3] - 2019-03-27
+
+### Fixed
+- `MapPolygonSeries.geodataSource` was not working.
+- `MapChart` was not showing data if `geodata` was set later than data on series.
+- When there were multiple data items with identical timestamps on `DateAxis`, the first ones could have been ignored.
+- Even if `legend.itemContainer.template.togglable` was set to `false`, Legend item was stil togglable.
+- Extra graticules (grid) was shown in `GraticuleSeries` unders some conditions.
+- Tooltips on a logarithmic `ValueAxis` were showing wrong values.
+- Value label for "0" could sometimes appear on top of logarithmic `ValueAxis`.
+- `MapChart` position was not correct if padding was set.
+
+
+## [4.3.2] - 2019-03-26
+
+### Fixed
+- `MapChart` dispose error fixed.
+
+
+## [4.3.1] - 2019-03-26
+
+### Fixed
+- Bug with live data updates fixed.
+
+
+## [4.3.0] - 2019-03-26
+
+### Added
+- `MapChart` can now use any projection supported by [d3-geo](https://www.npmjs.com/package/d3-geo). `Projection.d3Projection` property added and you can set any d3-geo projection using it, like: `mapChart.projection.d3Projection = am4maps.d3geo.geoConicEquidistant();`.
+- Albers, AlbersUsa, AzimuthalEqualArea, EqualEarth, NaturalEarth1, Stereographic projection classes added (use them regularly like: `mapChart.projection = new EqualEarth()`).
+- `deltaLatitude`, `deltaGamma` added to `MapChart`. Together with already existing `deltaLongitude` allows rotating maps in any possible direction.
+- `panBehavior` property added to `MapChart`. Values: "move" (default), "rotateLat", "rotateLong", "rotateLongLat". Indicate what should happen when map is dragged.
+- `ignoreBounds` added to `MapSeries`. Specifies if this series must be included when calculating bounds of the map.
+- `calculateVisualCenter` added to `MapPolygonSeries`. Specifies if map polygons should calculate their visual center. Visual center is good for placing labels.
+- `visualLongitude` and `visualLatitude` getters added to `MapPolygon`. They return coordinates if `calculateVisualCenter` of series is set to `true`. You can also set them manually.
+- `getCircle()` and `getBackground()` methods added to `MapUtils`.
+- `Graticule` and `GraticuleSeries` classed added. Those allow creating graticules (map grid).
+- `backgroundSeries` added to MapChart. Allows creating a map-shaped background fill.
+
+### Changed
+- Engine behind rendering of maps was changed to use [d3-geo](https://www.npmjs.com/package/d3-geo).While the change should be backwards compatible, beware of and report any issues.
+- `day-night-map` and `morphing-countries` demos we changed to work properly with new version.
+- When adding a `HeatLegend` to `MapChart` its `valign = "bottom"` is no longer set by default. Set it explicitly if you need legend to bottom-aligned.
+
+### Fixed
+- `rtl` setting was not being inherited properly.
+- Fixed RTL behavior for labels.
+- Disposing a hovered chart with scroll pan enabled used to leave whole document with disabled wheel scroll.
+
+
+## [4.2.6] - 2019-03-21
+
+### Fixed
+- `CategoryAxis` was breaking down after dynamic data update since 4.2.4.
+
+
+## [4.2.5] - 2019-03-21
+
+### Added
+- New property `minPolylinestep` added to global `am4core.options`. Setting to bigger value (default: `0.5`) allows simplification of multi-point lines.
+- Export: new setting `useSimplifiedExport` (default: `true`). Setting to `false` will force use of external library (canvg) for all exports.
+
+### Fixed
+- `XYCursor` with pan behavior used to remain in "grabbing" mode after click on zoom out button.
+- Export: Menu was not working properly on Mobile Safari.
+- Export: Menu was not working properly on Android Chrome.
+- Export: Exporting of PDF/XSLX is now supported on Mobile Safari.
+- Export: Exporting images in IE9 was broken.
+- Stacks with pre-hidden series were showing incorrectly.
+- `DateAxis` no longer ignores `renderer.tooltipLocation`.
+
+
 ## [4.2.4] - 2019-03-19
 
 ### Added
