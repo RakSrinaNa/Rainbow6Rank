@@ -62,6 +62,16 @@
 			echo "Missing field in json for user $uid : $responseStats<br/>\n";
 			continue;
 		}
+		if(isset($decode1['error']) && $decode1['error'])
+		{
+			echo "Got error getting infos<br/>\n";
+			continue;
+		}
+		if(isset($decode2['error']) && $decode2['error'])
+		{
+			echo "Got error getting infos<br/>\n";
+			continue;
+		}
 
 		$json['player'] = $decode1['players'][$uid];
 		$json['stats'] = $decode2['players'][$uid];
