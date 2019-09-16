@@ -1,6 +1,3 @@
-<p align="center">
-    <a href="https://rainbow.mrcraftcod.fr"><img alt="Rainbow6Rank logo" src="https://rainbow.mrcraftcod.fr/favicon.ico" height="175"/></a>
-</p>
 <a style="color: white; text-decoration:none;" href="https://rainbow.mrcraftcod.fr"><h1 align="center">Rainbow6Rank</h1></a>
 
 ## Infos
